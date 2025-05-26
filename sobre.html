@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>APIPMCBDF - Sobre Nós</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    :root {
+      --bg-dark: #121212;
+      --bg-dark-alt: #1E1E1E;
+      --text-light: #F5F5F5;
+      --accent: #FFD700;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background: var(--bg-dark);
+      color: var(--text-light);
+      font-family: Arial, sans-serif;
+    }
+    header {
+      background: var(--bg-dark-alt);
+      padding: 0.5rem 1rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+    }
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo img {
+      height: 50px;
+      max-width: 150px;
+      width: auto;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1rem;
+    }
+    nav a {
+      text-decoration: none;
+      color: var(--text-light);
+      font-weight: bold;
+    }
+    .menu-toggle {
+      display: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+    @media (max-width: 768px) {
+      nav ul {
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        flex-direction: column;
+        background: var(--bg-dark-alt);
+        display: none;
+      }
+      nav ul.show {
+        display: flex;
+      }
+      .menu-toggle {
+        display: block;
+      }
+    }
+    h1 {
+      text-align: center;
+      color: var(--accent);
+      margin-bottom: 2rem;
+    }
+    .about p {
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+    .highlight {
+      color: var(--accent);
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="logo"><a href="index.html"><img src="https://i.ibb.co/RTTPjxs6/Novo-Projeto-3.png" alt="APIPMCBDF Logo"></a></div>
+      <div class="menu-toggle" id="menu-toggle">☰</div>
+      <nav>
+        <ul id="nav-list">
+          <li><a href="index.html">Início</a></li>
+          <li><a href="noticias.html">Notícias</a></li>
+          <li><a href="sobre.html">Sobre Nós</a></li>
+          <li><a href="conquistas.html">Conquistas</a></li>
+          <li><a href="socio.html">Seja Sócio</a></li>
+          <li><a href="contato.html">Contato</a></li>
+          <li><a href="diretoria.html">Diretoria</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container about">
+    <h1>Sobre Nós</h1>
+    <p>A <span class="highlight">APIPMCBDF</span> nasceu da união e da força de militares inativos e pensionistas da Polícia Militar e do Corpo de Bombeiros do Antigo e Atual Distrito Federal, em busca de <span class="highlight">reconhecimento, dignidade e justiça</span>.</p>
+
+    <p>Com sede no Centro do Rio de Janeiro, a Associação atua <span class="highlight">administrativa, jurídica e politicamente</span> para garantir que os direitos de seus associados sejam respeitados e ampliados.</p>
+
+    <p>Desde sua fundação, a APIPMCBDF mantém <span class="highlight">diálogo constante com autoridades</span> públicas e trabalha para preservar a memória, a história e o valor daqueles que serviram ao país com bravura e dedicação.</p>
+
+    <p>Nosso compromisso é com a <span class="highlight">transparência, ética e apoio às famílias</span> que enfrentaram décadas de exclusão administrativa e previdenciária.</p>
+  </main>
+
+  <script>
+    const toggle = document.getElementById('menu-toggle');
+    const navList = document.getElementById('nav-list');
+    toggle.addEventListener('click', () => {
+      navList.classList.toggle('show');
+    });
+  </script>
+</body>
+</html>
