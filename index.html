@@ -4,9 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>APIPMCBDF - Início</title>
-  <!-- Font Awesome para ícones -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    integrity="sha512-p1CmT5M6R0N5zIWFXuCUZs86s1BwjUpBV3h8aMD3w3pFz7+O+L0olnJ8TtZuAnG+M5K0EwSY3ytYDBTDbvFzEA==" crossorigin="anonymous"
+  <!-- Font Awesome para ícones gerais -->
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    integrity="sha512-pVI0u1sQp8nzc4l+3mdKeKsWdQ+oGv3Ib6+JD8fkXjIoXW+5u+3P0K3RURK6Z1RM6p6b6fDdhc+N/3Z+Mfn1aQ=="
+    crossorigin="anonymous"
     referrerpolicy="no-referrer" />
   <style>
     :root { --bg-dark: #121212; --bg-dark-alt: #1E1E1E; --text-light: #F5F5F5; --accent: #FFD700; }
@@ -43,8 +45,19 @@
     .social-icons a { font-size: 1.8rem; color: var(--text-light); }
     .social-icons a:hover { color: var(--accent); }
     .copyright { text-align: center; margin-top: 1rem; font-size: 0.9rem; opacity: 0.7; }
-    .whatsapp-float { position: fixed; bottom: 20px; right: 20px; background: #25D366; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(0,0,0,0.3); z-index: 100; }
-    .whatsapp-float a { color: white; font-size: 2.5rem; }
+    /* Ícone flutuante do WhatsApp */
+    .whatsapp-link {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 200;
+      display: block;
+    }
+    .whatsapp-link .whatsapp-icon {
+      width: 3rem; /* ícone maior */
+      height: auto;
+    }
+    .whatsapp-link:hover { opacity: 0.8; }
   </style>
 </head>
 <body>
@@ -85,7 +98,7 @@
       <h2>Nossa História</h2>
       <p>A Associação Brasileira de Pensionistas e Inativos da Polícia Militar e Corpo de Bombeiros do Antigo e Atual Distrito Federal nasceu da união de militares e suas famílias em busca de reconhecimento e justiça, após décadas de exclusão administrativa e previdenciária.</p>
       <p>Suas raízes remontam ao século XIX: em 1809 D. João VI assinou o decreto que criou a Divisão Militar da Guarda Real de Polícia. Em 1832, sob o comando do Duque de Caxias, a corporação consolidou sua estrutura militar e disciplinar, e em 1865 destacou-se na Guerra do Paraguai ao enviar o 31º Grupo de Voluntários ao conflito.</p>
-      <p>O Corpo de Bombeiros, por sua vez, formalizou-se em 2 de julho de 1856, com o Decreto Imperial nº 1.775. Militarizado em 1880, evoluiu ao longo dos anos, participando de importantes eventos e tragédias nacionais.</p>
+      <p>O Corpo de Bombeiros, por sua vez, formalizou-se em 2 de julho de 1856, com o Decreto Imperial nº 1.175. Militarizado em 1880, evoluiu ao longo dos anos, participando de importantes eventos e tragédias nacionais.</p>
       <p>Após a transferência da capital para Brasília em 1960, muitos militares permaneceram no Rio de Janeiro, aguardando sua remanejamento. A Lei 4.242/63 permitiu sua permanência como militares da União, mas a Lei 5.959/73 realizou transferências compulsórias, gerando uma luta de 42 anos até a Lei 10.486/2002 equiparar seus direitos aos militares do Distrito Federal.</p>
       <p>Desde então, a Associação atua administrativa, jurídica e politicamente em defesa de seus associados, valorizando sua história e identidade. Localizada no Centro do Rio de Janeiro, mantém diálogo constante com autoridades e oferece assistência às famílias.</p>
     </section>
@@ -110,9 +123,10 @@
     </div>
   </footer>
 
-  <div class="whatsapp-float">
-    <a href="https://wa.me/552122205074" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-  </div>
+  <!-- Ícone flutuante do WhatsApp -->
+  <a href="https://wa.me/5521984997413" class="whatsapp-link" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+    <img src="https://img.icons8.com/?size=512&id=16713&format=png" alt="WhatsApp Icon" class="whatsapp-icon">
+  </a>
 
   <script>
     const toggle = document.getElementById('menu-toggle');
