@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>APIPMCBDF - Notícias</title>
+<title>Informações - APIPMCBDF</title>
 <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" referrerpolicy="no-referrer" rel="stylesheet"/>
 <style>
     :root {
@@ -71,139 +71,39 @@
       .menu-toggle {
         display: block;
       }
+      .logo img { width: 240px; height: 80px; object-fit: contain; }
     }
     main {
       padding: 2rem 1rem;
     }
-    h1 {
-      text-align: center;
-      color: var(--accent);
-      margin-bottom: 2rem;
-    }
-    .news-item {
-      background: var(--bg-dark-alt);
-      padding: 1.5rem;
-      margin-bottom: 2rem;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    }
-    .news-item h2 {
-      color: var(--accent);
-      margin-bottom: 0.5rem;
-    }
-    .news-item p {
-      line-height: 1.6;
-    }
-    .news-item time {
-      font-size: 0.9rem;
-      color: #aaa;
-      display: block;
-      margin-bottom: 0.5rem;
-    }
-  </style>
-<style>
-
-    :root {
-      --bg-dark: #121212;
-      --bg-dark-alt: #1E1E1E;
-      --text-light: #F5F5F5;
-      --accent: #FFD700;
-    }
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    body {
-      background: var(--bg-dark);
-      color: var(--text-light);
-      font-family: Arial, sans-serif;
-    }
-    header {
-      background: var(--bg-dark-alt);
-      padding: 0.5rem 1rem;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    .nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .logo img { width: 240px; height: 80px; object-fit: contain; }
-    nav ul {
-      list-style: none;
-      display: flex;
-      gap: 1rem;
-    }
-    nav a {
-      text-decoration: none;
-      color: var(--text-light);
-      font-weight: bold;
-    }
-    .menu-toggle {
-      display: none;
-      font-size: 1.5rem;
-      cursor: pointer;
-    }
-    @media (max-width: 768px) {
-      nav ul {
-        position: absolute;
-        top: 60px;
-        left: 0;
-        width: 100%;
-        flex-direction: column;
-        background: var(--bg-dark-alt);
-        display: none;
-      }
-      nav ul.show {
-        display: flex;
-      }
-      .menu-toggle {
-        display: block;
-      }
-    }
-    main {
-      padding: 2rem 1rem;
-    }
-    h1 {
-      text-align: center;
-      color: var(--accent);
-      margin-bottom: 2rem;
-    }
-    .team-grid {
+    .card-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 2rem;
-      padding: 0 1rem;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
     }
-    .member-card {
+    .card {
       background: var(--bg-dark-alt);
       border-radius: 12px;
-      overflow: hidden;
+      padding: 2rem 1rem;
       text-align: center;
-      padding: 1rem;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      transition: transform 0.2s ease, background 0.3s;
+      cursor: pointer;
+      border: 1px solid #FFD70020;
+      text-decoration: none;
+      color: var(--text-light);
     }
-    .member-card img {
-      width: 100%;
-      max-width: 200px;
-      height: auto;
-      border-radius: 50%;
+    .card:hover {
+      background: #2a2a2a;
+      transform: translateY(-5px);
+    }
+    .card i {
+      font-size: 2.5rem;
+      color: var(--accent);
       margin-bottom: 1rem;
     }
-    .member-card h2 {
-      margin-bottom: 0.25rem;
-      font-size: 1.2rem;
-    }
-    .member-card p {
-      font-size: 0.95rem;
-      opacity: 0.8;
+    .card h3 {
+      font-size: 1.1rem;
+      color: var(--accent);
     }
     footer {
       background: var(--bg-dark-alt);
@@ -239,8 +139,51 @@
       font-size: 0.9rem;
       opacity: 0.7;
     }
+    .whatsapp-link {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 200;
+      display: block;
+    }
+    .whatsapp-link .whatsapp-icon {
+      width: 3rem;
+      height: auto;
+    }
+    .whatsapp-link:hover {
+      opacity: 0.8;
+    }
   
-</style></head>
+.article-card {
+  background: #1e1e1e;
+  padding: 2rem;
+  margin: 2rem auto;
+  max-width: 900px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.1);
+  line-height: 1.7;
+}
+.article-card h1 {
+  text-align: center;
+  color: #FFD700;
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+}
+.article-card h2 {
+  color: #FFD700;
+  margin-top: 1.8rem;
+  margin-bottom: 0.8rem;
+  font-size: 1.3rem;
+}
+.article-card ul {
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+.article-card li {
+  margin-bottom: 0.5rem;
+}
+</style>
+</head>
 <body>
 <header>
 <div class="container nav">
@@ -260,29 +203,17 @@
 </div>
 </header>
 <main class="container">
-<h1>Últimas Notícias</h1>
-<!-- NOTÍCIA MAIS RECENTE -->
-<div class="news-item">
-<time datetime="2025-05-26">26 de maio de 2025</time>
-<h2>Título da notícia mais recente</h2>
-<p>Texto completo da notícia mais recente. Essa notícia é exibida no topo da página. Você pode atualizar esse bloco facilmente trocando o título, data e conteúdo.</p>
+<h2 style="color: var(--accent); margin-bottom: 2rem; text-align: center;">Informações Importantes</h2>
+<div class="card-grid">
+<a class="card" href="vpe.html"><i class="fas fa-handshake"></i><h3>VPE</h3></a>
+<a class="card" href="auxilio.html"><i class="fas fa-home"></i><h3>Auxílio Moradia</h3></a>
+<a class="card" href="soldo.html"><i class="fas fa-dollar-sign"></i><h3>Soldo</h3></a>
+<a class="card" href="gfm_gefm.html"><i class="fas fa-university"></i><h3>GFM e GEFM</h3></a>
+<a class="card" href="pensao.html"><i class="fas fa-user-shield"></i><h3>Pensão Militar</h3></a>
+<a class="card" href="artigo24.html"><i class="fas fa-gavel"></i><h3>Art. 24 - EC 103/2019</h3></a>
+<a class="card" href="documentacao.html"><i class="fas fa-folder-open"></i><h3>Consultar Documentos</h3></a>
 </div>
-<!-- OUTRAS NOTÍCIAS (ADICIONE AQUI ABAIXO) -->
-<div class="news-item">
-<time datetime="2025-05-20">20 de maio de 2025</time>
-<h2>Título de uma notícia anterior</h2>
-<p>Conteúdo da notícia anterior. Você pode adicionar quantos blocos quiser duplicando essa estrutura de "news-item".</p>
-</div>
-<!-- Exemplo adicional -->
-<!--
-    <div class="news-item">
-      <time datetime="2025-05-10">10 de maio de 2025</time>
-      <h2>Outro título de notícia</h2>
-      <p>Conteúdo adicional de uma notícia mais antiga.</p>
-    </div>
-    -->
 </main>
-
 <footer>
 <div class="footer-info container">
 <div><strong>Endereço:</strong><br/>Rua Evaristo da Veiga, nº 55, 10º andar — Centro — Rio de Janeiro — RJ</div>
@@ -300,7 +231,12 @@
 <div class="copyright container">
       © 2025 APIPMCBDF. Todos os direitos reservados.
     </div>
-</footer><script>
+</footer>
+<a aria-label="WhatsApp" class="whatsapp-link" href="https://wa.me/5521984997413" rel="noopener noreferrer" target="_blank">
+<img alt="WhatsApp Icon" class="whatsapp-icon" src="https://img.icons8.com/?size=512&amp;id=16713&amp;format=png"/>
+</a>
+
+<script>
     const toggle = document.getElementById('menu-toggle');
     const navList = document.getElementById('nav-list');
     toggle.addEventListener('click', () => { navList.classList.toggle('show'); });

@@ -40,11 +40,7 @@
       align-items: center;
       justify-content: space-between;
     }
-    .logo img {
-      height: 50px;
-      max-width: 150px;
-      width: auto;
-    }
+    .logo img { width: 240px; height: 80px; object-fit: contain; }
     nav ul {
       list-style: none;
       display: flex;
@@ -129,7 +125,36 @@
     button:hover {
       opacity: 0.9;
     }
-  </style>
+  
+.article-card {
+  background: #1e1e1e;
+  padding: 2rem;
+  margin: 2rem auto;
+  max-width: 900px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.1);
+  line-height: 1.7;
+}
+.article-card h1 {
+  text-align: center;
+  color: #FFD700;
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+}
+.article-card h2 {
+  color: #FFD700;
+  margin-top: 1.8rem;
+  margin-bottom: 0.8rem;
+  font-size: 1.3rem;
+}
+.article-card ul {
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+.article-card li {
+  margin-bottom: 0.5rem;
+}
+</style>
 <style>
 
     :root {
@@ -164,11 +189,7 @@
       align-items: center;
       justify-content: space-between;
     }
-    .logo img {
-      height: 50px;
-      max-width: 150px;
-      width: auto;
-    }
+    .logo img { width: 240px; height: 80px; object-fit: contain; }
     nav ul {
       list-style: none;
       display: flex;
@@ -277,7 +298,7 @@
 <body>
 <header>
 <div class="container nav">
-<div class="logo"><a href="index.html"><img alt="APIPMCBDF Logo" src="https://i.ibb.co/RTTPjxs6/Novo-Projeto-3.png"/></a></div>
+<div class="logo"><a href="index.html"><img alt="APIPMCBDF Logo" src="https://i.ibb.co/9HcbZhnR/Novo-Projeto.png"/></a></div>
 <div class="menu-toggle" id="menu-toggle">☰</div>
 <nav>
 <ul id="nav-list">
@@ -288,11 +309,11 @@
 <li><a href="socio.html">Seja Sócio</a></li>
 <li><a href="contato.html">Contato</a></li>
 <li><a href="diretoria.html">Diretoria</a></li>
-</ul>
+<li><a href="informacoes.html">Informações</a></li></ul>
 </nav>
 </div>
 </header>
-<main class="container">
+<main class="container"><section class="article-card">
 <h1>Fale Conosco</h1>
 <div class="contact-info">
 <p><strong>📍 Endereço:</strong><br/>Rua Evaristo da Veiga, nº 55, 10º andar — Centro — Rio de Janeiro — RJ</p>
@@ -310,14 +331,8 @@
 <div class="map-container" style="margin-top: 3rem;">
 <iframe allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3673.924073988655!2d-43.1779889!3d-22.958808599999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x997fd026255ed5%3A0xd160ff17d306e90c!2sRua%20Evaristo%20da%20Veiga%2C%2055%20-%20Centro%2C%20Rio%20de%20Janeiro%20-%20RJ%2C%2020021-040!5e0!3m2!1spt-BR!2sbr!4v1716750000000!5m2!1spt-BR!2sbr"></iframe>
 </div>
-</main>
-<script>
-    const toggle = document.getElementById('menu-toggle');
-    const navList = document.getElementById('nav-list');
-    toggle.addEventListener('click', () => {
-      navList.classList.toggle('show');
-    });
-  </script>
+</section></main>
+
 <footer>
 <div class="footer-info container">
 <div><strong>Endereço:</strong><br/>Rua Evaristo da Veiga, nº 55, 10º andar — Centro — Rio de Janeiro — RJ</div>
@@ -335,5 +350,17 @@
 <div class="copyright container">
       © 2025 APIPMCBDF. Todos os direitos reservados.
     </div>
-</footer></body>
+</footer><script>
+    const toggle = document.getElementById('menu-toggle');
+    const navList = document.getElementById('nav-list');
+    toggle.addEventListener('click', () => { navList.classList.toggle('show'); });
+
+    const slides = document.querySelectorAll('.slide');
+    let current = 0;
+    setInterval(() => {
+      slides[current].classList.remove('active');
+      current = (current + 1) % slides.length;
+      slides[current].classList.add('active');
+    }, 5000);
+  </script></body>
 </html>
