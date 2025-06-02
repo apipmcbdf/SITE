@@ -1,12 +1,13 @@
 <!DOCTYPE html>
+
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>APIPMCBDF - Nossa História</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>APIPMCBDF - Nossa História</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body { font-family: 'Inter', sans-serif; background-color: #f9f9f9; }
@@ -27,10 +28,6 @@
     }
     nav ul li:hover ul { display: block; animation: fadeIn 0.3s ease-in-out; }
     nav ul li ul li a { padding: 10px; font-weight: 400; }
-    @keyframes fadeIn {
-      from {opacity: 0; transform: translateY(-10px);}
-      to {opacity: 1; transform: translateY(0);}
-    }
     footer {
       background-color: #002244; color: white; padding: 40px 20px;
     }
@@ -54,235 +51,117 @@
       width: 60px; height: 60px; transition: transform 0.3s ease;
     }
     .whatsapp-float img:hover { transform: scale(1.1); }
-  
-@media (max-width: 768px) {
-  .hero-overlay h1 { font-size: 20px; }
-  .hero-overlay p { font-size: 14px; padding: 0 10px; }
-  .hero-overlay img.symbol { width: 50px; }
-  .footer-grid { grid-template-columns: 1fr; text-align: center; }
-  section div[style*="display: flex"] > div,
-  section div[style*="display: flex"] > a {
-    width: 100% !important;
-    max-width: 300px;
-  }
-
-  nav {
-    position: relative;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .logo {
-    text-align: center;
-    width: 100%;
-    margin-bottom: 10px;
-  }
-
-  .menu-toggle {
-    display: block;
-    cursor: pointer;
-    font-size: 24px;
-    color: white;
-    margin-bottom: 10px;
-  }
-
-  #menu {
-    display: none;
-    flex-direction: column;
-    position: relative;
-    width: 100%;
-    background-color: #003366;
-    z-index: 1000;
-  }
-
-  #menu.active {
-    display: flex;
-  }
-}
-
-</style>
+  </style>
 </head>
 <body>
-
 <div style="background-color: #ffcc00; color: #000; padding: 10px 20px; text-align: center; font-weight: bold;">
   📢 Atenção: A segunda listagem de implantação da VPE já foi protocolada. Não há prazo para implantação. Aguarde
 </div>
-
 <header>
-  <nav>
+<nav>
 <div class="menu-toggle" onclick="toggleMenu()">☰</div>
-    <div class="logo">
-      <img src="https://i.ibb.co/9HcbZhnR/Novo-Projeto.png" alt="Logo APIPMCBDF">
-    </div>
-    <ul id="menu">
-      <li><a href="index.html">Início</a></li>
-      
-<li><a href="#">Institucional</a>
-  <ul>
-    <li><a href="sobre.html">Sobre a Associação</a></li>
-    <li><a href="conquistas.html">Conquistas</a></li>
-    <li><a href="diretoria.html">Diretoria</a></li>
-    <li><a href="juridico.html">Atendimento Jurídico</a></li>
-    <li><a href="medicos.html">Atendimento Médico</a></li>
-    <li><a href="galeria.html">Galeria de Fotos</a></li>
-  </ul>
-</li>
-
-      <li><a href="#">Informações</a>
-        <ul>
-          <li><a href="vpe.html">VPE</a></li>
-          <li><a href="auxilio.html">Auxílio Moradia</a></li>
-          <li><a href="soldo.html">Soldo</a></li>
-          <li><a href="gfm.html">GFM e GEFM</a></li>
-          <li><a href="pensao.html">Desconto Pensão Militar</a></li>
-          <li><a href="art24.html">Art. 24 - EC 103/2019</a></li>
-        </ul>
-      </li>
-      <li><a href="consulta.html">Consultas</a></li>
-      <li><a href="seja-socio.html">Seja Sócio</a></li>
-      <li><a href="contato.html">Contato</a></li>
-    </ul>
-  </nav>
-</header>
-
-<section style="padding: 60px 20px; background-color: #fdfdfd;">
-  <div style="max-width: 900px; margin: auto; background-color: #ffffff; padding: 40px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); text-align: justify; font-size: 17px; line-height: 1.8; color: #333;">
-    <h2 style="text-align: center; margin-bottom: 30px; color: #003366;">Nossa História</h2>
-    <p>
-      A Associação Brasileira de Pensionistas e Inativos da Polícia Militar e Corpo de Bombeiros do Antigo e Atual Distrito Federal nasceu da união de militares e suas famílias em busca de reconhecimento e justiça, após décadas de exclusão administrativa e previdenciária.
-    </p>
-    <div style='text-align: center; margin: 30px 0;'>
-      <!-- Adicione aqui uma imagem relacionada a este parágrafo -->
-      <!-- <img src='sua-imagem.jpg' alt='Descrição da imagem' style='max-width:100%; border-radius: 8px;'> -->
-    </div>
-    <p>
-      Suas raízes remontam ao século XIX: em 1809 D. João VI assinou o decreto que criou a Divisão Militar da Guarda Real de Polícia. Em 1832, sob o comando do Duque de Caxias, a corporação consolidou sua estrutura militar e disciplinar, e em 1865 destacou-se na Guerra do Paraguai ao enviar o 31º Grupo de Voluntários ao conflito.
-    </p>
-    <div style='text-align: center; margin: 30px 0;'>
-      <!-- Adicione aqui uma imagem relacionada a este parágrafo -->
-      <!-- <img src='sua-imagem.jpg' alt='Descrição da imagem' style='max-width:100%; border-radius: 8px;'> -->
-    </div>
-    <p>
-      O Corpo de Bombeiros, por sua vez, formalizou-se em 2 de julho de 1856, com o Decreto Imperial nº 1.175. Militarizado em 1880, evoluiu ao longo dos anos, participando de importantes eventos e tragédias nacionais.
-    </p>
-    <div style='text-align: center; margin: 30px 0;'>
-      <!-- Adicione aqui uma imagem relacionada a este parágrafo -->
-      <!-- <img src='sua-imagem.jpg' alt='Descrição da imagem' style='max-width:100%; border-radius: 8px;'> -->
-    </div>
-    <p>
-      Após a transferência da capital para Brasília em 1960, muitos militares permaneceram no Rio de Janeiro, aguardando sua remanejamento. A Lei 4.242/63 permitiu sua permanência como militares da União, mas a Lei 5.959/73 realizou transferências compulsórias, gerando uma luta de 42 anos até a Lei 10.486/2002 equiparar seus direitos aos militares do Distrito Federal.
-    </p>
-    <div style='text-align: center; margin: 30px 0;'>
-      <!-- Adicione aqui uma imagem relacionada a este parágrafo -->
-      <!-- <img src='sua-imagem.jpg' alt='Descrição da imagem' style='max-width:100%; border-radius: 8px;'> -->
-    </div>
-    <p>
-      Desde então, a Associação atua administrativa, jurídica e politicamente em defesa de seus associados, valorizando sua história e identidade. Localizada no Centro do Rio de Janeiro, mantém diálogo constante com autoridades e oferece assistência às famílias.
-    </p>
-    <div style='text-align: center; margin: 30px 0;'>
-      <!-- Adicione aqui uma imagem relacionada a este parágrafo -->
-      <!-- <img src='sua-imagem.jpg' alt='Descrição da imagem' style='max-width:100%; border-radius: 8px;'> -->
-    </div>
-  </div>
-</section>
-
-<footer>
-  <div class="footer-grid">
-    <div>
-      <p><strong>Endereço</strong></p>
-    <div style='text-align: center; margin: 30px 0;'>
-      <!-- Adicione aqui uma imagem relacionada a este parágrafo -->
-      <!-- <img src='sua-imagem.jpg' alt='Descrição da imagem' style='max-width:100%; border-radius: 8px;'> -->
-    </div>
-      <p>Rua Evaristo da Veiga, nº 55</p>
-    <div style='text-align: center; margin: 30px 0;'>
-      <!-- Adicione aqui uma imagem relacionada a este parágrafo -->
-      <!-- <img src='sua-imagem.jpg' alt='Descrição da imagem' style='max-width:100%; border-radius: 8px;'> -->
-    </div>
-      <p>10º andar — Centro</p>
-    <div style='text-align: center; margin: 30px 0;'>
-      <!-- Adicione aqui uma imagem relacionada a este parágrafo -->
-      <!-- <img src='sua-imagem.jpg' alt='Descrição da imagem' style='max-width:100%; border-radius: 8px;'> -->
-    </div>
-      <p>Rio de Janeiro — RJ</p>
-    <div style='text-align: center; margin: 30px 0;'>
-      <!-- Adicione aqui uma imagem relacionada a este parágrafo -->
-      <!-- <img src='sua-imagem.jpg' alt='Descrição da imagem' style='max-width:100%; border-radius: 8px;'> -->
-    </div>
-      <p>CEP: 20031-040</p>
-    <div style='text-align: center; margin: 30px 0;'>
-      <!-- Adicione aqui uma imagem relacionada a este parágrafo -->
-      <!-- <img src='sua-imagem.jpg' alt='Descrição da imagem' style='max-width:100%; border-radius: 8px;'> -->
-    </div>
-    </div>
-    <div>
-      <p><strong>Contato</strong></p>
-    <div style='text-align: center; margin: 30px 0;'>
-      <!-- Adicione aqui uma imagem relacionada a este parágrafo -->
-      <!-- <img src='sua-imagem.jpg' alt='Descrição da imagem' style='max-width:100%; border-radius: 8px;'> -->
-    </div>
-      <p>(21) 2220-5074</p>
-    <div style='text-align: center; margin: 30px 0;'>
-      <!-- Adicione aqui uma imagem relacionada a este parágrafo -->
-      <!-- <img src='sua-imagem.jpg' alt='Descrição da imagem' style='max-width:100%; border-radius: 8px;'> -->
-    </div>
-      <p>2532-6974 | 2544-2607</p>
-    <div style='text-align: center; margin: 30px 0;'>
-      <!-- Adicione aqui uma imagem relacionada a este parágrafo -->
-      <!-- <img src='sua-imagem.jpg' alt='Descrição da imagem' style='max-width:100%; border-radius: 8px;'> -->
-    </div>
-      <p>atendimento@apipmcbdf.com.br</p>
-    <div style='text-align: center; margin: 30px 0;'>
-      <!-- Adicione aqui uma imagem relacionada a este parágrafo -->
-      <!-- <img src='sua-imagem.jpg' alt='Descrição da imagem' style='max-width:100%; border-radius: 8px;'> -->
-    </div>
-    </div>
-    <div>
-      <p><strong>Atendimento</strong></p>
-    <div style='text-align: center; margin: 30px 0;'>
-      <!-- Adicione aqui uma imagem relacionada a este parágrafo -->
-      <!-- <img src='sua-imagem.jpg' alt='Descrição da imagem' style='max-width:100%; border-radius: 8px;'> -->
-    </div>
-      <p>Segunda a Sexta</p>
-    <div style='text-align: center; margin: 30px 0;'>
-      <!-- Adicione aqui uma imagem relacionada a este parágrafo -->
-      <!-- <img src='sua-imagem.jpg' alt='Descrição da imagem' style='max-width:100%; border-radius: 8px;'> -->
-    </div>
-      <p>das 9h às 17h</p>
-    <div style='text-align: center; margin: 30px 0;'>
-      <!-- Adicione aqui uma imagem relacionada a este parágrafo -->
-      <!-- <img src='sua-imagem.jpg' alt='Descrição da imagem' style='max-width:100%; border-radius: 8px;'> -->
-    </div>
-    </div>
-    <div>
-      <p><strong>Redes Sociais</strong></p>
-    <div style='text-align: center; margin: 30px 0;'>
-      <!-- Adicione aqui uma imagem relacionada a este parágrafo -->
-      <!-- <img src='sua-imagem.jpg' alt='Descrição da imagem' style='max-width:100%; border-radius: 8px;'> -->
-    </div>
-      <div class="social-icons">
-        <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
-        <a href="#" title="X"><i class="fab fa-x-twitter"></i></a>
-        <a href="#" title="YouTube"><i class="fab fa-youtube"></i></a>
-        <a href="https://wa.me/5521984997413" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-      </div>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <p>© 2025 APIPMCBDF. Todos os direitos reservados.</p>
-    <div style='text-align: center; margin: 30px 0;'>
-      <!-- Adicione aqui uma imagem relacionada a este parágrafo -->
-      <!-- <img src='sua-imagem.jpg' alt='Descrição da imagem' style='max-width:100%; border-radius: 8px;'> -->
-    </div>
-  </div>
-</footer>
-
-<div class="whatsapp-float">
-  <a href="https://wa.me/5521984997413" target="_blank">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
-  </a>
+<div class="logo">
+<img alt="Logo APIPMCBDF" src="https://i.ibb.co/9HcbZhnR/Novo-Projeto.png"/>
 </div>
-
+<ul id="menu">
+<li><a href="index.html">Início</a></li>
+<li><a href="#">Institucional</a>
+<ul>
+<li><a href="sobre.html">Sobre a Associação</a></li>
+<li><a href="conquistas.html">Conquistas</a></li>
+<li><a href="diretoria.html">Diretoria</a></li>
+<li><a href="juridico.html">Atendimento Jurídico</a></li>
+<li><a href="medicos.html">Atendimento Médico</a></li>
+<li><a href="galeria.html">Galeria de Fotos</a></li>
+</ul>
+</li>
+<li><a href="#">Informações</a>
+<ul>
+<li><a href="vpe.html">VPE</a></li>
+<li><a href="auxilio.html">Auxílio Moradia</a></li>
+<li><a href="soldo.html">Soldo</a></li>
+<li><a href="gfm.html">GFM e GEFM</a></li>
+<li><a href="pensao.html">Desconto Pensão Militar</a></li>
+<li><a href="art24.html">Art. 24 - EC 103/2019</a></li>
+</ul>
+</li>
+<li><a href="consulta.html">Consultas</a></li>
+<li><a href="seja-socio.html">Seja Sócio</a></li>
+<li><a href="contato.html">Contato</a></li>
+</ul>
+</nav>
+</header>
+<section style="padding: 60px 20px; background-color: #fdfdfd;">
+<div style="max-width: 900px; margin: auto; background-color: #ffffff; padding: 40px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); text-align: justify; font-size: 17px; line-height: 1.8; color: #333;">
+<div style="text-align: center; margin-bottom: 20px;">
+<img alt="Símbolo" src="https://i.ibb.co/KcX2hK3P/pngtree-golden-fleur-de-lys-png-image-9944566.png" style="width: 80px;"/>
+</div>
+<h2 style="text-align: center; margin-bottom: 30px; color: #003366;">Nossa História</h2>
+<p style="margin-bottom: 30px;">A história da Associação Brasileira de Pensionistas e Inativos da Polícia Militar e Corpo de Bombeiros do Antigo e Atual Distrito Federal é marcada pela luta e união de militares e suas famílias em busca de reconhecimento e justiça, após décadas de exclusão administrativa e previdenciária.</p>
+<div style="text-align: center; margin: 30px 0;"><img alt="Descrição da imagem" src="https://raw.githubusercontent.com/apipmcbdf/SITE/main/imagens/Associacao%20(83).jpg" style="max-width:100%; border-radius: 8px;"/></div><p style="margin-bottom: 30px;">A origem da associação remonta ao esforço de um pequeno grupo de pensionistas — entre elas, as senhoras Maria Isabel, Lurdes, Aparecida, Orlandina, Ilma e Ana Maciel — que procuraram Carlos Franco com a proposta de fundar uma entidade que representasse os inativos e pensionistas. A ideia começou a tomar forma com o apoio decisivo da Deputada Federal Laura Carneiro, que cedeu seu escritório no Rio de Janeiro para as primeiras reuniões. Esse escritório, inclusive, abrigava a sala que havia sido utilizada pelo saudoso Senador Nelson Carneiro.</p>
+<div style="text-align: center; margin: 30px 0;"><img alt="Descrição da imagem" src="https://raw.githubusercontent.com/apipmcbdf/SITE/main/imagens/Associacao%20(13).jpg" style="max-width:100%; border-radius: 8px;"/></div><p style="margin-bottom: 30px;">Carlos Franco assumiu a responsabilidade pela elaboração dos documentos, estatuto e regimento interno. A proposta inicial era compor a diretoria majoritariamente com inativos, mas, no momento da formalização, os nomes previstos declinaram de suas posições. Diante disso, as próprias pensionistas assumiram a responsabilidade e formaram a maior parte da diretoria, demonstrando coragem e protagonismo. Por essa razão, o nome da associação foi ajustado para que Pensionistas viesse antes de Inativos, reconhecendo o papel decisivo dessas mulheres na criação da entidade: Associação Brasileira de Pensionistas e Inativos da Polícia Militar e Corpo de Bombeiros do Antigo e Atual Distrito Federal.</p>
+<div style="text-align: center; margin: 30px 0;"><img alt="Descrição da imagem" src="https://raw.githubusercontent.com/apipmcbdf/SITE/main/imagens/Associacao%20(49).jpg" style="max-width:100%; border-radius: 8px;"/></div><p style="margin-bottom: 30px;">A associação representa uma categoria cujas raízes institucionais são históricas. Em 1809, D. João VI criou a Divisão Militar da Guarda Real de Polícia. Já em 1832, sob o comando do Duque de Caxias, a corporação consolidou sua estrutura militar e disciplinar. Durante a Guerra do Paraguai, em 1865, destacou-se ao enviar o 31º Grupo de Voluntários ao conflito. O Corpo de Bombeiros foi formalmente instituído em 1856, pelo Decreto Imperial nº 1.175, e militarizado em 1880, participando desde então de eventos marcantes da história nacional.</p>
+<div style="text-align: center; margin: 30px 0;"><img alt="Descrição da imagem" src="https://raw.githubusercontent.com/apipmcbdf/SITE/main/imagens/Associacao%20(8).jpg" style="max-width:100%; border-radius: 8px;"/></div><p style="margin-bottom: 30px;">Com a transferência da capital para Brasília em 1960, muitos militares permaneceram no Rio de Janeiro à espera de transferência. A Lei nº 4.242/1963 permitiu que optassem por continuar como militares da União, mas a Lei nº 5.959/1973 os reclassificou como militares estaduais — uma mudança que os deixou à margem do sistema federal por mais de quatro décadas.</p>
+<div style="text-align: center; margin: 30px 0;"><img alt="Descrição da imagem" src="https://raw.githubusercontent.com/apipmcbdf/SITE/main/imagens/Associacao%20(62).jpg" style="max-width:100%; border-radius: 8px;"/></div><p style="margin-bottom: 30px;">Essa situação perdurou até 2001, quando a Medida Provisória nº 2.218 criou pela primeira vez uma legislação de remuneração para os militares do Distrito Federal. Com apoio da Câmara dos Deputados, foi formada uma comissão especial, e a Deputada Laura Carneiro — com seu histórico de defesa da causa — foi designada relatora. Ela recorreu novamente a Carlos Franco, que articulou negociações com as corporações do Distrito Federal e representantes do Governo, propondo alterações que valorizassem a trajetória desses militares esquecidos.</p>
+<div style="text-align: center; margin: 30px 0;"><img alt="Descrição da imagem" src="https://raw.githubusercontent.com/apipmcbdf/SITE/main/imagens/Associacao%20(1).jpg" style="max-width:100%; border-radius: 8px;"/></div><p style="margin-bottom: 30px;">Como resultado direto desse esforço conjunto, a MP 2.218 foi convertida na Lei nº 10.486/2002. Uma das principais conquistas foi o artigo 65, que garantiu a equiparação remuneratória dos militares remanescentes do antigo Distrito Federal com os militares da ativa do novo Distrito Federal — pondo fim a 42 anos de abandono.</p>
+<div style="text-align: center; margin: 30px 0;"><img alt="Descrição da imagem" src="https://raw.githubusercontent.com/apipmcbdf/SITE/main/imagens/Associacao%20(52).jpg" style="max-width:100%; border-radius: 8px;"/></div><p style="margin-bottom: 30px;">Desde então, a Associação atua administrativa, jurídica e politicamente em defesa dos seus associados. Localizada no Centro do Rio de Janeiro, a entidade mantém diálogo constante com autoridades e presta assistência às famílias, reforçando o compromisso com a valorização da história, da dignidade e dos direitos daqueles que serviram ao Brasil com honra.</p>
+</div>
+</section>
+<section style="padding: 50px 20px; background-color: #003366; color: white; text-align: center;">
+<h2>Associe-se à APIPMCBDF</h2>
+<p style="max-width: 700px; margin: 20px auto;">
+    Junte-se a centenas de associados que têm seus direitos defendidos com firmeza e comprometimento. Seja representado, tenha acesso a benefícios exclusivos e faça parte da nossa história!
+  </p>
+<a href="seja-socio.html" style="display: inline-block; margin-top: 20px; padding: 12px 24px; background-color: #f5b200; color: black; text-decoration: none; border-radius: 5px; font-weight: bold;">Quero me associar</a>
+</section>
+<section style="padding: 40px 20px; text-align: center; background-color: #fff;">
+<h2>Quem Somos</h2>
+<p style="max-width: 800px; margin: auto;">
+    A APIPMCBDF representa e apoia os pensionistas e inativos da Polícia Militar e Corpo de Bombeiros do Antigo e Atual Distrito Federal. Lutamos por direitos, assistência e valorização dos nossos associados.
+  </p>
+</section>
+<div style="background: #001a33; color: #fff; text-align: center; padding: 10px; font-size: 14px;">
+  Um homem que esquece seu passado está condenado a viver sem futuro.
+</div>
+<footer>
+<div class="footer-grid">
+<div>
+<p><strong>Endereço</strong></p>
+<p>Rua Evaristo da Veiga, nº 55</p>
+<p>10º andar — Centro</p>
+<p>Rio de Janeiro — RJ</p>
+<p>CEP: 20031-040</p>
+</div>
+<div>
+<p><strong>Contato</strong></p>
+<p>(21) 2220-5074</p>
+<p>2532-6974 | 2544-2607</p>
+<p>atendimento@apipmcbdf.com.br</p>
+</div>
+<div>
+<p><strong>Atendimento</strong></p>
+<p>Segunda a Sexta</p>
+<p>das 9h às 17h</p>
+</div>
+<div>
+<p><strong>Redes Sociais</strong></p>
+<div class="social-icons">
+<a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+<a href="#" title="X"><i class="fab fa-x-twitter"></i></a>
+<a href="#" title="YouTube"><i class="fab fa-youtube"></i></a>
+<a href="https://wa.me/5521984997413" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+</div>
+</div>
+</div>
+<div class="footer-bottom">
+<p>© 2025 APIPMCBDF. Todos os direitos reservados.</p>
+</div>
+</footer>
+<div class="whatsapp-float">
+<a href="https://wa.me/5521984997413" target="_blank">
+<img alt="WhatsApp" src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"/>
+</a>
+</div>
 <script>
 function toggleMenu() {
   var menu = document.getElementById("menu");
