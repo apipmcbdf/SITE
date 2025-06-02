@@ -1,166 +1,237 @@
-<!DOCTYPE html>
 
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>APIPMCBDF - Início</title>
-<!-- Font Awesome para ícones gerais -->
-<link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-pVI0u1sQp8nzc4l+3mdKeKsWdQ+oGv3Ib6+JD8fkXjIoXW+5u+3P0K3RURK6Z1RM6p6b6fDdhc+N/3Z+Mfn1aQ==" referrerpolicy="no-referrer" rel="stylesheet"/>
-<style>
-    :root { --bg-dark: #121212; --bg-dark-alt: #1E1E1E; --text-light: #F5F5F5; --accent: #FFD700; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>APIPMCBDF</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { background: var(--bg-dark); color: var(--text-light); font-family: Arial, sans-serif; }
-    header { background: var(--bg-dark-alt); padding: 0.5rem 1rem; position: sticky; top: 0; z-index: 100; }
-    .container { max-width: 1200px; margin: 0 auto; }
-    .nav { display: flex; align-items: center; justify-content: space-between; }
-    .logo img { width: 240px; height: 80px; object-fit: contain; }
-    nav ul { list-style: none; display: flex; gap: 1rem; }
-    nav a { text-decoration: none; color: var(--text-light); font-weight: bold; }
-    .menu-toggle { display: none; font-size: 1.5rem; cursor: pointer; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background-color: #f9f9f9; }
+    header { background-color: #003366; padding: 20px; color: white; }
+    nav { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+    .logo img { height: 50px; }
+    nav ul { display: flex; list-style: none; gap: 20px; flex-wrap: wrap; }
+    nav ul li { position: relative; }
+    nav ul li a {
+      color: white; text-decoration: none; font-weight: 600;
+      padding: 8px 12px; display: block; transition: background-color 0.3s ease;
+    }
+    nav ul li a:hover { background-color: #005599; border-radius: 4px; }
+    nav ul li ul {
+      display: none; position: absolute; background-color: #004080;
+      top: 100%; left: 0; min-width: 220px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2); z-index: 10;
+    }
+    nav ul li:hover ul { display: block; animation: fadeIn 0.3s ease-in-out; }
+    nav ul li ul li a { padding: 10px; font-weight: 400; }
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(-10px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+    .hero {
+      position: relative; height: 90vh; overflow: hidden;
+    }
+    .hero img.slideshow-img {
+      position: absolute; width: 100%; height: 100%;
+      object-fit: cover; opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+    .hero img.slideshow-img.active { opacity: 1; z-index: 1; }
+    .hero-overlay {
+      position: relative; z-index: 2;
+      background-color: rgba(0, 0, 0, 0.5);
+      height: 100%; display: flex; flex-direction: column;
+      justify-content: center; align-items: center;
+      color: white; text-align: center; padding: 20px;
+      animation: fadeIn 1s ease-in-out;
+    }
+    .hero-overlay img.symbol {
+      width: 80px; margin-bottom: 20px;
+    }
+    .hero-overlay h1 { font-size: 28px; margin-bottom: 10px; }
+    .hero-overlay p { font-size: 18px; max-width: 800px; }
+    section { animation: fadeIn 0.8s ease-in-out; }
     @media (max-width: 768px) {
-      nav ul { position: absolute; top: 60px; left: 0; width: 100%; flex-direction: column; background: var(--bg-dark-alt); display: none; }
-      nav ul.show { display: flex; }
-      .menu-toggle { display: block; }
-      .logo img { width: 240px; height: 80px; object-fit: contain; }
+      nav ul { flex-direction: column; align-items: flex-start; }
+      .footer-grid { grid-template-columns: 1fr; text-align: center; }
     }
-    main { padding: 2rem 1rem; }
-    .hero { position: relative; width: 100%; height: 400px; overflow: hidden; }
-    .slider { position: relative; width: 100%; height: 100%; }
-    .slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; opacity: 0; transition: opacity 1s ease-in-out; }
-    .slide.active { opacity: 1; }
-    .hero-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: var(--text-light); text-shadow: 0 2px 4px rgba(0,0,0,0.7); padding: 0 1rem; }
-    .hero-text h1 { font-size: 2.5rem; color: var(--accent); margin-bottom: 0.5rem; }
-    .hero-text p { font-size: 1.2rem; max-width: 800px; margin: 0 auto; }
-    .history { padding: 2rem 1rem; }
-    .history h2 { margin-bottom: 1rem; color: var(--accent); }
-    .history p { margin-bottom: 1rem; }
-    footer { background: var(--bg-dark-alt); color: var(--text-light); padding: 1rem 0; }
-    .footer-info, .footer-social { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; padding: 0 1rem; }
-    .footer-info div { margin: 0.5rem 0; }
-    .footer-social .social-icons { display: flex; gap: 1rem; }
-    .social-icons a { font-size: 1.8rem; color: var(--text-light); }
-    .social-icons a:hover { color: var(--accent); }
-    .copyright { text-align: center; margin-top: 1rem; font-size: 0.9rem; opacity: 0.7; }
-    /* Ícone flutuante do WhatsApp */
-    .whatsapp-link {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      z-index: 200;
-      display: block;
+    footer {
+      background-color: #002244; color: white; padding: 40px 20px;
     }
-    .whatsapp-link .whatsapp-icon {
-      width: 3rem; /* ícone maior */
-      height: auto;
+    .footer-grid {
+      max-width: 1200px; margin: auto;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 30px; text-align: center;
     }
-    .whatsapp-link:hover { opacity: 0.8; }
-  
-.article-card {
-  background: #1e1e1e;
-  padding: 2rem;
-  margin: 2rem auto;
-  max-width: 900px;
-  border-radius: 12px;
-  box-shadow: 0 0 10px rgba(255, 215, 0, 0.1);
-  line-height: 1.7;
-}
-.article-card h1 {
-  text-align: center;
-  color: #FFD700;
-  font-size: 1.8rem;
-  margin-bottom: 1.5rem;
-}
-.article-card h2 {
-  color: #FFD700;
-  margin-top: 1.8rem;
-  margin-bottom: 0.8rem;
-  font-size: 1.3rem;
-}
-.article-card ul {
-  padding-left: 1.5rem;
-  margin-bottom: 1rem;
-}
-.article-card li {
-  margin-bottom: 0.5rem;
-}
-</style>
+    .footer-grid div p { font-size: 14px; margin: 8px 0; }
+    .footer-bottom { text-align: center; margin-top: 30px; font-size: 13px; }
+    .social-icons { margin-top: 10px; }
+    .social-icons a {
+      color: white; margin: 0 8px; font-size: 20px;
+      text-decoration: none; transition: transform 0.3s ease;
+    }
+    .social-icons a:hover { transform: scale(1.2); }
+    .whatsapp-float {
+      position: fixed; bottom: 20px; right: 20px; z-index: 1000;
+    }
+    .whatsapp-float img {
+      width: 60px; height: 60px; transition: transform 0.3s ease;
+    }
+    .whatsapp-float img:hover { transform: scale(1.1); }
+  </style>
 </head>
 <body>
+
+<div style="background-color: #ffcc00; color: #000; padding: 10px 20px; text-align: center; font-weight: bold;">
+  📢 Atenção: A segunda listagem de implantação da VPE já foi protocolada. Não há prazo para implantação. Aguarde
+</div>
+
 <header>
-<div class="container nav">
-<div class="logo"><a href="index.html"><img alt="APIPMCBDF Logo" src="https://i.ibb.co/9HcbZhnR/Novo-Projeto.png"/></a></div>
-<div class="menu-toggle" id="menu-toggle">☰</div>
-<nav>
-<ul id="nav-list">
-<li><a href="index.html">Início</a></li>
-<li><a href="noticias.html">Notícias</a></li>
-<li><a href="sobre.html">Sobre Nós</a></li>
-<li><a href="conquistas.html">Conquistas</a></li>
-<li><a href="socio.html">Seja Sócio</a></li>
-<li><a href="contato.html">Contato</a></li>
-<li><a href="diretoria.html">Diretoria</a></li>
-<li><a href="informacoes.html">Informações</a></li></ul>
-</nav>
-</div>
-</header>
-<main><section class="article-card">
-<section class="hero">
-<div class="slider">
-<div class="slide active" style="background-image: url('https://www.freetour.com/images/cities/rio-de-janeiro-brazil.jpg');"></div>
-<div class="slide" style="background-image: url('https://i.ibb.co/pBFzd2VX/ass.jpg');"></div>
-<div class="slide" style="background-image: url('https://i.ibb.co/7xBhFn5G/Sem-t-tulo.jpg');"></div>
-<div class="slide" style="background-image: url('https://i.ibb.co/Y7CzJgpf/bomb.png');"></div>
-</div>
-<div class="hero-text">
-<img alt="Flor de Lis" src="https://i.ibb.co/KcX2hK3P/pngtree-golden-fleur-de-lys-png-image-9944566.png" style="width: 80px; margin-bottom: 1rem;"/>
-<h1>Bem-vindo à APIPMCBDF</h1>
-<p>Associação Brasileira de Pensionistas e Inativos da Polícia Militar e Corpo de Bombeiros do Antigo e Atual Distrito Federal</p>
-</div>
-</section>
-<section class="history container">
-<h2>Nossa História</h2>
-<p>A Associação Brasileira de Pensionistas e Inativos da Polícia Militar e Corpo de Bombeiros do Antigo e Atual Distrito Federal nasceu da união de militares e suas famílias em busca de reconhecimento e justiça, após décadas de exclusão administrativa e previdenciária.</p>
-<p>Suas raízes remontam ao século XIX: em 1809 D. João VI assinou o decreto que criou a Divisão Militar da Guarda Real de Polícia. Em 1832, sob o comando do Duque de Caxias, a corporação consolidou sua estrutura militar e disciplinar, e em 1865 destacou-se na Guerra do Paraguai ao enviar o 31º Grupo de Voluntários ao conflito.</p>
-<p>O Corpo de Bombeiros, por sua vez, formalizou-se em 2 de julho de 1856, com o Decreto Imperial nº 1.175. Militarizado em 1880, evoluiu ao longo dos anos, participando de importantes eventos e tragédias nacionais.</p>
-<p>Após a transferência da capital para Brasília em 1960, muitos militares permaneceram no Rio de Janeiro, aguardando sua remanejamento. A Lei 4.242/63 permitiu sua permanência como militares da União, mas a Lei 5.959/73 realizou transferências compulsórias, gerando uma luta de 42 anos até a Lei 10.486/2002 equiparar seus direitos aos militares do Distrito Federal.</p>
-<p>Desde então, a Associação atua administrativa, jurídica e politicamente em defesa de seus associados, valorizando sua história e identidade. Localizada no Centro do Rio de Janeiro, mantém diálogo constante com autoridades e oferece assistência às famílias.</p>
-</section>
-</section></main>
-<footer>
-<div class="footer-info container">
-<div><strong>Endereço:</strong><br/>Rua Evaristo da Veiga, nº 55, 10º andar — Centro — Rio de Janeiro — RJ</div>
-<div><strong>Telefone:</strong><br/>(21) 2220-5074 | 2532-6974 | 2544-2607</div>
-<div><strong>Email:</strong><br/>atendimento@apipmcbdf.com.br</div>
-<div><strong>Horário de Atendimento:</strong><br/>Segunda a Sexta, das 9h às 17h</div>
-</div>
-<div class="footer-social container">
-<div class="social-icons">
-<a aria-label="Twitter" href="https://twitter.com/apipmcbdf" target="_blank"><i class="fab fa-twitter"></i></a>
-<a aria-label="Instagram" href="https://instagram.com/apipmcbdf" target="_blank"><i class="fab fa-instagram"></i></a>
-<a aria-label="WhatsApp" href="https://wa.me/552122205074" target="_blank"><i class="fab fa-whatsapp"></i></a>
-</div>
-</div>
-<div class="copyright container">
-      © 2025 APIPMCBDF. Todos os direitos reservados.
+  <nav>
+    <div class="logo">
+      <img src="https://i.ibb.co/9HcbZhnR/Novo-Projeto.png" alt="Logo APIPMCBDF">
     </div>
+    <ul>
+      <li><a href="index.html">Início</a></li>
+      
+<li><a href="#">Institucional</a>
+  <ul>
+    <li><a href="sobre.html">Sobre a Associação</a></li>
+    <li><a href="conquistas.html">Conquistas</a></li>
+    <li><a href="diretoria.html">Diretoria</a></li>
+    <li><a href="juridico.html">Atendimento Jurídico</a></li>
+    <li><a href="medicos.html">Atendimento Médico</a></li>
+  </ul>
+</li>
+
+      <li><a href="#">Informações</a>
+        <ul>
+          <li><a href="vpe.html">VPE</a></li>
+          <li><a href="auxilio.html">Auxílio Moradia</a></li>
+          <li><a href="soldo.html">Soldo</a></li>
+          <li><a href="gfm.html">GFM e GEFM</a></li>
+          <li><a href="pensao.html">Desconto Pensão Militar</a></li>
+          <li><a href="art24.html">Art. 24 - EC 103/2019</a></li>
+        </ul>
+      </li>
+      <li><a href="#">Consultas</a></li>
+      <li><a href="seja-socio.html">Seja Sócio</a></li>
+      <li><a href="contato.html">Contato</a></li>
+    </ul>
+  </nav>
+</header>
+
+<section class="hero">
+  <img src="https://www.freetour.com/images/cities/rio-de-janeiro-brazil.jpg" class="slideshow-img active" />
+  <img src="https://i.ibb.co/pBFzd2VX/ass.jpg" class="slideshow-img" />
+  <img src="https://i.ibb.co/7xBhFn5G/Sem-t-tulo.jpg" class="slideshow-img" />
+  <img src="https://i.ibb.co/Y7CzJgpf/bomb.png" class="slideshow-img" />
+  <div class="hero-overlay">
+    <img src="https://i.ibb.co/KcX2hK3P/pngtree-golden-fleur-de-lys-png-image-9944566.png" class="symbol" alt="Símbolo" />
+    <h1>Bem-vindo à APIPMCBDF</h1>
+    <p>Associação Brasileira de Pensionistas e Inativos da Polícia Militar e Corpo de Bombeiros do Antigo e Atual Distrito Federal</p>
+  </div>
+</section>
+
+<section style="padding: 40px 20px; text-align: center; background-color: #fff;">
+  <h2>Quem Somos</h2>
+  <p style="max-width: 800px; margin: auto;">
+    A APIPMCBDF representa e apoia os pensionistas e inativos da Polícia Militar e Corpo de Bombeiros do Antigo e Atual Distrito Federal. Lutamos por direitos, assistência e valorização dos nossos associados.
+  </p>
+  <a href="sobre.html" style="display: inline-block; margin-top: 20px; padding: 10px 20px; background-color: #003366; color: white; text-decoration: none; border-radius: 5px;">Saiba mais</a>
+</section>
+
+<section style="padding: 40px 20px; background-color: #f0f4f8;">
+  <h2 style="text-align: center;">Últimas Notícias</h2>
+  <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; margin-top: 30px;">
+    <div style="width: 300px; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+      <h3>Vitória Judicial Coletiva</h3>
+      <p>Conquista importante na Justiça para os pensionistas vinculados ao art. 24 da EC 103/2019.</p>
+      <a href="noticia1.html">Leia mais</a>
+    </div>
+    <div style="width: 300px; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+      <h3>Nova Sede em Reforma</h3>
+      <p>Estamos preparando um novo espaço de atendimento ainda mais confortável e moderno.</p>
+      <a href="noticia2.html">Leia mais</a>
+    </div>
+  </div>
+</section>
+
+<section style="padding: 50px 20px; background-color: #003366; color: white; text-align: center;">
+  <h2>Associe-se à APIPMCBDF</h2>
+  <p style="max-width: 700px; margin: 20px auto;">
+    Junte-se a centenas de associados que têm seus direitos defendidos com firmeza e comprometimento. Seja representado, tenha acesso a benefícios exclusivos e faça parte da nossa história!
+  </p>
+  <a href="seja-socio.html" style="display: inline-block; margin-top: 20px; padding: 12px 24px; background-color: #f5b200; color: black; text-decoration: none; border-radius: 5px; font-weight: bold;">Quero me associar</a>
+</section>
+
+<section style="padding: 40px 20px; background-color: #fff; text-align: center;">
+  <h2>Acesso Rápido</h2>
+  <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; margin-top: 30px;">
+    <a href="documentos.html" style="background: #e6f0ff; padding: 20px 30px; border-radius: 8px; text-decoration: none; color: #003366; font-weight: bold;">Consultar Documentos</a>
+    <a href="vpe.html" style="background: #e6f0ff; padding: 20px 30px; border-radius: 8px; text-decoration: none; color: #003366; font-weight: bold;">VPE</a>
+    <a href="auxilio.html" style="background: #e6f0ff; padding: 20px 30px; border-radius: 8px; text-decoration: none; color: #003366; font-weight: bold;">Auxílio Moradia</a>
+  </div>
+</section>
+
+<div style="background: #001a33; color: #fff; text-align: center; padding: 10px; font-size: 14px;">
+  Um homem que esquece seu passado está condenado a viver sem futuro.
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <p><strong>Endereço</strong></p>
+      <p>Rua Evaristo da Veiga, nº 55</p>
+      <p>10º andar — Centro</p>
+      <p>Rio de Janeiro — RJ</p>
+      <p>CEP: 20031-040</p>
+    </div>
+    <div>
+      <p><strong>Contato</strong></p>
+      <p>(21) 2220-5074</p>
+      <p>2532-6974 | 2544-2607</p>
+      <p>atendimento@apipmcbdf.com.br</p>
+    </div>
+    <div>
+      <p><strong>Atendimento</strong></p>
+      <p>Segunda a Sexta</p>
+      <p>das 9h às 17h</p>
+    </div>
+    <div>
+      <p><strong>Redes Sociais</strong></p>
+      <div class="social-icons">
+        <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="#" title="X"><i class="fab fa-x-twitter"></i></a>
+        <a href="#" title="YouTube"><i class="fab fa-youtube"></i></a>
+        <a href="https://wa.me/5521984997413" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 APIPMCBDF. Todos os direitos reservados.</p>
+  </div>
 </footer>
-<!-- Ícone flutuante do WhatsApp -->
-<a aria-label="WhatsApp" class="whatsapp-link" href="https://wa.me/5521984997413" rel="noopener noreferrer" target="_blank">
-<img alt="WhatsApp Icon" class="whatsapp-icon" src="https://img.icons8.com/?size=512&amp;id=16713&amp;format=png"/>
-</a>
+
+<div class="whatsapp-float">
+  <a href="https://wa.me/5521984997413" target="_blank">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+  </a>
+</div>
 
 <script>
-    const toggle = document.getElementById('menu-toggle');
-    const navList = document.getElementById('nav-list');
-    toggle.addEventListener('click', () => { navList.classList.toggle('show'); });
+  const slides = document.querySelectorAll('.slideshow-img');
+  let index = 0;
+  setInterval(() => {
+    slides[index].classList.remove('active');
+    index = (index + 1) % slides.length;
+    slides[index].classList.add('active');
+  }, 5000);
+</script>
 
-    const slides = document.querySelectorAll('.slide');
-    let current = 0;
-    setInterval(() => {
-      slides[current].classList.remove('active');
-      current = (current + 1) % slides.length;
-      slides[current].classList.add('active');
-    }, 5000);
-  </script></body>
+</body>
 </html>
