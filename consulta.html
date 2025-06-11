@@ -1,114 +1,49 @@
 <!DOCTYPE html>
-
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Consulta de Documentação</title>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;display=swap" rel="stylesheet"/>
-<style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body { font-family: 'Inter', sans-serif; background-color: #f9f9f9; }
-  header { background-color: #003366; padding: 20px; color: white; }
-  nav { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
-  .logo img { height: 50px; }
-  nav ul { display: flex; list-style: none; gap: 20px; flex-wrap: wrap; }
-  nav ul li { position: relative; }
-  nav ul li a {
-    color: white; text-decoration: none; font-weight: 600;
-    padding: 8px 12px; display: block; transition: background-color 0.3s ease;
-  }
-  nav ul li a:hover { background-color: #005599; border-radius: 4px; }
-  nav ul li ul {
-    display: none; position: absolute; background-color: #004080;
-    top: 100%; left: 0; min-width: 220px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2); z-index: 10;
-  }
-  nav ul li:hover ul { display: block; animation: fadeIn 0.3s ease-in-out; }
-  nav ul li ul li a { padding: 10px; font-weight: 400; }
-  @keyframes fadeIn {
-    from {opacity: 0; transform: translateY(-10px);}
-    to {opacity: 1; transform: translateY(0);}
-  }
-  footer {
-    background-color: #002244; color: white; padding: 40px 20px;
-  }
-  .footer-grid {
-    max-width: 1200px; margin: auto;
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 30px; text-align: center;
-  }
-  .footer-grid div p { font-size: 14px; margin: 8px 0; }
-  .footer-bottom { text-align: center; margin-top: 30px; font-size: 13px; }
-  .social-icons { margin-top: 10px; }
-  .social-icons a {
-    color: white; margin: 0 8px; font-size: 20px;
-    text-decoration: none; transition: transform 0.3s ease;
-  }
-  .social-icons a:hover { transform: scale(1.2); }
-  .whatsapp-float {
-    position: fixed; bottom: 20px; right: 20px; z-index: 1000;
-  }
-  .whatsapp-float img {
-    width: 60px; height: 60px; transition: transform 0.3s ease;
-  }
-  .whatsapp-float img:hover { transform: scale(1.1); }
-
-  /* Estilo da consulta */
-  .consulta-container {
-    max-width: 700px;
-    margin: 60px auto;
-    background: white;
-    padding: 40px;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-  }
-  .consulta-container h1 {
-    text-align: center;
-    margin-bottom: 30px;
-    font-weight: 600;
-    font-size: 24px;
-    color: #003366;
-  }
-  .consulta-container label {
-    font-weight: 500;
-    display: block;
-    margin-bottom: 8px;
-  }
-  .consulta-container input[type="text"] {
-    width: 100%;
-    padding: 10px;
-    font-size: 16px;
-    text-align: center;
-    margin-bottom: 20px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-  }
-  .consulta-container button {
-    width: 100%;
-    padding: 12px;
-    font-size: 16px;
-    font-weight: bold;
-    color: white;
-    background-color: #4a90e2;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-  }
-  .consulta-container button:hover {
-    background-color: #357ab8;
-  }
-  .card {
-    border: none;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    background-color: #ffffff;
-    margin-top: 30px;
-    padding: 20px;
-  }
-</style>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Consulta de Documentação</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet"/>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background-color: #f9f9f9; }
+    header { background-color: #003366; padding: 20px; color: white; }
+    nav { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+    .logo img { height: 50px; }
+    nav ul { display: flex; list-style: none; gap: 20px; flex-wrap: wrap; }
+    nav ul li { position: relative; }
+    nav ul li a { color: white; text-decoration: none; font-weight: 600; padding: 8px 12px; display: block; transition: background-color 0.3s ease; }
+    nav ul li a:hover { background-color: #005599; border-radius: 4px; }
+    nav ul li ul { display: none; position: absolute; background-color: #004080; top: 100%; left: 0; min-width: 220px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); z-index: 10; }
+    nav ul li:hover ul { display: block; animation: fadeIn 0.3s ease-in-out; }
+    nav ul li ul li a { padding: 10px; font-weight: 400; }
+    @keyframes fadeIn { from {opacity: 0; transform: translateY(-10px);} to {opacity: 1; transform: translateY(0);} }
+    footer { background-color: #002244; color: white; padding: 40px 20px; }
+    .footer-grid { max-width: 1200px; margin: auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; text-align: center; }
+    .footer-grid div p { font-size: 14px; margin: 8px 0; }
+    .footer-bottom { text-align: center; margin-top: 30px; font-size: 13px; }
+    .social-icons { margin-top: 10px; }
+    .social-icons a { color: white; margin: 0 8px; font-size: 20px; text-decoration: none; transition: transform 0.3s ease; }
+    .social-icons a:hover { transform: scale(1.2); }
+    .whatsapp-float { position: fixed; bottom: 20px; right: 20px; z-index: 1000; }
+    .whatsapp-float img { width: 60px; height: 60px; transition: transform 0.3s ease; }
+    .whatsapp-float img:hover { transform: scale(1.1); }
+    /* Estilo da consulta */
+    .consulta-container { max-width: 700px; margin: 60px auto; background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+    .consulta-container h1 { text-align: center; margin-bottom: 30px; font-weight: 600; font-size: 24px; color: #003366; }
+    .consulta-container label { font-weight: 500; display: block; margin-bottom: 8px; }
+    .consulta-container input[type="text"] { width: 100%; padding: 10px; font-size: 16px; text-align: center; margin-bottom: 20px; border-radius: 6px; border: 1px solid #ccc; }
+    .consulta-container button { width: 100%; padding: 12px; font-size: 16px; font-weight: bold; color: white; background-color: #4a90e2; border: none; border-radius: 6px; cursor: pointer; }
+    .consulta-container button:hover { background-color: #357ab8; }
+    .card { border: none; border-radius: 10px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); background-color: #ffffff; margin-top: 30px; padding: 20px; }
+    .data-section { margin-bottom: 30px; }
+    .data-section h3 { font-size: 18px; color: #003366; border-bottom: 2px solid #003366; padding-bottom: 5px; margin-bottom: 15px; }
+    .data-section ul { list-style: none; padding: 0; }
+    .data-section li { margin-bottom: 8px; }
+  </style>
 </head>
 <body>
 <div style="background-color: #ffcc00; color: #000; padding: 10px 20px; text-align: center; font-weight: bold;">
@@ -116,38 +51,17 @@
 </div>
 <header>
 <nav>
-<div class="logo">
-<img alt="Logo APIPMCBDF" src="https://i.ibb.co/9HcbZhnR/Novo-Projeto.png"/>
-</div>
+<div class="logo"><img alt="Logo APIPMCBDF" src="https://i.ibb.co/9HcbZhnR/Novo-Projeto.png"/></div>
 <ul>
 <li><a href="index.html">Início</a></li>
-<li><a href="#">Institucional</a>
-<ul>
-<li><a href="sobre.html">Sobre a Associação</a></li>
-<li><a href="conquistas.html">Conquistas</a></li>
-<li><a href="diretoria.html">Diretoria</a></li>
-<li><a href="juridico.html">Atendimento Jurídico</a></li>
-<li><a href="medicos.html">Atendimento Médico</a></li>
-<li><a href="galeria.html">Galeria de Fotos</a></li>
-</ul>
-</li>
-<li><a href="#">Informações</a>
-<ul>
-<li><a href="vpe.html">VPE</a></li>
-<li><a href="auxilio.html">Auxílio Moradia</a></li>
-<li><a href="soldo.html">Soldo</a></li>
-<li><a href="gfm.html">GFM e GEFM</a></li>
-<li><a href="pensao.html">Desconto Pensão Militar</a></li>
-<li><a href="art24.html">Art. 24 - EC 103/2019</a></li>
-</ul>
-</li>
+<li><a href="#">Institucional</a><ul><li><a href="sobre.html">Sobre a Associação</a></li><li><a href="conquistas.html">Conquistas</a></li><li><a href="diretoria.html">Diretoria</a></li><li><a href="juridico.html">Atendimento Jurídico</a></li><li><a href="medicos.html">Atendimento Médico</a></li><li><a href="galeria.html">Galeria de Fotos</a></li></ul></li>
+<li><a href="#">Informações</a><ul><li><a href="vpe.html">VPE</a></li><li><a href="auxilio.html">Auxílio Moradia</a></li><li><a href="soldo.html">Soldo</a></li><li><a href="gfm.html">GFM e GEFM</a></li><li><a href="pensao.html">Desconto Pensão Militar</a></li><li><a href="art24.html">Art. 24 - EC 103/2019</a></li></ul></li>
 <li><a href="consulta.html">Consultas</a></li>
 <li><a href="seja-socio.html">Seja Sócio</a></li>
 <li><a href="contato.html">Contato</a></li>
 </ul>
 </nav>
 </header>
-
 <section style="padding: 60px 20px; background-color: #f4f6f9;">
 <div class="consulta-container">
 <h1>CONSULTA DE DOCUMENTAÇÃO</h1>
@@ -157,32 +71,6 @@
 <div id="resultContainer"></div>
 </div>
 </section>
-<style>
-  .card {
-    background: white;
-    padding: 20px;
-    margin-top: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  }
-  .data-section {
-    margin-bottom: 30px;
-  }
-  .data-section h3 {
-    font-size: 18px;
-    color: #003366;
-    border-bottom: 2px solid #003366;
-    padding-bottom: 5px;
-    margin-bottom: 15px;
-  }
-  .data-section ul {
-    list-style: none;
-    padding: 0;
-  }
-  .data-section li {
-    margin-bottom: 8px;
-  }
-</style>
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
   import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
@@ -250,80 +138,133 @@
     });
 
     container.appendChild(card);
+
+    const docAux = (data['DOCUMENTAÇÃO AUX'] || '').toUpperCase();
+    const docVpe = (data['DOCUMENTAÇÃO VPE'] || '').toUpperCase();
+    const statusAux = (data['STATUS AUX'] || '').toUpperCase();
+    const statusVpe = (data['STATUS VPE'] || '').toUpperCase();
+    const recebeVpe = (data['RECEBE VPE'] || '').toUpperCase();
+
+    const pendente = [docAux, docVpe].some(doc => !['COMPLETA', 'EM FILA', 'ARQUIVADA', 'PROTOCOLADA'].includes(doc));
+    if (pendente) {
+      const aviso = document.createElement('div');
+      aviso.className = 'card';
+aviso.innerHTML = `
+  <div style="font-size: 16px; line-height: 1.6; color: #333;">
+    <h3 style="color: #cc0000; margin-bottom: 15px;">📢 Atenção! Envio de Documentos Pendentes</h3>
+
+    <p>Para dar continuidade ao seu processo, encaminhe os documentos pendentes conforme as instruções abaixo:</p>
+
+    <h4 style="margin-top: 20px; color: #003366;">📧 Documentos que podem ser enviados por e-mail:</h4>
+    <p><strong>Enviar para:</strong> documentos@apipmcbdf.com.br</p>
+    <p><strong>Assunto:</strong> Documentação Pendente</p>
+
+    <ul style="margin-left: 20px; margin-top: 10px;">
+      <li>✅ Contracheque</li>
+      <li>✅ Ficha Financeira (preferencialmente por e-mail)</li>
+      <li>✅ Comprovante de residência</li>
+      <li>✅ Documento de identidade (RG ou CNH)</li>
+    </ul>
+
+    <h4 style="margin-top: 20px; color: #cc6600;">⚠️ Importante:</h4>
+    <ul style="margin-left: 20px; margin-top: 10px;">
+      <li>NÃO ACEITAMOS PRINTS DE TELA</li>
+      <li>CUIDADO COM PDF PROTEGIDO POR SENHA</li>
+      <li>Somente arquivos PDF, legíveis e em boa qualidade.</li>
+    </ul>
+
+    <h4 style="margin-top: 20px; color: #003366;">📮 Entrega física ou pelos Correios:</h4>
+    <ul style="margin-left: 20px; margin-top: 10px;">
+      <li>🔹 Contrato</li>
+      <li>🔹 Procuração</li>
+      <li>🔹 Declaração de Inexistência de Ação</li>
+    </ul>
+
+    <p style="margin-top: 15px;">Rua Evaristo da Veiga, 55, 10º andar – CEP: 20031-040</p>
+    <p>Presencial: 09h às 13h</p>
+
+    <p style="margin-top: 20px;">📞 (21) 2532-6974 / 2220-6154 / 2544-2607</p>
+    <p>💬 WhatsApp: (21) 98499-7413</p>
+    <p>📧 atendimento@apipmcbdf.com.br</p>
+  </div>
+`;
+
+      container.appendChild(aviso);
+    }
+
+    const temNumeroAux = /\d/.test(statusAux);
+    const temNumeroVpe = /\d/.test(statusVpe);
+    if (temNumeroAux || temNumeroVpe) {
+      let mensagem = "Seu(s) processo(s) ";
+      if (temNumeroAux && temNumeroVpe) {
+        mensagem += "do Auxílio Moradia e da VPE foram protocolados com sucesso.";
+      } else if (temNumeroAux) {
+        mensagem += "do Auxílio Moradia foi protocolado com sucesso.";
+      } else if (temNumeroVpe) {
+        mensagem += "da VPE foi protocolado com sucesso.";
+      }
+      mensagem += " Aguarde o andamento; novidades serão comunicadas individualmente.";
+      const aviso = document.createElement('div');
+      aviso.className = 'card';
+      aviso.innerHTML = `<p>${mensagem}</p>`;
+      container.appendChild(aviso);
+    }
+
+    if (statusAux === 'EM FILA' || statusVpe === 'EM FILA') {
+      const aviso = document.createElement('div');
+      aviso.className = 'card';
+      aviso.innerHTML = `<p><strong>Status:</strong> EM FILA</p><p>Sua documentação está completa e aguarda protocolação. Não há prazo definido nem necessidade de contato no momento. Acompanhe o andamento por este canal.</p>`;
+      container.appendChild(aviso);
+    }
+
+    if (recebeVpe.includes('2ª LISTA DE IMPLANTAÇÃO')) {
+      const aviso = document.createElement('div');
+      aviso.className = 'card';
+      aviso.innerHTML = `<p>Seu nome já foi incluído para implantação. Aguarde novas informações.</p>`;
+      container.appendChild(aviso);
+    }
   }
 
-  document.getElementById("consultBtn").addEventListener("click", async () => {
-    const cpfInput = document.getElementById("cpfInput").value;
-    const cpfFormatado = formatarCPF(cpfInput);
-    if (cpfFormatado.length !== 11) {
-      alert("Digite um CPF válido com 11 dígitos.");
-      return;
-    }
-    const docRef = doc(db, "Dados", cpfFormatado);
-    const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) {
-      mostrarDados(docSnap.data());
-    } else {
-      mostrarDados(null);
-    }
+  window.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("consultBtn").addEventListener("click", async () => {
+      const cpfInput = document.getElementById("cpfInput").value;
+      const cpfFormatado = formatarCPF(cpfInput);
+      if (cpfFormatado.length !== 11) {
+        alert("Digite um CPF válido com 11 dígitos.");
+        return;
+      }
+      const docRef = doc(db, "Dados", cpfFormatado);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        mostrarDados(docSnap.data());
+      } else {
+        mostrarDados(null);
+      }
+    });
   });
 </script>
 
 <section style="padding: 50px 20px; background-color: #003366; color: white; text-align: center;">
 <h2>Associe-se à APIPMCBDF</h2>
-<p style="max-width: 700px; margin: 20px auto;">
-    Junte-se a centenas de associados que têm seus direitos defendidos com firmeza e comprometimento. Seja representado, tenha acesso a benefícios exclusivos e faça parte da nossa história!
-  </p>
+<p style="max-width: 700px; margin: 20px auto;">Junte-se a centenas de associados que têm seus direitos defendidos com firmeza e comprometimento. Seja representado, tenha acesso a benefícios exclusivos e faça parte da nossa história!</p>
 <a href="seja-socio.html" style="display: inline-block; margin-top: 20px; padding: 12px 24px; background-color: #f5b200; color: black; text-decoration: none; border-radius: 5px; font-weight: bold;">Quero me associar</a>
 </section>
-<section style="padding: 40px 20px; text-align: center; background-color: #fff;">
+<section style="padding: 40px 20px; text-align: center; background-color: #fff;
+">
 <h2>Quem Somos</h2>
-<p style="max-width: 800px; margin: auto;">
-    A APIPMCBDF representa e apoia os pensionistas e inativos da Polícia Militar e Corpo de Bombeiros do Antigo e Atual Distrito Federal. Lutamos por direitos, assistência e valorização dos nossos associados.
-  </p>
+<p style="max-width: 800px; margin: auto;">A APIPMCBDF representa e apoia os pensionistas e inativos da Polícia Militar e Corpo de Bombeiros do Antigo e Atual Distrito Federal. Lutamos por direitos, assistência e valorização dos nossos associados.</p>
 <a href="sobre.html" style="display: inline-block; margin-top: 20px; padding: 10px 20px; background-color: #003366; color: white; text-decoration: none; border-radius: 5px;">Saiba mais</a>
 </section>
-<div style="background: #001a33; color: #fff; text-align: center; padding: 10px; font-size: 14px;">
-  Um homem que esquece seu passado está condenado a viver sem futuro.
-</div>
+<div style="background: #001a33; color: #fff; text-align: center; padding: 10px; font-size: 14px;">Um homem que esquece seu passado está condenado a viver sem futuro.</div>
 <footer>
-<div class="footer-grid">
-<div>
-<p><strong>Endereço</strong></p>
-<p>Rua Evaristo da Veiga, nº 55</p>
-<p>10º andar — Centro</p>
-<p>Rio de Janeiro — RJ</p>
-<p>CEP: 20031-040</p>
-</div>
-<div>
-<p><strong>Contato</strong></p>
-<p>(21) 2220-5074</p>
-<p>2532-6974 | 2544-2607</p>
-<p>atendimento@apipmcbdf.com.br</p>
-</div>
-<div>
-<p><strong>Atendimento</strong></p>
-<p>Segunda a Sexta</p>
-<p>das 9h às 17h</p>
-</div>
-<div>
-<p><strong>Redes Sociais</strong></p>
-<div class="social-icons">
-<a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
-<a href="#" title="X"><i class="fab fa-x-twitter"></i></a>
-<a href="#" title="YouTube"><i class="fab fa-youtube"></i></a>
-<a href="https://wa.me/5521984997413" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-</div>
-</div>
-</div>
-<div class="footer-bottom">
-<p>© 2025 APIPMCBDF. Todos os direitos reservados.</p>
-</div>
+  <div class="footer-grid">
+    <div><p><strong>Endereço</strong></p><p>Rua Evaristo da Veiga, nº 55</p><p>10º andar — Centro</p><p>Rio de Janeiro — RJ</p><p>CEP: 20031-040</p></div>
+    <div><p><strong>Contato</strong></p><p>(21) 2220-5074</p><p>2532-6974 | 2544-2607</p><p>atendimento@apipmcbdf.com.br</p></div>
+    <div><p><strong>Atendimento</strong></p><p>Segunda a Sexta</p><p>das 9h às 17h</p></div>
+    <div><p><strong>Redes Sociais</strong></p><div class="social-icons"><a href="#" title="Instagram"><i class="fab fa-instagram"></i></a><a href="#" title="X"><i class="fab fa-x-twitter"></i></a><a href="#" title="YouTube"><i class="fab fa-youtube"></i></a><a href="https://wa.me/5521984997413" title="WhatsApp"><i class="fab fa-whatsapp"></i></a></div></div>
+  </div>
+  <div class="footer-bottom"><p>© 2025 APIPMCBDF. Todos os direitos reservados.</p></div>
 </footer>
-<div class="whatsapp-float">
-<a href="https://wa.me/5521984997413" target="_blank">
-<img alt="WhatsApp" src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg">
-</img></a>
-</div>
+<div class="whatsapp-float"><a href="https://wa.me/5521984997413" target="_blank"><img alt="WhatsApp" src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"/></a></div>
 </body>
 </html>
