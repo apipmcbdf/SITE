@@ -97,7 +97,17 @@
       const valor = data[campo];
       if (valor && valor.toString().trim() !== '') {
         const li = document.createElement('li');
-        li.innerHTML = `<strong>${campo}:</strong> ${valor}`;
+// define o rótulo conforme cada caso
+const label = 
+  (campo === 'RECEBE VPE' && valor.includes('LISTA DE IMPLANTAÇÃO')) ? 'LISTAGEM' :
+  (campo === 'STATUS VPE'      && data['DOCUMENTAÇÃO VPE'] === 'INCOMPLETA')   ? 'PENDÊNCIAS VPE' :
+  (campo === 'STATUS AUX'      && data['DOCUMENTAÇÃO AUX'] === 'INCOMPLETA')   ? 'PENDÊNCIAS AUX' :
+  campo;
+
+// insere no <li> com o novo label
+li.innerHTML = `<strong>${label}:</strong> ${valor}`;
+
+
         ul.appendChild(li);
       }
     }
@@ -145,11 +155,43 @@
     const statusVpe = (data['STATUS VPE'] || '').toUpperCase();
     const recebeVpe = (data['RECEBE VPE'] || '').toUpperCase();
 
-    const pendente = [docAux, docVpe].some(doc => !['COMPLETA', 'EM FILA', 'ARQUIVADA', 'PROTOCOLADA'].includes(doc));
-    if (pendente) {
-      const aviso = document.createElement('div');
-      aviso.className = 'card';
-aviso.innerHTML = `
+// —– 1) documentos-padrão pendentes e seus links —–
+const docsPadrao = {
+  'PROCURAÇÃO AUX':    'https://drive.google.com/file/d/1rsujXVdCMEiIO0di30OoUAuKwO4JEnvK/view?usp=drive_link',
+  'PROCURAÇÃO VPE':    'https://drive.google.com/file/d/1-1IL4GtaIA0uE_OeSJuvqNtuAGiWF-4D/view?usp=drive_link',
+  'CONTRATO AUX':      'https://drive.google.com/file/d/1rryE7Kworr16Qhb6-i1TGXZXQyPImiI-/view?usp=drive_link',
+  'CONTRATO VPE':      'https://drive.google.com/file/d/1-0PkD2Y9azc6TxnDzl1SmPHfXlKFyj7g/view?usp=drive_link',
+  'DECLARAÇÃO DE INEXISTENCIA DE AÇÃO VPE': 'https://drive.google.com/file/d/1-0Ee-gDuO4jHjOGBLFQHNR7pVcn8eKSf/view?usp=drive_link',
+  'DECLARAÇÃO DE INEXISTENCIA DE AÇÃO AUX': 'https://drive.google.com/file/d/1rt4tOVPEQuU7Nj1mHEIMlx25L2ZqaXjp/view?usp=drive_link'
+};
+
+const docsEncontrados = Object.entries(docsPadrao)
+  .filter(([nome]) => statusAux === nome || statusVpe === nome)
+  .map(([nome, url]) => ({ nome, url }));
+
+if (docsEncontrados.length) {
+  const avisoLinks = document.createElement('div');
+  avisoLinks.className = 'card';
+  avisoLinks.innerHTML = `
+    <div style="font-size: 16px; line-height: 1.6; color: #333;">
+      <h3 style="color: #003366; margin-bottom: 10px;">📌 Baixe aqui os documentos padrão pendentes:</h3>
+      <ul style="margin-left: 20px; margin-top: 10px;">
+        ${docsEncontrados
+          .map(d => `<li><a href="${d.url}" target="_blank">${d.nome}</a></li>`)
+          .join('')}
+      </ul>
+    </div>
+  `;
+  container.appendChild(avisoLinks);
+}
+
+// —– 2) aviso genérico de documentos pendentes —–
+const pendente = [docAux, docVpe]
+  .some(doc => !['COMPLETA', 'EM FILA', 'ARQUIVADA', 'PROTOCOLADA'].includes(doc));
+if (pendente) {
+  const aviso = document.createElement('div');
+  aviso.className = 'card';
+  aviso.innerHTML = `
   <div style="font-size: 16px; line-height: 1.6; color: #333;">
     <h3 style="color: #cc0000; margin-bottom: 15px;">📢 Atenção! Envio de Documentos Pendentes</h3>
 
@@ -187,10 +229,10 @@ aviso.innerHTML = `
     <p>💬 WhatsApp: (21) 98499-7413</p>
     <p>📧 atendimento@apipmcbdf.com.br</p>
   </div>
-`;
 
-      container.appendChild(aviso);
-    }
+  `;
+  container.appendChild(aviso);
+}
 
     const temNumeroAux = /\d/.test(statusAux);
     const temNumeroVpe = /\d/.test(statusVpe);
