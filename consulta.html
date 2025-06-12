@@ -166,7 +166,10 @@ const docsPadrao = {
 };
 
 const docsEncontrados = Object.entries(docsPadrao)
-  .filter(([nome]) => statusAux === nome || statusVpe === nome)
+  .filter(([nome]) =>
+    statusAux.includes(nome) ||
+    statusVpe.includes(nome)
+  )
   .map(([nome, url]) => ({ nome, url }));
 
 if (docsEncontrados.length) {
