@@ -8,7 +8,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet"/>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
     body { font-family: 'Inter', sans-serif; background-color: #f9f9f9; }
     header { background-color: #003366; padding: 20px; color: white; }
     nav { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
@@ -43,273 +42,360 @@
     .data-section h3 { font-size: 18px; color: #003366; border-bottom: 2px solid #003366; padding-bottom: 5px; margin-bottom: 15px; }
     .data-section ul { list-style: none; padding: 0; }
     .data-section li { margin-bottom: 8px; }
-  </style>
+    /* --- Estilo para abas e status --- */
+    .tabs { display: flex; justify-content: center; gap: 12px; margin-top: 20px; flex-wrap: wrap; }
+    .tab-button { padding: 10px 20px; font-weight: bold; background-color: #e0e0e0; color: #003366; border: none; border-radius: 20px; cursor: pointer; transition: all 0.2s ease; }
+    .tab-button.active { background-color: #003366; color: #fff; }
+    .tab-content { display: none; padding: 20px; }
+    .tab-content.active { display: block; }
+    .tab-content ul { list-style: none; padding-left: 0; margin-top: 10px; }
+    .tab-content li { margin-bottom: 8px; font-size: 16px; line-height: 1.5; }
+    li[data-status="COMPLETA"]::before { content: "✅ "; color: green; }
+    li[data-status="INCOMPLETA"]::before { content: "⚠️ "; color: orange; }
+    li[data-status="PROTOCOLADA"]::before { content: "📑 "; color: teal; }
+    li[data-status="EM FILA"]::before { content: "⏳ "; color: #007bff; }
+    li[data-status*="LISTA"]::before { content: "🟢 "; color: green; }
+    li[data-status*="NÃO"]::before { content: "❌ "; color: red; }
+  
+    /* Estilo aprimorado para avisos */
+    .warning {
+      background-color: #fffae6;
+      border-left: 6px solid #ffca28;
+      color: #665c00;
+      padding: 15px 20px;
+      margin-top: 20px;
+      border-radius: 8px;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+    .warning h4 {
+      margin: 10px 0 5px;
+      font-size: 18px;
+      color: #444;
+    }
+    .warning ul {
+      margin: 5px 0 10px 20px;
+    }
+    .warning ul li {
+      margin-bottom: 5px;
+    }
+    .warning p {
+      margin: 8px 0;
+    }
+
+.warning {
+  background-color: #fff8e1;
+  border-left: 6px solid #ffb300;
+  color: #333;
+  padding: 16px 20px;
+  margin: 20px 0;
+  font-size: 15px;
+  line-height: 1.6;
+  border-radius: 8px;
+}
+
+</style>
 </head>
 <body>
-<div style="background-color: #ffcc00; color: #000; padding: 10px 20px; text-align: center; font-weight: bold;">
-  📢 Atenção: A segunda listagem de implantação da VPE já foi protocolada. Não há prazo para implantação. Aguarde
-</div>
-<header>
-<nav>
-<div class="logo"><img alt="Logo APIPMCBDF" src="https://i.ibb.co/9HcbZhnR/Novo-Projeto.png"/></div>
-<ul>
-<li><a href="index.html">Início</a></li>
-<li><a href="#">Institucional</a><ul><li><a href="sobre.html">Sobre a Associação</a></li><li><a href="conquistas.html">Conquistas</a></li><li><a href="diretoria.html">Diretoria</a></li><li><a href="juridico.html">Atendimento Jurídico</a></li><li><a href="medicos.html">Atendimento Médico</a></li><li><a href="galeria.html">Galeria de Fotos</a></li></ul></li>
-<li><a href="#">Informações</a><ul><li><a href="vpe.html">VPE</a></li><li><a href="auxilio.html">Auxílio Moradia</a></li><li><a href="soldo.html">Soldo</a></li><li><a href="gfm.html">GFM e GEFM</a></li><li><a href="pensao.html">Desconto Pensão Militar</a></li><li><a href="art24.html">Art. 24 - EC 103/2019</a></li></ul></li>
-<li><a href="consulta.html">Consultas</a></li>
-<li><a href="seja-socio.html">Seja Sócio</a></li>
-<li><a href="contato.html">Contato</a></li>
-</ul>
-</nav>
-</header>
-<section style="padding: 60px 20px; background-color: #f4f6f9;">
-<div class="consulta-container">
-<h1>CONSULTA DE DOCUMENTAÇÃO</h1>
-<label for="cpfInput">Digite seu CPF:</label>
-<input id="cpfInput" placeholder="Digite seu CPF (com ou sem pontuação)" type="text"/>
-<button id="consultBtn">CONSULTAR</button>
-<div id="resultContainer"></div>
-</div>
-</section>
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-  import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  <div style="background-color: #ffcc00; color: #000; padding: 10px 20px; text-align: center; font-weight: bold;">
+    📢 Atenção: A segunda listagem de implantação da VPE já foi protocolada. Não há prazo para implantação. Aguarde
+  </div>
+  <header>
+    <nav>
+      <div class="logo"><img alt="Logo APIPMCBDF" src="https://i.ibb.co/9HcbZhnR/Novo-Projeto.png"/></div>
+      <ul>
+        <li><a href="index.html">Início</a></li>
+        <li>
+          <a href="#">Institucional</a>
+          <ul>
+            <li><a href="sobre.html">Sobre a Associação</a></li>
+            <li><a href="conquistas.html">Conquistas</a></li>
+            <li><a href="diretoria.html">Diretoria</a></li>
+            <li><a href="juridico.html">Atendimento Jurídico</a></li>
+            <li><a href="medicos.html">Atendimento Médico</a></li>
+            <li><a href="galeria.html">Galeria de Fotos</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="#">Informações</a>
+          <ul>
+            <li><a href="vpe.html">VPE</a></li>
+            <li><a href="auxilio.html">Auxílio Moradia</a></li>
+            <li><a href="soldo.html">Soldo</a></li>
+            <li><a href="gfm.html">GFM e GEFM</a></li>
+            <li><a href="pensao.html">Desconto Pensão Militar</a></li>
+            <li><a href="art24.html">Art. 24 - EC 103/2019</a></li>
+          </ul>
+        </li>
+        <li><a href="consulta.html">Consultas</a></li>
+        <li><a href="seja-socio.html">Seja Sócio</a></li>
+        <li><a href="contato.html">Contato</a></li>
+      </ul>
+    </nav>
+  </header>
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyDoXdgj_fRuYTluJby6QOIiEYBu268lZmQ",
-    authDomain: "documentos-apipmcbdf.firebaseapp.com",
-    projectId: "documentos-apipmcbdf",
-    storageBucket: "documentos-apipmcbdf.appspot.com",
-    messagingSenderId: "422508459389",
-    appId: "1:422508459389:web:bebd6b53839f77a3cd4814"
-  };
+  <section style="padding: 60px 20px; background-color: #f4f6f9;">
+    <div class="consulta-container">
+      <h1>CONSULTA DE DOCUMENTAÇÃO</h1>
+      <label for="cpfInput">Digite seu CPF:</label>
+      <input id="cpfInput" placeholder="Digite seu CPF (com ou sem pontuação)" type="text"/>
+      <button id="consultBtn">CONSULTAR</button>
+      <div id="resultContainer"></div>
+    </div>
+  </section>
 
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
+  <section style="padding: 50px 20px; background-color: #003366; color: white; text-align: center;">
+    <h2>Associe-se à APIPMCBDF</h2>
+    <p style="max-width: 700px; margin: 20px auto;">Junte-se a centenas de associados que têm seus direitos defendidos com firmeza e comprometimento. Seja representado, tenha acesso a benefícios exclusivos e faça parte da nossa história!</p>
+    <a href="seja-socio.html" style="display: inline-block; margin-top: 20px; padding: 12px 24px; background-color: #f5b200; color: black; text-decoration: none; border-radius: 5px; font-weight: bold;">Quero me associar</a>
+  </section>
 
-  function formatarCPF(cpf) {
-    return cpf.replace(/\D/g, '').padStart(11, '0');
-  }
+  <section style="padding: 40px 20px; text-align: center; background-color: #fff;">
+    <h2>Quem Somos</h2>
+    <p style="max-width: 800px; margin: auto;">A APIPMCBDF representa e apoia os pensionistas e inativos da Polícia Militar e Corpo de Bombeiros do Antigo e Atual Distrito Federal. Lutamos por direitos, assistência e valorização dos nossos associados.</p>
+    <a href="sobre.html" style="display: inline-block; margin-top: 20px; padding: 10px 20px; background-color: #003366; color: white; text-decoration: none; border-radius: 5px;">Saiba mais</a>
+  </section>
 
-  function criarLista(campos, data) {
-    const ul = document.createElement('ul');
-    for (const campo of campos) {
-      const valor = data[campo];
-      if (valor && valor.toString().trim() !== '') {
+  <div style="background: #001a33; color: #fff; text-align: center; padding: 10px; font-size: 14px;">
+    Um homem que esquece seu passado está condenado a viver sem futuro.
+  </div>
+
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <p><strong>Endereço</strong></p>
+        <p>Rua Evaristo da Veiga, nº 55</p>
+        <p>10º andar — Centro</p>
+        <p>Rio de Janeiro — RJ</p>
+        <p>CEP: 20031-040</p>
+      </div>
+      <div>
+        <p><strong>Contato</strong></p>
+        <p>(21) 2220-5074</p>
+        <p>2532-6974 | 2544-2607</p>
+        <p>atendimento@apipmcbdf.com.br</p>
+      </div>
+      <div>
+        <p><strong>Atendimento</strong></p>
+        <p>Segunda a Sexta</p>
+        <p>das 9h às 17h</p>
+      </div>
+      <div>
+        <p><strong>Redes Sociais</strong></p>
+        <div class="social-icons">
+          <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" title="X"><i class="fab fa-x-twitter"></i></a>
+          <a href="#" title="YouTube"><i class="fab fa-youtube"></i></a>
+          <a href="https://wa.me/5521984997413" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom"><p>© 2025 APIPMCBDF. Todos os direitos reservados.</p></div>
+  </footer>
+
+  <div class="whatsapp-float">
+    <a href="https://wa.me/5521984997413" target="_blank">
+      <img alt="WhatsApp" src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"/>
+    </a>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDoXdgj_fRuYTluJby6QOIiEYBu268lZmQ",
+      authDomain: "documentos-apipmcbdf.firebaseapp.com",
+      projectId: "documentos-apipmcbdf",
+      storageBucket: "documentos-apipmcbdf.appspot.com",
+      messagingSenderId: "422508459389",
+      appId: "1:422508459389:web:bebd6b53839f77a3cd4814"
+    };
+    const app = initializeApp(firebaseConfig);
+    const db  = getFirestore(app);
+
+    function formatarCPF(cpf) {
+      return cpf.replace(/\D/g, '').padStart(11, '0');
+    }
+
+function criarLista(campos, data) {
+      const ul = document.createElement('ul');
+      for (let campo of campos) {
+        let valor = data[campo];
+        if (!valor || !valor.toString().trim()) continue;
+
+        let status = valor.toString().toUpperCase();
+
+        // Renomeia "Status VPE"/"Status AUX" para "Pendências" se documentação estiver incompleta
+        if ((campo === 'Status VPE' && (data['Documentação VPE'] || '').toUpperCase() === 'INCOMPLETA') ||
+            (campo === 'Status AUX' && (data['Documentação AUX'] || '').toUpperCase() === 'INCOMPLETA')) {
+          campo = 'Pendências';
+        }
+
+        // Renomeia "Recebe VPE" para "Lista de implantação" se estiver em uma das listas
+        if (campo === 'Recebe VPE' && ['SEGUNDA LISTA DE IMPLANTAÇÃO VPE','TERCEIRA LISTA DE IMPLANTAÇÃO VPE','QUARTA LISTA DE IMPLANTAÇÃO VPE'].includes(status)) {
+          campo = 'Lista de implantação';
+        }
+
         const li = document.createElement('li');
-// define o rótulo conforme cada caso
-const label = 
-  (campo === 'RECEBE VPE' && valor.includes('LISTA DE IMPLANTAÇÃO')) ? 'LISTAGEM' :
-  (campo === 'STATUS VPE'      && data['DOCUMENTAÇÃO VPE'] === 'INCOMPLETA')   ? 'PENDÊNCIAS VPE' :
-  (campo === 'STATUS AUX'      && data['DOCUMENTAÇÃO AUX'] === 'INCOMPLETA')   ? 'PENDÊNCIAS AUX' :
-  campo;
+    li.setAttribute('data-status', status);
 
-// insere no <li> com o novo label
-li.innerHTML = `<strong>${label}:</strong> ${valor}`;
-
-
+    // Formatação amigável com quebra de linhas para pendências
+    if (campo === 'Pendências') {
+      const pendencias = valor.split(';').map(p => `<li>📌 ${p.trim()}</li>`).join('');
+      li.innerHTML = `<strong>Pendências:</strong><ul style='margin-top:8px; padding-left: 18px;'>${pendencias}</ul>`;
+    } else {
+      li.textContent = `${campo}: ${valor}`;
+    }
         ul.appendChild(li);
       }
-    }
-    return ul.childElementCount > 0 ? ul : null;
-  }
-
-  function mostrarDados(data) {
-    const container = document.getElementById('resultContainer');
-    container.innerHTML = '';
-    const card = document.createElement('div');
-    card.className = 'card';
-
-    if (!data || Object.keys(data).length === 0) {
-      card.innerHTML = "<p><strong>Nenhum dado encontrado para este CPF.</strong></p>";
-      container.appendChild(card);
-      return;
+      return ul.childElementCount ? ul : null;
     }
 
-    const grupos = [
-      { titulo: null, campos: ['NOME', 'MENSALIDADE', 'BENEFICIARIO', 'AMFETA'] },
-      { titulo: 'AUXÍLIO MORADIA', campos: ['DOCUMENTAÇÃO AUX', 'STATUS AUX', 'RECEBE AUX'] },
-      { titulo: 'VPE', campos: ['DOCUMENTAÇÃO VPE', 'STATUS VPE', 'RECEBE VPE'] }
-    ];
+    function mostrarDados(data) {
+      const container = document.getElementById('resultContainer');
+      container.innerHTML = '';
 
-    grupos.forEach(grupo => {
-      const lista = criarLista(grupo.campos, data);
-      if (lista) {
-        const section = document.createElement('div');
-        section.className = 'data-section';
-        if (grupo.titulo) {
-          const h3 = document.createElement('h3');
-          h3.textContent = grupo.titulo;
-          section.appendChild(h3);
-        }
-        section.appendChild(lista);
-        card.appendChild(section);
-      }
-    });
-
-    container.appendChild(card);
-
-    const docAux = (data['DOCUMENTAÇÃO AUX'] || '').toUpperCase();
-    const docVpe = (data['DOCUMENTAÇÃO VPE'] || '').toUpperCase();
-    const statusAux = (data['STATUS AUX'] || '').toUpperCase();
-    const statusVpe = (data['STATUS VPE'] || '').toUpperCase();
-    const recebeVpe = (data['RECEBE VPE'] || '').toUpperCase();
-
-// —– 1) documentos-padrão pendentes e seus links —–
-const docsPadrao = {
-  'PROCURAÇÃO AUX':    'https://drive.google.com/file/d/1rsujXVdCMEiIO0di30OoUAuKwO4JEnvK/view?usp=drive_link',
-  'PROCURAÇÃO VPE':    'https://drive.google.com/file/d/1-1IL4GtaIA0uE_OeSJuvqNtuAGiWF-4D/view?usp=drive_link',
-  'CONTRATO AUX':      'https://drive.google.com/file/d/1rryE7Kworr16Qhb6-i1TGXZXQyPImiI-/view?usp=drive_link',
-  'CONTRATO VPE':      'https://drive.google.com/file/d/1-0PkD2Y9azc6TxnDzl1SmPHfXlKFyj7g/view?usp=drive_link',
-  'DECLARAÇÃO DE INEXISTENCIA DE AÇÃO VPE': 'https://drive.google.com/file/d/1-0Ee-gDuO4jHjOGBLFQHNR7pVcn8eKSf/view?usp=drive_link',
-  'DECLARAÇÃO DE INEXISTENCIA DE AÇÃO AUX': 'https://drive.google.com/file/d/1rt4tOVPEQuU7Nj1mHEIMlx25L2ZqaXjp/view?usp=drive_link'
-};
-
-const docsEncontrados = Object.entries(docsPadrao)
-  .filter(([nome]) =>
-    statusAux.includes(nome) ||
-    statusVpe.includes(nome)
-  )
-  .map(([nome, url]) => ({ nome, url }));
-
-if (docsEncontrados.length) {
-  const avisoLinks = document.createElement('div');
-  avisoLinks.className = 'card';
-  avisoLinks.innerHTML = `
-    <div style="font-size: 16px; line-height: 1.6; color: #333;">
-      <h3 style="color: #003366; margin-bottom: 10px;">📌 Baixe aqui os documentos padrão pendentes:</h3>
-      <ul style="margin-left: 20px; margin-top: 10px;">
-        ${docsEncontrados
-          .map(d => `<li><a href="${d.url}" target="_blank">${d.nome}</a></li>`)
-          .join('')}
-      </ul>
-    </div>
-  `;
-  container.appendChild(avisoLinks);
-}
-
-// —– 2) aviso genérico de documentos pendentes —–
-const pendente = [docAux, docVpe]
-  .some(doc => !['COMPLETA', 'EM FILA', 'ARQUIVADA', 'PROTOCOLADA'].includes(doc));
-if (pendente) {
-  const aviso = document.createElement('div');
-  aviso.className = 'card';
-  aviso.innerHTML = `
-  <div style="font-size: 16px; line-height: 1.6; color: #333;">
-    <h3 style="color: #cc0000; margin-bottom: 15px;">📢 Atenção! Envio de Documentos Pendentes</h3>
-
-    <p>Para dar continuidade ao seu processo, encaminhe os documentos pendentes conforme as instruções abaixo:</p>
-
-    <h4 style="margin-top: 20px; color: #003366;">📧 Documentos que podem ser enviados por e-mail:</h4>
-    <p><strong>Enviar para:</strong> documentos@apipmcbdf.com.br</p>
-    <p><strong>Assunto:</strong> Documentação Pendente</p>
-
-    <ul style="margin-left: 20px; margin-top: 10px;">
-      <li>✅ Contracheque</li>
-      <li>✅ Ficha Financeira (preferencialmente por e-mail)</li>
-      <li>✅ Comprovante de residência</li>
-      <li>✅ Documento de identidade (RG ou CNH)</li>
-    </ul>
-
-    <h4 style="margin-top: 20px; color: #cc6600;">⚠️ Importante:</h4>
-    <ul style="margin-left: 20px; margin-top: 10px;">
-      <li>NÃO ACEITAMOS PRINTS DE TELA</li>
-      <li>CUIDADO COM PDF PROTEGIDO POR SENHA</li>
-      <li>Somente arquivos PDF, legíveis e em boa qualidade.</li>
-    </ul>
-
-    <h4 style="margin-top: 20px; color: #003366;">📮 Entrega física ou pelos Correios:</h4>
-    <ul style="margin-left: 20px; margin-top: 10px;">
-      <li>🔹 Contrato</li>
-      <li>🔹 Procuração</li>
-      <li>🔹 Declaração de Inexistência de Ação</li>
-    </ul>
-
-    <p style="margin-top: 15px;">Rua Evaristo da Veiga, 55, 10º andar – CEP: 20031-040</p>
-    <p>Presencial: 09h às 13h</p>
-
-    <p style="margin-top: 20px;">📞 (21) 2532-6974 / 2220-6154 / 2544-2607</p>
-    <p>💬 WhatsApp: (21) 98499-7413</p>
-    <p>📧 atendimento@apipmcbdf.com.br</p>
-  </div>
-
-  `;
-  container.appendChild(aviso);
-}
-
-    const temNumeroAux = /\d/.test(statusAux);
-    const temNumeroVpe = /\d/.test(statusVpe);
-    if (temNumeroAux || temNumeroVpe) {
-      let mensagem = "Seu(s) processo(s) ";
-      if (temNumeroAux && temNumeroVpe) {
-        mensagem += "do Auxílio Moradia e da VPE foram protocolados com sucesso.";
-      } else if (temNumeroAux) {
-        mensagem += "do Auxílio Moradia foi protocolado com sucesso.";
-      } else if (temNumeroVpe) {
-        mensagem += "da VPE foi protocolado com sucesso.";
-      }
-      mensagem += " Aguarde o andamento; novidades serão comunicadas individualmente.";
-      const aviso = document.createElement('div');
-      aviso.className = 'card';
-      aviso.innerHTML = `<p>${mensagem}</p>`;
-      container.appendChild(aviso);
-    }
-
-    if (statusAux === 'EM FILA' || statusVpe === 'EM FILA') {
-      const aviso = document.createElement('div');
-      aviso.className = 'card';
-      aviso.innerHTML = `<p><strong>Status:</strong> EM FILA</p><p>Sua documentação está completa e aguarda protocolação. Não há prazo definido nem necessidade de contato no momento. Acompanhe o andamento por este canal.</p>`;
-      container.appendChild(aviso);
-    }
-
-    if (recebeVpe.includes('2ª LISTA DE IMPLANTAÇÃO')) {
-      const aviso = document.createElement('div');
-      aviso.className = 'card';
-      aviso.innerHTML = `<p>Seu nome já foi incluído para implantação. Aguarde novas informações.</p>`;
-      container.appendChild(aviso);
-    }
-  }
-
-  window.addEventListener("DOMContentLoaded", () => {
-    document.getElementById("consultBtn").addEventListener("click", async () => {
-      const cpfInput = document.getElementById("cpfInput").value;
-      const cpfFormatado = formatarCPF(cpfInput);
-      if (cpfFormatado.length !== 11) {
-        alert("Digite um CPF válido com 11 dígitos.");
+      if (!data || Object.keys(data).length === 0) {
+        container.innerHTML = `<div class="card"><p style="padding:20px; text-align:center; font-weight:bold;">❌ Nenhum dado encontrado para este CPF.</p></div>`;
         return;
       }
-      const docRef = doc(db, "Dados", cpfFormatado);
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        mostrarDados(docSnap.data());
-      } else {
-        mostrarDados(null);
-      }
-    });
-  });
-</script>
 
-<section style="padding: 50px 20px; background-color: #003366; color: white; text-align: center;">
-<h2>Associe-se à APIPMCBDF</h2>
-<p style="max-width: 700px; margin: 20px auto;">Junte-se a centenas de associados que têm seus direitos defendidos com firmeza e comprometimento. Seja representado, tenha acesso a benefícios exclusivos e faça parte da nossa história!</p>
-<a href="seja-socio.html" style="display: inline-block; margin-top: 20px; padding: 12px 24px; background-color: #f5b200; color: black; text-decoration: none; border-radius: 5px; font-weight: bold;">Quero me associar</a>
-</section>
-<section style="padding: 40px 20px; text-align: center; background-color: #fff;
-">
-<h2>Quem Somos</h2>
-<p style="max-width: 800px; margin: auto;">A APIPMCBDF representa e apoia os pensionistas e inativos da Polícia Militar e Corpo de Bombeiros do Antigo e Atual Distrito Federal. Lutamos por direitos, assistência e valorização dos nossos associados.</p>
-<a href="sobre.html" style="display: inline-block; margin-top: 20px; padding: 10px 20px; background-color: #003366; color: white; text-decoration: none; border-radius: 5px;">Saiba mais</a>
-</section>
-<div style="background: #001a33; color: #fff; text-align: center; padding: 10px; font-size: 14px;">Um homem que esquece seu passado está condenado a viver sem futuro.</div>
-<footer>
-  <div class="footer-grid">
-    <div><p><strong>Endereço</strong></p><p>Rua Evaristo da Veiga, nº 55</p><p>10º andar — Centro</p><p>Rio de Janeiro — RJ</p><p>CEP: 20031-040</p></div>
-    <div><p><strong>Contato</strong></p><p>(21) 2220-5074</p><p>2532-6974 | 2544-2607</p><p>atendimento@apipmcbdf.com.br</p></div>
-    <div><p><strong>Atendimento</strong></p><p>Segunda a Sexta</p><p>das 9h às 17h</p></div>
-    <div><p><strong>Redes Sociais</strong></p><div class="social-icons"><a href="#" title="Instagram"><i class="fab fa-instagram"></i></a><a href="#" title="X"><i class="fab fa-x-twitter"></i></a><a href="#" title="YouTube"><i class="fab fa-youtube"></i></a><a href="https://wa.me/5521984997413" title="WhatsApp"><i class="fab fa-whatsapp"></i></a></div></div>
-  </div>
-  <div class="footer-bottom"><p>© 2025 APIPMCBDF. Todos os direitos reservados.</p></div>
-</footer>
-<div class="whatsapp-float"><a href="https://wa.me/5521984997413" target="_blank"><img alt="WhatsApp" src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"/></a></div>
+      const card = document.createElement('div');
+      card.className = 'card';
+
+      const tabData = [
+        { title: '🧾 Informações Gerais', campos: ['Nome','CPF','Mensalidade','Beneficiário'] },
+        { title: '🏠 Auxílio Moradia',    campos: ['Documentação AUX','Status AUX'] },
+        { title: '💼 VPE',                campos: ['Documentação VPE','Status VPE','Recebe VPE'] }
+      ];
+
+      const docVPE = data['Documentação VPE']?.toString().toUpperCase() || '';
+      const docAUX = data['Documentação AUX']?.toString().toUpperCase() || '';
+      const statusAUX = data['Status AUX']?.toString().toUpperCase() || '';
+      const statusVPE = data['Status VPE']?.toString().toUpperCase() || '';
+      const recebeVPE = data['Recebe VPE']?.toString().toUpperCase() || '';
+      const warnings = [];
+
+      if (docVPE === 'PROTOCOLADA' || docAUX === 'PROTOCOLADA') {
+        let processos = '';
+        if (docVPE === 'PROTOCOLADA' && docAUX === 'PROTOCOLADA') processos = 'do Auxílio Moradia e da VPE';
+        else if (docAUX === 'PROTOCOLADA') processos = 'do Auxílio Moradia';
+        else processos = 'da VPE';
+        warnings.push(`Seu(s) processo(s) ${processos} foram protocolados com sucesso. Aguarde o andamento; novidades serão comunicadas individualmente.`);
+      }
+
+      if (statusAUX === 'AGUARDANDO IMPLANTAÇÃO') {
+        warnings.push('AGUARDANDO IMPLANTAÇÃO DO AUXÍLIO MORADIA');
+      }
+
+      if (['SEGUNDA LISTA DE IMPLANTAÇÃO VPE','TERCEIRA LISTA DE IMPLANTAÇÃO VPE','QUARTA LISTA DE IMPLANTAÇÃO VPE'].includes(recebeVPE)) {
+        warnings.push('Seu nome já foi incluído para implantação. Aguarde novas informações.');
+      }
+
+      if (docVPE === 'INCOMPLETA' || docAUX === 'INCOMPLETA' || docVPE === 'NCOMPLETA' || docAUX === 'NCOMPLETA') {
+        warnings.push(`📢 Atenção! Envio de Documentos Pendentes<br>Para dar continuidade ao seu processo, encaminhe os documentos pendentes conforme as instruções abaixo:<br><br>📧 Documentos que podem ser enviados por e-mail:<br><br>✅ Contracheque  <br>✅ Ficha Financeira (preferencialmente por e-mail)  <br>✅ Comprovante de residência  <br>✅ Documento de identidade (RG ou CNH)<br><br>Enviar para: documentos@apipmcbdf.com.br  <br>Assunto: Documentação Pendente<br><br>⚠️ Importante:<br>- NÃO ACEITAMOS PRINTS DE TELA<br>- CUIDADO COM PDF PROTEGIDO POR SENHA<br>- Somente arquivos PDF, legíveis e em boa qualidade.<br><br>📮 Entrega física ou pelos Correios:<br>🔹 Contrato<br>🔹 Procuração<br>🔹 Declaração de Inexistência de Ação<br><br>Rua Evaristo da Veiga, 55, 10º andar – CEP: 20031-040  <br>Presencial: 09h às 13h<br><br>📞 (21) 2532-6974 / 2220-6154 / 2544-2607  <br>💬 WhatsApp: (21) 98499-7413  <br>📧 atendimento@apipmcbdf.com.br`);
+
+        
+let linksHtml = '<div>📌 Baixe aqui os documentos padrão pendentes:<ul>';
+
+const statusAuxStr = statusAUX.toUpperCase();
+const statusVpeStr = statusVPE.toUpperCase();
+
+if (docAUX === 'INCOMPLETA' || docAUX === 'NCOMPLETA') {
+  if (statusAuxStr.includes('PROCURAÇÃO')) {
+    linksHtml += '<li><a href="https://drive.google.com/file/d/1rsujXVdCMEiIO0di30OoUAuKwO4JEnvK/view?usp=drive_link" target="_blank">PROCURAÇÃO AUX</a></li>';
+  }
+  if (statusAuxStr.includes('CONTRATO')) {
+    linksHtml += '<li><a href="https://drive.google.com/file/d/1rryE7Kworr16Qhb6-i1TGXZXQyPImiI-/view?usp=drive_link" target="_blank">CONTRATO AUX</a></li>';
+  }
+  if (statusAuxStr.includes('DECLARAÇÃO')) {
+    linksHtml += '<li><a href="https://drive.google.com/file/d/1rt4tOVPEQuU7Nj1mHEIMlx25L2ZqaXjp/view?usp=drive_link" target="_blank">DECLARAÇÃO DE INEXISTÊNCIA DE AÇÃO AUX</a></li>';
+  }
+}
+
+if (docVPE === 'INCOMPLETA' || docVPE === 'NCOMPLETA') {
+  if (statusVpeStr.includes('PROCURAÇÃO')) {
+    linksHtml += '<li><a href="https://drive.google.com/file/d/1-1IL4GtaIA0uE_OeSJuvqNtuAGiWF-4D/view?usp=drive_link" target="_blank">PROCURAÇÃO VPE</a></li>';
+  }
+  if (statusVpeStr.includes('CONTRATO')) {
+    linksHtml += '<li><a href="https://drive.google.com/file/d/1-0PkD2Y9azc6TxnDzl1SmPHfXlKFyj7g/view?usp=drive_link" target="_blank">CONTRATO VPE</a></li>';
+  }
+  if (statusVpeStr.includes('DECLARAÇÃO')) {
+    linksHtml += '<li><a href="https://drive.google.com/file/d/1-0Ee-gDuO4jHjOGBLFQHNR7pVcn8eKSf/view?usp=drive_link" target="_blank">DECLARAÇÃO DE INEXISTÊNCIA DE AÇÃO VPE</a></li>';
+  }
+}
+
+linksHtml += '</ul></div>';
+warnings.push(linksHtml);
+
+      }
+
+      if (statusAUX.includes('LITISPENDENCIA') || statusVPE.includes('LITISPENDENCIA')) {
+        let text = 'FOI IDENTIFICADA LITISPENDÊNCIA PARA ';
+        if (statusAUX.includes('LITISPENDENCIA') && statusVPE.includes('LITISPENDENCIA')) text += 'AUX e VPE. ';
+        else if (statusAUX.includes('LITISPENDENCIA')) text += 'AUX. ';
+        else text += 'VPE. ';
+        text += 'SUA DOCUMENTAÇÃO FOI ARQUIVADA.';
+        warnings.push(text);
+      }
+
+      if (statusAUX === 'PARA CÁLCULO' || statusVPE === 'PARA CÁLCULO') {
+        warnings.push('Sua documentação está completa e foi enviada ao contador para cálculo dos atrasados. Não há prazo definido nem necessidade de contato no momento. Acompanhe o andamento por este canal.');
+      }
+
+      
+tabData.forEach((tab) => {
+  let temConteudo = false;
+  for (const campo of tab.campos) {
+    const valor = data[campo];
+    if (valor && valor.toString().trim()) {
+      temConteudo = true;
+      break;
+    }
+  }
+  if (!temConteudo) return; // pula esta seção
+
+  const section = document.createElement('div');
+  section.className = 'data-section';
+
+  const h3 = document.createElement('h3');
+  h3.textContent = tab.title;
+  section.appendChild(h3);
+
+  const ul = criarLista(tab.campos, data);
+  if (ul) {
+    section.appendChild(ul);
+  } else {
+    section.innerHTML += '<p>❌ Nenhum dado disponível.</p>';
+  }
+
+  card.appendChild(section);
+});
+
+
+      if (warnings.length > 0) {
+        warnings.forEach(msg => {
+        const avisoDiv = document.createElement('div');
+        avisoDiv.className = 'warning';
+        avisoDiv.innerHTML = msg;
+        card.appendChild(avisoDiv);
+      });
+      }
+
+      container.appendChild(card);
+
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('consultBtn').onclick = async () => {
+        const raw = document.getElementById('cpfInput').value;
+        const cpf = formatarCPF(raw);
+        if (cpf.length !== 11) { alert('CPF inválido'); return; }
+        const snap = await getDoc(doc(db,'Dados',cpf));
+        mostrarDados(snap.exists() ? snap.data() : {});
+      };
+    });
+  </script>
 </body>
 </html>
