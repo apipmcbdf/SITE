@@ -1,0 +1,527 @@
+
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>APIPMCBDF</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background-color: #f9f9f9; }
+    header { background-color: #003366; padding: 20px; color: white; }
+    nav { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+    .logo img { height: 50px; }
+    nav ul { display: flex; list-style: none; gap: 20px; flex-wrap: wrap; }
+    nav ul li { position: relative; }
+    nav ul li a {
+      color: white; text-decoration: none; font-weight: 600;
+      padding: 8px 12px; display: block; transition: background-color 0.3s ease;
+    }
+    nav ul li a:hover { background-color: #005599; border-radius: 4px; }
+    nav ul li ul {
+      display: none; position: absolute; background-color: #004080;
+      top: 100%; left: 0; min-width: 220px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2); z-index: 10;
+    }
+    nav ul li:hover ul { display: block; animation: fadeIn 0.3s ease-in-out; }
+    nav ul li ul li a { padding: 10px; font-weight: 400; }
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(-10px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+    .hero {
+      position: relative; height: 90vh; overflow: hidden;
+    }
+    .hero img.slideshow-img {
+      position: absolute; width: 100%; height: 100%;
+      object-fit: cover; opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+    .hero img.slideshow-img.active { opacity: 1; z-index: 1; }
+    .hero-overlay {
+      position: relative; z-index: 2;
+      background-color: rgba(0, 0, 0, 0.5);
+      height: 100%; display: flex; flex-direction: column;
+      justify-content: center; align-items: center;
+      color: white; text-align: center; padding: 20px;
+      animation: fadeIn 1s ease-in-out;
+    }
+    .hero-overlay img.symbol {
+      width: 80px; margin-bottom: 20px;
+    }
+    .hero-overlay h1 { font-size: 28px; margin-bottom: 10px; }
+    .hero-overlay p { font-size: 18px; max-width: 800px; }
+    section { animation: fadeIn 0.8s ease-in-out; }
+    @media (max-width: 768px) {
+      nav ul { flex-direction: column; align-items: flex-start; }
+      .footer-grid { grid-template-columns: 1fr; text-align: center; }
+    }
+    footer {
+      background-color: #002244; color: white; padding: 40px 20px;
+    }
+    .footer-grid {
+      max-width: 1200px; margin: auto;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 30px; text-align: center;
+    }
+    .footer-grid div p { font-size: 14px; margin: 8px 0; }
+    .footer-bottom { text-align: center; margin-top: 30px; font-size: 13px; }
+    .social-icons { margin-top: 10px; }
+    .social-icons a {
+      color: white; margin: 0 8px; font-size: 20px;
+      text-decoration: none; transition: transform 0.3s ease;
+    }
+    .social-icons a:hover { transform: scale(1.2); }
+    .whatsapp-float {
+      position: fixed; bottom: 20px; right: 20px; z-index: 1000;
+    }
+    .whatsapp-float img {
+      width: 60px; height: 60px; transition: transform 0.3s ease;
+    }
+    .whatsapp-float img:hover { transform: scale(1.1); }
+  
+@media (max-width: 768px) {
+  .hero-overlay h1 { font-size: 20px; }
+  .hero-overlay p { font-size: 14px; padding: 0 10px; }
+  .hero-overlay img.symbol { width: 50px; }
+  .footer-grid { grid-template-columns: 1fr; text-align: center; }
+  section div[style*="display: flex"] > div,
+  section div[style*="display: flex"] > a {
+    width: 100% !important;
+    max-width: 300px;
+  }
+
+  nav {
+    position: relative;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .logo {
+    text-align: center;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .menu-toggle {
+    display: block;
+    cursor: pointer;
+    font-size: 24px;
+    color: white;
+    margin-bottom: 10px;
+  }
+
+  #menu {
+    display: none;
+    flex-direction: column;
+    position: relative;
+    width: 100%;
+    background-color: #003366;
+    z-index: 1000;
+  }
+
+  #menu.active {
+    display: flex;
+  }
+}
+
+</style>
+</head>
+<body>
+<div style="background-color: #ffcc00; color: #000; padding: 10px 20px; text-align: center; font-weight: bold;">
+  📢 Atenção: A segunda listagem de implantação da VPE já foi protocolada. Não há prazo para implantação. Aguarde
+</div>
+<header>
+<nav>
+<div class="menu-toggle" onclick="toggleMenu()">☰</div>
+<div class="logo">
+<img alt="Logo APIPMCBDF" src="https://i.ibb.co/9HcbZhnR/Novo-Projeto.png"/>
+</div>
+<ul id="menu">
+<li><a href="index.html">Início</a></li>
+<li><a href="#">Institucional</a>
+<ul>
+<li><a href="sobre.html">Sobre a Associação</a></li>
+<li><a href="conquistas.html">Conquistas</a></li>
+<li><a href="diretoria.html">Diretoria</a></li>
+<li><a href="juridico.html">Atendimento Jurídico</a></li>
+<li><a href="medicos.html">Atendimento Médico</a></li>
+<li><a href="galeria.html">Galeria de Fotos</a></li>
+</ul>
+</li>
+<li><a href="#">Informações</a>
+        <ul>
+          <li><a href="vpe.html">VPE</a></li>
+          <li><a href="auxilio.html">Auxílio Moradia</a></li>
+          <li><a href="soldo.html">Soldo</a></li>
+          <li><a href="gfm.html">GFM e GEFM</a></li>
+          <li><a href="pensao.html">Desconto Pensão Militar</a></li>
+          <li><a href="art24.html">Art. 24 - EC 103/2019</a></li>
+          <li><a href="noticia3.html">Esclarecimentos Importantes</a></li>
+        </ul>
+</li>
+<li><a href="consulta.html">Consultas</a></li>
+<li><a href="seja-socio.html">Seja Sócio</a></li>
+<li><a href="contato.html">Contato</a></li>
+</ul>
+</nav>
+</header>
+<section id="vpe-content" style="padding: 60px 20px; background-color: #f9f9f9;">
+  <div style="max-width: 800px; margin: auto; background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+    <h1 style="font-size: 28px; color: #003366; text-align: center; margin-bottom: 5px;">VANTAGEM PECUNIÁRIA ESPECIAL (VPE)</h1>
+    <p style="text-align: center; font-style: italic; margin-top: 0; margin-bottom: 30px;">Autor: Dra. Marcelle Dias</p>
+
+    <p style="text-align: justify; margin-bottom: 20px;">
+      Para ajudá-lo com as questões da VPE, organizamos as informações importantes por tópicos. Por favor, leia com atenção o tópico que se aplique ao seu caso. Em caso de dúvidas, entre em contato com a associação pelo e-mail: <em>indicar e-mail</em>, com um breve relato da sua questão/dúvida. Se necessário, agendaremos um atendimento com o departamento jurídico para esclarecimentos.
+    </p>
+
+    <h2 style="margin-top: 30px; margin-bottom: 10px; font-size: 22px; color: #003366;">SOBRE A VPE</h2>
+    <p style="text-align: justify; margin-bottom: 20px;">
+      A Vantagem Pecuniária Especial (VPE) foi estabelecida pela Lei 11.134/05 e tem seus valores definidos em uma tabela específica (Anexo I da Lei), variando de acordo com o posto ou graduação do militar.
+    </p>
+    <p style="text-align: justify; margin-bottom: 20px;">
+      A implantação desse benefício para os associados foi uma conquista judicial por meio do Mandado de Segurança impetrado pela AMFETADF (Processo nº 0033179-61.2008.4.01.3400).
+    </p>
+    <p style="text-align: justify; margin-bottom: 20px;">
+      As primeiras implantações ocorreram entre 2016 e 2017.
+    </p>
+    <p style="text-align: justify; margin-bottom: 20px;">
+      Apesar de a VPE ter sido suspensa para alguns associados em determinado período, a Associação alcançou uma decisão judicial que confirma o direito de representar judicialmente todos os membros, sem a necessidade de lista nominal.
+    </p>
+    <p style="text-align: justify; margin-bottom: 20px;">
+      Com isso, estamos avançando com a execução do processo para a implantação da VPE e o pagamento dos valores retroativos (atrasados) para todos os associados que se enquadram no benefício.
+    </p>
+    <p style="text-align: justify; margin-bottom: 30px;"><strong>Importante:</strong> Se você já perdeu uma ação individual sobre a VPE, não poderá dar entrada no cumprimento de sentença para o recebimento dos valores retroativos. O mesmo acontece para os herdeiros: se você é herdeiro/pensionista e seu pai ou sua mãe inativos/pensionista já perderam uma ação da VPE, não poderá entrar com ação para cobrar os atrasados referentes ao período em que eles estavam vivos.</p>
+
+    <h2 style="margin-top: 30px; margin-bottom: 10px; font-size: 22px; color: #003366;">QUAL É O VALOR DA VPE?</h2>
+    <p style="text-align: justify; margin-bottom: 20px;">
+      Inicialmente os valores estavam previstos na Lei 11.134/05. Os valores foram atualizados por diversas leis ao longo dos anos. Para saber o valor exato, é necessário consultar a tabela mais atualizada. O último reajuste ocorreu com a Lei 14.724/23, com valores aplicados a partir de 1º de janeiro de 2014. Há previsão de novo reajuste para 2025, mas ainda não está confirmado.
+    </p>
+    <p style="text-align: justify; margin-bottom: 10px;">Na tabela abaixo, você encontrará dois valores:</p>
+    <p style="text-align: justify; margin-bottom: 20px;">
+      um com o valor integral da VPE, previsto na Lei 14.724/23;<br>
+      um segundo valor com a dedução da GEFM e GFM, cuja explicação detalhada se encontra no próximo tópico.
+    </p>
+
+    <table style="width:100%; border-collapse: collapse; margin-bottom: 30px;">
+      <thead>
+        <tr>
+          <th style="padding: 8px; border: 1px solid #ccc; text-align: center;">Posto/Graduação</th>
+          <th style="padding: 8px; border: 1px solid #ccc; text-align: center;">Valor Integral (R$)</th>
+          <th style="padding: 8px; border: 1px solid #ccc; text-align: center;">Valor com Dedução (R$)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+            <td style="padding: 8px; border: 1px solid #ccc; text-align: center;">Coronel</td>
+            <td style="padding: 8px; border: 1px solid #ccc; text-align: center;">13.183,33</td>
+            <td style="padding: 8px; border: 1px solid #ccc; text-align: center;">9.304,47</td>
+        </tr>
+        <tr>
+            <td style="padding: 8px; border: 1px solid #ccc; text-align: center;">Tenente-Coronel</td>
+            <td style="padding: 8px; border: 1px solid #ccc; text-align: center;">12.689,09</td>
+            <td style="padding: 8px; border: 1px solid #ccc; text-align: center;">8.925,97</td>
+        </tr>
+        <tr>
+            <td style="padding: 8px; border: 1px solid #ccc; text-align: center;">Major</td>
+            <td style="padding: 8px; border: 1px solid #ccc; text-align: center;">11.410,69</td>
+            <td style="padding: 8px; border: 1px solid #ccc; text-align: center;">8.082,85</td>
+        </tr>
+        <tr>
+            <td style="padding: 8px; border: 1px solid #ccc; text-align: center;">Capitão</td>
+            <td style="padding: 8px; border: 1px solid #ccc; text-align: center;">9.643,36</td>
+            <td style="padding: 8px; border: 1px solid #ccc; text-align: center;">6.754,46</td>
+        </tr>
+        <tr>
+            <td style="padding: 8px; border: 1px solid #ccc; text-align: center;">Primeiro-Tenente</td>
+            <td style="padding: 8px; border: 1px solid #ccc; text-align: center;">8.513,28</td>
+            <td style="padding: 8px; border: 1px solid #ccc; text-align: center;">5.968,13</td>
+        </tr>
+        <tr>
+            <td style="padding: 8px; border: 1px solid #ccc; text-align: center;">Segundo-Tenente</td>
+            <td style="padding: 8px; border: 1px solid #ccc; text-align: center;">8.141,75</td>
+            <td style="padding: 8px; border: 1px solid #ccc; text-align: center;">5.714,01</td>
+        </tr>
+        <tr>
+            <td style="padding: 8px; border: 1px solid #ccc; text-align: center;">Aspirante a Oficial</td>
+            <td style="padding: 8px; border: 1px solid #ccc; text-align: center;">6.731,52</td>
+            <td style="padding: 8px; border: 1px solid #ccc; text-align: center;">4.503,12</td>
+        </tr>
+        <tr>
+            <td style="padding: 8px; border: 1px solid #ccc; text-align: center;">Cadete (último ano)</td>
+            <td style="padding: 8px; border: 1px solid #ccc; text-align: center;">3.714,25</td>
+            <td style="padding: 8px; border: 1px solid #ccc; text-align: center;">2.632,11</td>
+        </tr>
+        <tr>
+            <td style="padding: 8px; border: 1px solid #ccc; text-align: center;">Cadete (demais anos)</td>
+            <td style="padding: 8px; border: 1px solid #ccc; text-align: center;">2.826,68</td>
+            <td style="padding: 8px; border: 1px solid #ccc; text-align: center;">1.853,75</td>
+        </tr>
+        <tr>
+            <td style="padding: 8px; border: 1px solid #ccc; text-align: center;">Subtenente</td>
+            <td style="padding: 8px; border: 1px solid #ccc; text-align: center;">8.489,56</td>
+            <td style="padding: 8px; border: 1px solid #ccc; text-align: center;">6.580,35</td>
+        </tr>
+        <tr>
+            <td style="padding: 8px; border: 1px solid #ccc; text-align: center;">Primeiro-Sargento</td>
+            <td style="padding: 8px; border: 1px solid #ccc; text-align: center;">6.050,18</td>
+            <td style="padding: 8px; border: 1px solid #ccc; text-align: center;">4.295,97</td>
+        </tr>
+        <tr>
+            <td style="padding: 8px; border: 1px solid #ccc; text-align: center;">Segundo-Sargento</td>
+            <td style="padding: 8px; border: 1px solid #ccc; text-align: center;">5.358,12</td>
+            <td style="padding: 8px; border: 1px solid #ccc; text-align: center;">3.841,50</td>
+        </tr>
+        <tr>
+            <td style="padding: 8px; border: 1px solid #ccc; text-align: center;">Terceiro-Sargento</td>
+            <td style="padding: 8px; border: 1px solid #ccc; text-align: center;">4.862,35</td>
+            <td style="padding: 8px; border: 1px solid #ccc; text-align: center;">3.434,22</td>
+        </tr>
+        <tr>
+            <td style="padding: 8px; border: 1px solid #ccc; text-align: center;">Cabo</td>
+            <td style="padding: 8px; border: 1px solid #ccc; text-align: center;">4.107,29</td>
+            <td style="padding: 8px; border: 1px solid #ccc; text-align: center;">2.874,67</td>
+        </tr>
+        <tr>
+            <td style="padding: 8px; border: 1px solid #ccc; text-align: center;">Soldado - Primeira Classe</td>
+            <td style="padding: 8px; border: 1px solid #ccc; text-align: center;">3.886,00</td>
+            <td style="padding: 8px; border: 1px solid #ccc; text-align: center;">2.716,43</td>
+        </tr>
+        <tr>
+            <td style="padding: 8px; border: 1px solid #ccc; text-align: center;">Soldado - Segunda Classe</td>
+            <td style="padding: 8px; border: 1px solid #ccc; text-align: center;">2.826,68</td>
+            <td style="padding: 8px; border: 1px solid #ccc; text-align: center;">1.853,75</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2 style="margin-top: 30px; margin-bottom: 10px; font-size: 22px; color: #003366;">POR QUE O VALOR DA VPE ESTÁ SENDO PAGO, NA MAIORIA DOS CASOS, COM A DEDUÇÃO DA GEFM E GFM?</h2>
+    <p style="text-align: justify; margin-bottom: 20px;">
+      A Gratificação Especial de Função Militar (GEFM), criada pela Lei 11.356/06, e a Gratificação de Incentivo à Função Militar (GFM), criada pela Lei ... , são gratificações exclusivas para militares da Polícia Militar e do Corpo de Bombeiros Militar dos ex-Territórios e do antigo Distrito Federal. Todos os militares ativos, inativos e pensionistas que se enquadram nessa categoria recebem tais gratificações.
+    </p>
+    <p style="text-align: justify; margin-bottom: 20px;">
+      Na maioria das vezes, o pagamento da Vantagem Pecuniária Especial (VPE) acontece por causa da interpretação da Administração Pública.
+    </p>
+    <p style="text-align: justify; margin-bottom: 30px;">
+      A Administração Pública entende que a VPE e as outras duas gratificações não podem ser recebidas ao mesmo tempo. Por isso, em vez de remover a GEFM e a GFM do contracheque, o valor delas é descontado da VPE, resultando em um valor final da VPE reduzido.
+    </p>
+
+    <h2 style="margin-top: 30px; margin-bottom: 10px; font-size: 22px; color: #003366;">O QUE A ASSOCIAÇÃO ESTÁ FAZENDO EM RELAÇÃO A ESSA SITUAÇÃO?</h2>
+    <p style="text-align: justify; margin-bottom: 20px;">
+      A legalidade desse desconto está sendo discutida na Justiça. A Associação questionou a Administração por fazer o abatimento sem uma autorização judicial expressa (Processo NUP 14022.059633/2024-66). No entanto, a redução continua sendo aplicada. O escritório Silveira e Cruz vem atuando ativamente nos processos de cumprimento de sentença para garantir a manutenção do valor integral da VPE.
+    </p>
+    <p style="text-align: justify; margin-bottom: 20px;">
+      A possibilidade de recebimento da VPE junto com a GEFM e GFM é um tema ainda não completamente definido na Justiça, estando em discussão no cumprimento de sentença, com decisões divergentes. Portanto, a orientação neste momento é aguardar a definição final da Justiça.
+    </p>
+    <p style="text-align: justify; margin-bottom: 30px;">
+      O STJ definirá se é legal ou não fazer a compensação desses valores. Enquanto isso, o abatimento continua e a decisão final ainda não foi tomada. Se existirem dúvidas sobre o assunto, direcione-as ao e-mail da associação; se necessário, agendaremos consulta com o departamento jurídico para maiores esclarecimentos.
+    </p>
+
+    <h2 style="margin-top: 30px; margin-bottom: 10px; font-size: 22px; color: #003366;">INFORMAÇÕES PARA QUEM JÁ RECEBE A VPE</h2>
+    <p style="text-align: justify; margin-bottom: 20px;">
+      O Mandado de Segurança foi distribuído em outubro de 2008. Portanto, os beneficiários têm direito a iniciar o cumprimento de sentença para receber os valores da VPE a partir de outubro de 2008.
+    </p>
+
+    <h2 style="margin-top: 30px; margin-bottom: 10px; font-size: 22px; color: #003366;">SOBRE A NOTIFICAÇÃO DE REDUÇÃO DA VPE (COMPENSAÇÃO GEFM E GFM)</h2>
+    <p style="text-align: justify; margin-bottom: 20px;">
+      A Diretoria de Serviço de Aposentados e de Pensionistas e Órgãos Extintos (DECIPEX) tem emitido notificações e instaurado processos administrativos para regularizar o pagamento da VPE, promovendo a dedução dos valores da GEFM e GFM da rubrica que é paga a VPE.
+    </p>
+    <p style="text-align: justify; margin-bottom: 20px;">
+      É fundamental que os associados que se encaixam nessa situação procurem orientação de um advogado especializado em direito militar para analisar o caso de forma específica. A decisão sobre a compensação pode variar dependendo dos detalhes de cada processo, e a defesa administrativa ou judicial contra o abatimento pode ser necessária para preservar o valor total do benefício.
+    </p>
+    <p style="text-align: justify; margin-bottom: 20px;">
+      Atenção especial para quem está assinando o acordo da União. Ao aceitar a proposta, o beneficiário concorda com as condições apresentadas, incluindo o encerramento de discussão futura sobre os valores da VPE.
+    </p>
+    <p style="text-align: justify; margin-bottom: 30px;">
+      Devido à alta demanda, o departamento jurídico da Associação fará apenas orientação aos associados, não realizando procedimentos administrativos ou judiciais. Nesses casos, o associado deverá procurar um advogado de sua preferência.
+    </p>
+
+    <h2 style="margin-top: 30px; margin-bottom: 10px; font-size: 22px; color: #003366;">O QUE É PRECISO FAZER PARA RECEBER OS VALORES ATRASADOS?</h2>
+    <p style="text-align: justify; margin-bottom: 20px;">
+      Se você já recebe a VPE e entregou toda a documentação necessária para os valores retroativos, não precisa fazer mais nada. Caso não consiga localizar o número do seu processo no link abaixo, entre em contato com a associação através do e-mail.
+    </p>
+    <p style="text-align: justify; margin-bottom: 20px;"><strong>Documentos necessários para entrar com o pedido de valores atrasados:</strong></p>
+    <ul style="margin-bottom: 30px; padding-left: 20px;">
+      <li>RG, CPF e comprovante de residência</li>
+      <li>Último contracheque</li>
+      <li>Ficha financeira (a partir de 2008 até 2025 — para fins de cálculos dos atrasados)</li>
+      <li>Termo de adesão, procuração e declaração de inexistência de litispendência e coisa julgada</li>
+    </ul>
+    <p style="text-align: justify; margin-bottom: 30px;">
+      Após a entrega da documentação, o associado deve acompanhar através do link abaixo se a documentação está completa e aguardar a distribuição.
+    </p>
+
+    <h2 style="margin-top: 30px; margin-bottom: 10px; font-size: 22px; color: #003366;">EU RECEBI UMA NOTIFICAÇÃO PARA DEVOLVER VALORES DA VPE (REPOSIÇÃO AO ERÁRIO) – O QUE DEVO FAZER?</h2>
+    <p style="text-align: justify; margin-bottom: 30px;">
+      Se você recebeu uma notificação de “Reposição ao Erário”, a defesa administrativa deve ser feita individualmente. O objetivo é comprovar que você recebeu o dinheiro de boa-fé e, se for o caso, argumentar que o prazo para a cobrança já expirou.
+    </p>
+
+    <h2 style="margin-top: 30px; margin-bottom: 10px; font-size: 22px; color: #003366;">COMO DEVO FAZER?</h2>
+    <p style="text-align: justify; margin-bottom: 30px;">
+      Entre em contato com o departamento jurídico da associação para orientação e avaliação da necessidade de uma ação judicial individual. A associação irá orientá-lo, mas não realizará os procedimentos administrativos ou judiciais, para os quais você precisará contratar um advogado de sua preferência.
+    </p>
+
+    <h2 style="margin-top: 30px; margin-bottom: 10px; font-size: 22px; color: #003366;">PARA QUEM NÃO RECEBE A VPE</h2>
+    <p style="text-align: justify; margin-bottom: 20px;">
+      NÃO RECEBO A VPE — O QUE É PRECISO FAZER?
+    </p>
+    <ul style="margin-bottom: 20px; padding-left: 20px;">
+      <li>Verifique se seu nome está na segunda ou terceira lista de inclusão, disponíveis no site da associação.</li>
+      <li>Se estiver na segunda lista, a listagem já foi anexada no processo e está aguardando despacho.</li>
+      <li>Se estiver na terceira, a lista será anexada em breve nos autos.</li>
+    </ul>
+    <p style="text-align: justify; margin-bottom: 30px;">
+      Assim, se seu nome consta em uma das duas listagens, basta aguardar a inclusão. Se seu nome não estiver em nenhuma das listas, entre em contato com a associação pelo e-mail.
+    </p>
+
+    <h2 style="margin-top: 30px; margin-bottom: 10px; font-size: 22px; color: #003366;">O QUE FAZER APÓS A INCLUSÃO?</h2>
+    <p style="text-align: justify; margin-bottom: 30px;">
+      Após a inclusão da VPE, você deverá apresentar o contracheque referente ao mês da inclusão e a ficha financeira de 2008 até 2025 para viabilizar o cálculo dos atrasados. A documentação deverá ser encaminhada pela associação para o e-mail: documentos@apipmcbdf.com.br
+    </p>
+
+    <h2 style="margin-top: 30px; margin-bottom: 10px; font-size: 22px; color: #003366;">PARA QUEM JÁ TEM UM PROCESSO EM ANDAMENTO</h2>
+    <p style="text-align: justify; margin-bottom: 20px;">
+      Você pode acompanhar a situação do seu processo pelo link que a associação disponibilizou.
+    </p>
+    <ul style="margin-bottom: 30px; padding-left: 20px;">
+      <li>Se o processo foi distribuído em nome de um titular falecido, é obrigatório informar o óbito à associação para iniciar a habilitação dos herdeiros.</li>
+      <li>Caso haja alguma exigência no processo ou uma proposta de acordo da União, entraremos em contato.</li>
+    </ul>
+
+    <h2 style="margin-top: 30px; margin-bottom: 10px; font-size: 22px; color: #003366;">O QUE ACONTECE SE O MILITAR OU PENSIONISTA QUE TEM DIREITO À VPE FALECEU?</h2>
+    <p style="text-align: justify; margin-bottom: 30px;">
+      Nesses casos, será necessária a habilitação de herdeiros para continuar com o processo.
+    </p>
+
+    <h2 style="margin-top: 30px; margin-bottom: 10px; font-size: 22px; color: #003366;">O INVENTÁRIO É OBRIGATÓRIO?</h2>
+    <p style="text-align: justify; margin-bottom: 20px;">
+      A 3ª Vara Federal entende que os valores atrasados da VPE devem ser incluídos no inventário do falecido. Portanto, a abertura do inventário é um requisito obrigatório para a maioria dos casos.
+    </p>
+    <p style="text-align: justify; margin-bottom: 20px;">
+      Existem exceções à regra do inventário:
+    </p>
+    <ul style="margin-bottom: 30px; padding-left: 20px;">
+      <li>Se a(s) pensionista(s) forem as únicas herdeiras e a certidão de óbito do falecido não indicar a existência de outros bens, as pensionistas poderão requerer a habilitação no processo, apresentando documentação pessoal e assinando os termos exigidos pela associação.</li>
+      <li>Se houver um único herdeiro (mesmo que não seja pensionista), é preciso comprovar sua qualidade de único herdeiro e que não há inventário aberto.</li>
+    </ul>
+    <p style="text-align: justify; margin-bottom: 30px;"><strong>ATENÇÃO:</strong> se você é herdeiro/pensionista e seu pai ou sua mãe inativos/pensionista já perderam uma ação da VPE, não poderá entrar com ação para cobrar os atrasados referentes ao período em que eles estavam vivos.</p>
+
+    <h2 style="margin-top: 30px; margin-bottom: 10px; font-size: 22px; color: #003366;">SE VOCÊ É HERDEIRO E SEU CASO EXIGE A APRESENTAÇÃO DE INVENTÁRIO</h2>
+    <p style="text-align: justify; margin-bottom: 20px;">
+      Deverá apresentar os seguintes documentos:
+    </p>
+    <ul style="margin-bottom: 30px; padding-left: 20px;">
+      <li>Cópia da certidão de óbito.</li>
+      <li>Escritura de inventário ou termo de nomeação de inventariante.</li>
+      <li>Documentos pessoais dos herdeiros ou do inventariante (identidade, CPF e comprovante de residência).</li>
+      <li>Procuração assinada por todos os herdeiros ou pelo inventariante.</li>
+      <li>Termo de adesão ao contrato originário assinado por todos os herdeiros ou pelo inventariante.</li>
+      <li>Cópias das fichas financeiras do militar falecido, de 2008 até a data do óbito, para elaboração dos cálculos.</li>
+      <li>Declaração assinada por todos os herdeiros ou pelo inventariante de que não ajuizaram ação individual com o mesmo objeto.</li>
+    </ul>
+
+    <h2 style="margin-top: 30px; margin-bottom: 10px; font-size: 22px; color: #003366;">SE VOCÊ É HERDEIRO ÚNICO</h2>
+    <p style="text-align: justify; margin-bottom: 20px;">
+      Para comprovar a qualidade de único herdeiro, é necessário apresentar (além da documentação pessoal e da exigida pela associação):
+    </p>
+    <ul style="margin-bottom: 30px; padding-left: 20px;">
+      <li>Declaração de único herdeiro (modelo com firma reconhecida).</li>
+      <li>Certidão de inexistência de testamento e escrituras de inventário.</li>
+      <li>Certidão atualizada de nascimento/casamento do falecido, com averbação do óbito.</li>
+      <li>Certidão do TJ para comprovar a inexistência de processo de inventário.</li>
+    </ul>
+    <p style="text-align: justify; margin-bottom: 30px;">
+      Em caso de dúvidas sobre a documentação de herdeiros e inventário, o associado deve buscar assistência junto a um advogado especializado de sua preferência.
+    </p>
+
+    <h2 style="margin-top: 30px; margin-bottom: 10px; font-size: 22px; color: #003366;">COMO POSSO ACOMPANHAR MEU PROCESSO?</h2>
+    <p style="text-align: justify; margin-bottom: 20px;">
+      Você pode acompanhar a situação do seu processo através do link disponibilizado pela associação.
+    </p>
+    <p style="margin-bottom: 10px;"><strong>Importante:</strong></p>
+    <ol style="margin-bottom: 30px; padding-left: 20px;">
+      <li>O processo foi distribuído em nome de um titular falecido – informe o óbito à associação para iniciar a habilitação dos herdeiros.</li>
+      <li>Caso tenha ocorrido qualquer óbito após a distribuição da ação, os herdeiros devem solicitar a habilitação da ação.</li>
+      <li>Nos demais casos, a associação entrará em contato caso haja exigência no processo ou proposta de acordo da União.</li>
+    </ol>
+    <p style="text-align: justify;">
+      <strong>Importante:</strong> Se você já perdeu uma ação individual sobre a VPE, não poderá entrar com um novo pedido para receber os valores atrasados.
+    </p>
+  </div>
+</section>
+<section style="padding: 50px 20px; background-color: #003366; color: white; text-align: center;">
+<h2>Associe-se à APIPMCBDF</h2>
+<p style="max-width: 700px; margin: 20px auto;">
+    Junte-se a centenas de associados que têm seus direitos defendidos com firmeza e comprometimento. Seja representado, tenha acesso a benefícios exclusivos e faça parte da nossa história!
+  </p>
+<a href="seja-socio.html" style="display: inline-block; margin-top: 20px; padding: 12px 24px; background-color: #f5b200; color: black; text-decoration: none; border-radius: 5px; font-weight: bold;">Quero me associar</a>
+</section><section style="padding: 40px 20px; text-align: center; background-color: #fff;">
+<h2>Quem Somos</h2>
+<p style="max-width: 800px; margin: auto;">
+    A APIPMCBDF representa e apoia os pensionistas e inativos da Polícia Militar e Corpo de Bombeiros do Antigo e Atual Distrito Federal. Lutamos por direitos, assistência e valorização dos nossos associados.
+  </p>
+<a href="sobre.html" style="display: inline-block; margin-top: 20px; padding: 10px 20px; background-color: #003366; color: white; text-decoration: none; border-radius: 5px;">Saiba mais</a>
+</section>
+<div style="background: #001a33; color: #fff; text-align: center; padding: 10px; font-size: 14px;">
+  Um homem que esquece seu passado está condenado a viver sem futuro.
+</div>
+<footer>
+<div class="footer-grid">
+<div>
+<p><strong>Endereço</strong></p>
+<p>Rua Evaristo da Veiga, nº 55</p>
+<p>10º andar — Centro</p>
+<p>Rio de Janeiro — RJ</p>
+<p>CEP: 20031-040</p>
+</div>
+<div>
+<p><strong>Contato</strong></p>
+<p>(21) 2220-5074</p>
+<p>2532-6974 | 2544-2607</p>
+<p>atendimento@apipmcbdf.com.br</p>
+</div>
+<div>
+<p><strong>Atendimento</strong></p>
+<p>Segunda a Sexta</p>
+<p>das 9h às 13h</p>
+</div>
+<div>
+<p><strong>Redes Sociais</strong></p>
+<div class="social-icons">
+<a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+<a href="#" title="X"><i class="fab fa-x-twitter"></i></a>
+<a href="#" title="YouTube"><i class="fab fa-youtube"></i></a>
+<a href="https://wa.me/5521984997413" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+</div>
+</div>
+</div>
+<div class="footer-bottom">
+<p>© 2025 APIPMCBDF. Todos os direitos reservados.</p>
+</div>
+</footer>
+<div class="whatsapp-float">
+<a href="https://wa.me/5521984997413" target="_blank">
+<img alt="WhatsApp" src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg">
+</img></a>
+</div>
+<script>
+  const slides = document.querySelectorAll('.slideshow-img');
+  let index = 0;
+  setInterval(() => {
+    slides[index].classList.remove('active');
+    index = (index + 1) % slides.length;
+    slides[index].classList.add('active');
+  }, 5000);
+
+function toggleMenu() {
+  var menu = document.getElementById("menu");
+  if (menu) menu.classList.toggle("active");
+}
+
+</script>
+</body>
+</html>
