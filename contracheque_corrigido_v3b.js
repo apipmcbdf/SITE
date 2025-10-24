@@ -8,7 +8,24 @@
 
   // Populate posts preserving order; keep placeholder
   const ORDER = (DATA.ordered_pg && DATA.ordered_pg.length) ? DATA.ordered_pg : [];
-  ORDER.forEach(p => { const opt = document.createElement('option'); opt.value = p; opt.textContent = p; postoSel.appendChild(opt); });
+  (function(){
+    const seen = new Set();
+    const items = [];
+    ORDER.forEach((p) => {
+      const canon = __canonLabel(p);
+      const key = __canonKey(canon);
+      if(!seen.has(key)){
+        seen.add(key);
+        items.push(canon);
+      }
+    });
+    items.forEach((label) => {
+      const opt = document.createElement('option');
+      opt.value = label;
+      opt.textContent = label;
+      postoSel.appendChild(opt);
+    });
+  })();
 
   function clamp0(n){ if(n==null||isNaN(n)) return null; return n<0 ? 0 : n; }
   function fmt(v) { return (v==null||isNaN(v)) ? '' : Number(v).toLocaleString('pt-BR', {minimumFractionDigits:2, maximumFractionDigits:2}); }
@@ -21,7 +38,41 @@
     }
   }
   function __norm(s){ return !s ? '' : s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim(); }
-  function __lookup(map, key){ const nk=__norm(key); for(const k in map) if(__norm(k)===nk) return map[k]; return null; }
+
+  // Canonicalize PG labels so variants (e.g., "Soldado - 1ª Classe" vs "Soldado de 1ª Classe") collapse into one
+  function __canonKey(s){
+    if(!s) return '';
+    let t = s.normalize('NFD').toLowerCase();
+    t = t.replace(/[ª]/g,'a').replace(/[º]/g,'o');
+    t = t.replace(/[\u0300-\u036f]/g,''); // remove combining marks
+    t = t.replace(/[\s\-_.]/g,'');       // strip spaces, hyphens, underscores, dots
+    return t;
+  }
+  const __CANON_LABELS = {
+    // Both "soldado1aclasse" and "soldadode1aclasse" map to the canonical label with hífen
+    "soldado1aclasse": "Soldado - 1ª Classe",
+    "soldadode1aclasse": "Soldado - 1ª Classe",
+    "soldadode2aclasse": "Soldado - 2ª Classe"
+  };
+  function __canonLabel(s){
+    const k = __canonKey(s);
+    return __CANON_LABELS[k] || s;
+  }
+  function __lookup(map, key){
+    const nk = __norm(key);
+    for(const k in map){
+      if(__norm(k)===nk) return map[k];
+    }
+    // Try canonical label fallback (e.g., map "Soldado de 1ª Classe" -> "Soldado - 1ª Classe")
+    const canon = __canonLabel(key);
+    if (canon !== key){
+      const nk2 = __norm(canon);
+      for(const k in map){
+        if(__norm(k)===nk2) return map[k];
+      }
+    }
+    return null;
+  }
 
   const FIXED = [
     ['SOLDO','SOLDO'],
