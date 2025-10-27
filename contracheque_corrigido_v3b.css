@@ -1,7 +1,0 @@
-
-.topo-ini { background:#0a3c5f; color:#fff; }
-.table thead th { background:#0a3c5f; color:#fff; }
-.muted { color:#6c757d; font-size:12px; }
-@media (min-width: 992px){
-  .container-fluid .col-lg-3{ max-height: calc(100vh - 90px); overflow:auto; }
-}
