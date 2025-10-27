@@ -1,50 +1,5 @@
+
 <!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>APIPMCBDF</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body { font-family: 'Inter', sans-serif; background-color: #f9f9f9; }
-    /* Estilos mínimos para o header carregado */
-    header { background-color: #003366; padding: 20px; color: white; }
-    nav { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
-    .logo img { height: 50px; }
-    nav ul { display: flex; list-style: none; gap: 20px; flex-wrap: wrap; }
-    nav ul li { position: relative; }
-    nav ul li a {
-      color: white; text-decoration: none; font-weight: 600;
-      padding: 8px 12px; display: block; transition: background-color 0.3s ease;
-    }
-    nav ul li a:hover { background-color: #005599; border-radius: 4px; }
-    nav ul li ul {
-      display: none; position: absolute; background-color: #004080;
-      top: 100%; left: 0; min-width: 220px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2); z-index: 10;
-    }
-    nav ul li:hover ul { display: block; animation: fadeIn 0.3s ease-in-out; }
-    nav ul li ul li a { padding: 10px; font-weight: 400; }
-    @keyframes fadeIn { from {opacity: 0; transform: translateY(-8px);} to {opacity: 1; transform: translateY(0);} }
-    /* Utilidades */
-    .container { max-width: 1000px; margin: 40px auto; background: #fff; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); padding: 30px; }
-    .section-cta { padding: 50px 20px; background-color: #003366; color: white; text-align: center; }
-    .section-cta a { display: inline-block; margin-top: 20px; padding: 12px 24px; background-color: #f5b200; color: black; text-decoration: none; border-radius: 5px; font-weight: bold; }
-    .section-about { padding: 40px 20px; text-align: center; background-color: #fff; }
-    @media (max-width: 768px) {
-      nav ul { flex-direction: column; align-items: flex-start; }
-      .container { padding: 20px; margin: 20px auto; }
-    }
-  </style>
-
-</head>
-<body>
-  <div id="header-container"></div>
-
-  <!DOCTYPE html>
 
 <html lang="pt-BR">
 <head>
@@ -177,41 +132,11 @@
 </style>
 </head>
 <body>
+<div id=\"header-container\"></div>
 <div style="background-color: #ffcc00; color: #000; padding: 10px 20px; text-align: center; font-weight: bold;">
   📢 Atenção: A segunda listagem de implantação da VPE já foi protocolada. Não há prazo para implantação. Aguarde
 </div>
-<header>
-  <nav>
-<div class="menu-toggle" onclick="toggleMenu()">☰</div>
-    <div class="logo">
-      <img src="https://i.ibb.co/9HcbZhnR/Novo-Projeto.png" alt="Logo APIPMCBDF">
-    </div>
-    <ul id="menu">
-      <li><a href="index.html">Início</a></li>
-      
-<li><a href="#">Institucional</a>
-  <ul>
-    <li><a href="sobre.html">Sobre a Associação</a></li>
-    <li><a href="conquistas.html">Conquistas</a></li>
-    <li><a href="diretoria.html">Diretoria</a></li>
-    <li><a href="juridico.html">Atendimento Jurídico</a></li>
-    <li><a href="medicos.html">Atendimento Médico</a></li>
-    <li><a href="galeria.html">Galeria de Fotos</a></li>
-  </ul>
-</li>
 
-      <li><a href="#">Informações</a>
-        <ul>
-          <li><a href="noticia3.html">Esclarecimentos Importantes</a></li>
-           <li><a href="simulador_aumento.html"><i class="fa-solid fa-calculator" aria-hidden="true"></i> Simulador - Contracheque <span class="badge-novo">NOVO</span></a></li>
-        </ul>
-      </li>
-      <li><a href="consulta.html">Consultas</a></li>
-      <li><a href="seja-socio.html">Seja Sócio</a></li>
-      <li><a href="contato.html">Contato</a></li>
-    </ul>
-  </nav>
-</header>
 <section style="padding: 60px 20px; background-color: #f4f6f9;">
 <div style="max-width: 850px; margin: auto; background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); font-family: 'Inter', sans-serif; text-align: center; line-height: 1.7;">
 <h1 style="color: #003366; font-size: 28px; margin-bottom: 20px;">📞 Fale Conosco</h1>
@@ -231,40 +156,7 @@
 <div style="background: #001a33; color: #fff; text-align: center; padding: 10px; font-size: 14px;">
   Um homem que esquece seu passado está condenado a viver sem futuro.
 </div>
-<footer>
-<div class="footer-grid">
-<div>
-<p><strong>Endereço</strong></p>
-<p>Rua Evaristo da Veiga, nº 55</p>
-<p>10º andar — Centro</p>
-<p>Rio de Janeiro — RJ</p>
-<p>CEP: 20031-040</p>
-</div>
-<div>
-<p><strong>Contato</strong></p>
-<p>(21) 2220-5074</p>
-<p>2532-6974 | 2544-2607</p>
-<p>atendimento@apipmcbdf.com.br</p>
-</div>
-<div>
-<p><strong>Atendimento</strong></p>
-<p>Segunda a Sexta</p>
-<p>das 9h às 13h</p>
-</div>
-<div>
-<p><strong>Redes Sociais</strong></p>
-<div class="social-icons">
-<a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
-<a href="#" title="X"><i class="fab fa-x-twitter"></i></a>
-<a href="#" title="YouTube"><i class="fab fa-youtube"></i></a>
-<a href="https://wa.me/5521984997413" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-</div>
-</div>
-</div>
-<div class="footer-bottom">
-<p>© 2025 APIPMCBDF. Todos os direitos reservados.</p>
-</div>
-</footer>
+
 <div class="whatsapp-float">
 <a href="https://wa.me/5521984997413" target="_blank">
 <img alt="WhatsApp" src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"/>
@@ -285,12 +177,9 @@ function toggleMenu() {
 }
 
 </script>
-</body>
-</html>
 
-  <div id="footer-container"></div>
+<div id="footer-container"></div>
 
-  <!-- Includes de header e footer -->
   <script>
     (function loadHeader(){
       const el = document.getElementById('header-container');
