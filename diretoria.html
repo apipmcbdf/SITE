@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <title>Diretoria - APIPMCBDF</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background-color: #f9f9f9; }
+    /* Estilos mínimos para o header carregado */
+    header { background-color: #003366; padding: 20px; color: white; }
+    nav { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+    .logo img { height: 50px; }
+    nav ul { display: flex; list-style: none; gap: 20px; flex-wrap: wrap; }
+    nav ul li { position: relative; }
+    nav ul li a {
+      color: white; text-decoration: none; font-weight: 600;
+      padding: 8px 12px; display: block; transition: background-color 0.3s ease;
+    }
+    nav ul li a:hover { background-color: #005599; border-radius: 4px; }
+    nav ul li ul {
+      display: none; position: absolute; background-color: #004080;
+      top: 100%; left: 0; min-width: 220px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2); z-index: 10;
+    }
+    nav ul li:hover ul { display: block; animation: fadeIn 0.3s ease-in-out; }
+    nav ul li ul li a { padding: 10px; font-weight: 400; }
+    @keyframes fadeIn { from {opacity: 0; transform: translateY(-8px);} to {opacity: 1; transform: translateY(0);} }
+    /* Utilidades */
+    .container { max-width: 1000px; margin: 40px auto; background: #fff; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); padding: 30px; }
+    .section-cta { padding: 50px 20px; background-color: #003366; color: white; text-align: center; }
+    .section-cta a { display: inline-block; margin-top: 20px; padding: 12px 24px; background-color: #f5b200; color: black; text-decoration: none; border-radius: 5px; font-weight: bold; }
+    .section-about { padding: 40px 20px; text-align: center; background-color: #fff; }
+    @media (max-width: 768px) {
+      nav ul { flex-direction: column; align-items: flex-start; }
+      .container { padding: 20px; margin: 20px auto; }
+    }
+  </style>
+
+  <style>
+    .grid { display:flex; flex-wrap: wrap; justify-content: center; gap: 40px; }
+    .card { width: 260px; background: white; border-radius: 16px; box-shadow: 0 8px 16px rgba(0,0,0,0.08); padding: 20px; }
+    .card img { width: 100%; height: auto; border-radius: 12px; }
+    .card h3 { margin-top: 15px; font-size: 20px; color: #003366; }
+    .card p { color: #666; font-size: 14px; margin-top: 5px; }
+    @media (max-width:768px) { .grid { gap: 20px; } }
+  </style>
+
+</head>
+<body>
+  <div id="header-container"></div>
+
+  <main class="container" style="text-align:center;">
+    <h2 style="margin-bottom: 30px; font-size: 36px; color: #003366;">Conheça a Diretoria</h2>
+    <div class="grid">
+      <div class="card">
+        <img src="https://i.ibb.co/d0BHQjf7/ISABEL.jpg" alt="Maria Isabel Josefino Freire">
+        <h3>Maria Isabel Josefino Freire</h3>
+        <p><i class="fas fa-star" style="margin-right:6px; color:#f5b200;"></i>Presidente</p>
+      </div>
+      <div class="card">
+        <img src="https://i.ibb.co/8D6c2Vq9/GERALDO-page-0001.jpg" alt="Geraldo Ribeiro Silva">
+        <h3>Geraldo Ribeiro Silva</h3>
+        <p><i class="fas fa-user-tie" style="margin-right:6px;"></i>Vice-Presidente</p>
+      </div>
+      <div class="card">
+        <img src="https://i.ibb.co/23H8D3W3/CARLOS-FRANCO-page-0001.jpg" alt="Carlos Franco">
+        <h3>Carlos Franco</h3>
+        <p><i class="fas fa-briefcase" style="margin-right:6px;"></i>Diretor Executivo</p>
+      </div>
+      <div class="card">
+        <img src="https://i.ibb.co/cccLH721/Sem-t-tulo.jpg" alt="Neuza Therezinha Vargas Cordeiro">
+        <h3>Neuza Therezinha Vargas Cordeiro</h3>
+        <p><i class="fas fa-coins" style="margin-right:6px;"></i>Tesoureira</p>
+      </div>
+    </div>
+  </main>
+
+  <section class="section-about">
+    <h2>Quem Somos</h2>
+    <p style="max-width: 800px; margin: auto;">
+      A APIPMCBDF representa e apoia os pensionistas e inativos da Polícia Militar e Corpo de Bombeiros do Antigo e Atual Distrito Federal. Lutamos por direitos, assistência e valorização dos nossos associados.
+    </p>
+    <a href="sobre.html" style="display:inline-block; margin-top: 16px; padding: 10px 20px; background-color: #003366; color: #fff; border-radius: 6px; text-decoration: none;">Saiba mais</a>
+  </section>
+
+  <div id="footer-container"></div>
+
+  <!-- Includes de header e footer -->
+  <script>
+    (function loadHeader(){
+      const el = document.getElementById('header-container');
+      if (!el) return;
+      fetch('header.html', { cache: 'no-store' })
+        .then(r => r.text()).then(html => el.innerHTML = html)
+        .catch(() => el.innerHTML = '<!-- falha ao carregar header -->');
+    })();
+    (function loadFooter(){
+      const el = document.getElementById('footer-container');
+      if (!el) return;
+      fetch('footer.html', { cache: 'no-store' })
+        .then(r => r.text()).then(html => el.innerHTML = html)
+        .catch(() => el.innerHTML = '<!-- falha ao carregar footer -->');
+    })();
+    function toggleMenu() {
+      var menu = document.getElementById("menu");
+      if (menu) menu.classList.toggle("active");
+    }
+  </script>
+  <noscript>
+    <iframe src="header.html" title="Cabeçalho" style="width:100%; border:0; height:160px;"></iframe>
+    <iframe src="footer.html" title="Rodapé" style="width:100%; border:0; height:320px;"></iframe>
+  </noscript>
+
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <title>Galeria - APIPMCBDF</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background-color: #f9f9f9; }
+    /* Estilos mínimos para o header carregado */
+    header { background-color: #003366; padding: 20px; color: white; }
+    nav { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+    .logo img { height: 50px; }
+    nav ul { display: flex; list-style: none; gap: 20px; flex-wrap: wrap; }
+    nav ul li { position: relative; }
+    nav ul li a {
+      color: white; text-decoration: none; font-weight: 600;
+      padding: 8px 12px; display: block; transition: background-color 0.3s ease;
+    }
+    nav ul li a:hover { background-color: #005599; border-radius: 4px; }
+    nav ul li ul {
+      display: none; position: absolute; background-color: #004080;
+      top: 100%; left: 0; min-width: 220px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2); z-index: 10;
+    }
+    nav ul li:hover ul { display: block; animation: fadeIn 0.3s ease-in-out; }
+    nav ul li ul li a { padding: 10px; font-weight: 400; }
+    @keyframes fadeIn { from {opacity: 0; transform: translateY(-8px);} to {opacity: 1; transform: translateY(0);} }
+    /* Utilidades */
+    .container { max-width: 1000px; margin: 40px auto; background: #fff; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); padding: 30px; }
+    .section-cta { padding: 50px 20px; background-color: #003366; color: white; text-align: center; }
+    .section-cta a { display: inline-block; margin-top: 20px; padding: 12px 24px; background-color: #f5b200; color: black; text-decoration: none; border-radius: 5px; font-weight: bold; }
+    .section-about { padding: 40px 20px; text-align: center; background-color: #fff; }
+    @media (max-width: 768px) {
+      nav ul { flex-direction: column; align-items: flex-start; }
+      .container { padding: 20px; margin: 20px auto; }
+    }
+  </style>
+
+  <style>
+    .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+    .pagination { margin-top: 30px; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+    .pagination button { padding: 10px 18px; background-color: #003366; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; }
+    .pagination button.active { background-color: #005599; }
+  </style>
+
+</head>
+<body>
+  <div id="header-container"></div>
+
+  <main class="container">
+    <h1 style="text-align:center; color:#003366; margin-bottom:20px;">Galeria de Fotos</h1>
+    <div class="gallery" id="gallery"></div>
+    <div class="pagination" id="pagination"></div>
+  </main>
+
+  <section class="section-cta">
+    <h2>Associe-se à APIPMCBDF</h2>
+    <p style="max-width: 700px; margin: 20px auto;">
+      Junte-se a centenas de associados que têm seus direitos defendidos com firmeza e comprometimento. Seja representado, tenha acesso a benefícios exclusivos e faça parte da nossa história!
+    </p>
+    <a href="seja-socio.html">Quero me associar</a>
+  </section>
+
+  <section class="section-about">
+    <h2>Quem Somos</h2>
+    <p style="max-width: 800px; margin: auto;">
+      A APIPMCBDF representa e apoia os pensionistas e inativos da Polícia Militar e Corpo de Bombeiros do Antigo e Atual Distrito Federal. Lutamos por direitos, assistência e valorização dos nossos associados.
+    </p>
+    <a href="sobre.html" style="display:inline-block; margin-top: 16px; padding: 10px 20px; background-color: #003366; color: #fff; border-radius: 6px; text-decoration: none;">Saiba mais</a>
+  </section>
+
+  <div id="footer-container"></div>
+
+  <script>
+    const totalImages = 86;
+    const imagesPerPage = 10;
+    const gallery = document.getElementById('gallery');
+    const pagination = document.getElementById('pagination');
+
+    function renderGallery(page = 1) {
+      gallery.innerHTML = '';
+      const start = (page - 1) * imagesPerPage + 1;
+      const end = Math.min(start + imagesPerPage - 1, totalImages);
+      for (let i = start; i <= end; i++) {
+        const img = document.createElement('img');
+        img.src = `https://raw.githubusercontent.com/apipmcbdf/SITE/main/imagens/Associacao%20(${i}).jpg`;
+        img.alt = `Foto ${i}`;
+        img.style.width = "100%";
+        img.style.borderRadius = "10px";
+        img.style.boxShadow = "0 2px 8px rgba(0,0,0,0.15)";
+        img.style.height = "200px";
+        img.style.objectFit = "cover";
+        gallery.appendChild(img);
+      }
+      renderPagination(page);
+    }
+
+    function renderPagination(currentPage) {
+      pagination.innerHTML = '';
+      const totalPages = Math.ceil(totalImages / imagesPerPage);
+      for (let i = 1; i <= totalPages; i++) {
+        const btn = document.createElement('button');
+        btn.textContent = i;
+        btn.className = i === currentPage ? 'active' : '';
+        btn.onclick = () => renderGallery(i);
+        pagination.appendChild(btn);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => renderGallery());
+  </script>
+
+  <!-- Includes de header e footer -->
+  <script>
+    (function loadHeader(){
+      const el = document.getElementById('header-container');
+      if (!el) return;
+      fetch('header.html', { cache: 'no-store' })
+        .then(r => r.text()).then(html => el.innerHTML = html)
+        .catch(() => el.innerHTML = '<!-- falha ao carregar header -->');
+    })();
+    (function loadFooter(){
+      const el = document.getElementById('footer-container');
+      if (!el) return;
+      fetch('footer.html', { cache: 'no-store' })
+        .then(r => r.text()).then(html => el.innerHTML = html)
+        .catch(() => el.innerHTML = '<!-- falha ao carregar footer -->');
+    })();
+    function toggleMenu() {
+      var menu = document.getElementById("menu");
+      if (menu) menu.classList.toggle("active");
+    }
+  </script>
+  <noscript>
+    <iframe src="header.html" title="Cabeçalho" style="width:100%; border:0; height:160px;"></iframe>
+    <iframe src="footer.html" title="Rodapé" style="width:100%; border:0; height:320px;"></iframe>
+  </noscript>
+
+</body>
+</html>
