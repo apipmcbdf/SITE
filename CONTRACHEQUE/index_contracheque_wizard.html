@@ -18,7 +18,6 @@
   </style>
 </head>
 <body>
-<div id=\"header-container\"></div>
   <nav class="navbar navbar-dark bg-dark fixed-top topo-ini">
     <span class="navbar-brand">Simulador de Reajustes do Contracheque 2025/2026</span>
     <button class="btn btn-outline-light btn-sm ml-auto" id="resetTop">Reset</button>
@@ -462,33 +461,5 @@
     resetAll();
   })();
   </script>
-
-<div id="footer-container"></div>
-
-  <script>
-    (function loadHeader(){
-      const el = document.getElementById('header-container');
-      if (!el) return;
-      fetch('header.html', { cache: 'no-store' })
-        .then(r => r.text()).then(html => el.innerHTML = html)
-        .catch(() => el.innerHTML = '<!-- falha ao carregar header -->');
-    })();
-    (function loadFooter(){
-      const el = document.getElementById('footer-container');
-      if (!el) return;
-      fetch('footer.html', { cache: 'no-store' })
-        .then(r => r.text()).then(html => el.innerHTML = html)
-        .catch(() => el.innerHTML = '<!-- falha ao carregar footer -->');
-    })();
-    function toggleMenu() {
-      var menu = document.getElementById("menu");
-      if (menu) menu.classList.toggle("active");
-    }
-  </script>
-  <noscript>
-    <iframe src="header.html" title="Cabeçalho" style="width:100%; border:0; height:160px;"></iframe>
-    <iframe src="footer.html" title="Rodapé" style="width:100%; border:0; height:320px;"></iframe>
-  </noscript>
-
 </body>
 </html>
