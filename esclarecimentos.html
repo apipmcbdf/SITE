@@ -1,17 +1,16 @@
-
 <!DOCTYPE html>
-
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>APIPMCBDF</title>
+<title>APIPMCBDF — Esclarecimentos Importantes</title>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet"/>
 <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body { font-family: 'Inter', sans-serif; background-color: #f9f9f9; }
+    /* Estilo para o header/nav utilizado em header.html */
     header { background-color: #003366; padding: 20px; color: white; }
     nav { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
     .logo img { height: 50px; }
@@ -33,253 +32,125 @@
       from {opacity: 0; transform: translateY(-10px);}
       to {opacity: 1; transform: translateY(0);}
     }
-    .hero {
-      position: relative; height: 90vh; overflow: hidden;
-    }
-    .hero img.slideshow-img {
-      position: absolute; width: 100%; height: 100%;
-      object-fit: cover; opacity: 0;
-      transition: opacity 1s ease-in-out;
-    }
-    .hero img.slideshow-img.active { opacity: 1; z-index: 1; }
-    .hero-overlay {
-      position: relative; z-index: 2;
-      background-color: rgba(0, 0, 0, 0.5);
-      height: 100%; display: flex; flex-direction: column;
-      justify-content: center; align-items: center;
-      color: white; text-align: center; padding: 20px;
-      animation: fadeIn 1s ease-in-out;
-    }
-    .hero-overlay img.symbol {
-      width: 80px; margin-bottom: 20px;
-    }
-    .hero-overlay h1 { font-size: 28px; margin-bottom: 10px; }
-    .hero-overlay p { font-size: 18px; max-width: 800px; }
     section { animation: fadeIn 0.8s ease-in-out; }
     @media (max-width: 768px) {
-      nav ul { flex-direction: column; align-items: flex-start; }
-      .footer-grid { grid-template-columns: 1fr; text-align: center; }
+      nav { position: relative; flex-direction: column; align-items: center; }
+      .logo { text-align: center; width: 100%; margin-bottom: 10px; }
+      .menu-toggle { display: block; cursor: pointer; font-size: 24px; color: white; margin-bottom: 10px; }
+      #menu { display: none; flex-direction: column; position: relative; width: 100%; background-color: #003366; z-index: 1000; }
+      #menu.active { display: flex; }
     }
-    footer {
-      background-color: #002244; color: white; padding: 40px 20px;
-    }
-    .footer-grid {
-      max-width: 1200px; margin: auto;
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 30px; text-align: center;
-    }
-    .footer-grid div p { font-size: 14px; margin: 8px 0; }
-    .footer-bottom { text-align: center; margin-top: 30px; font-size: 13px; }
-    .social-icons { margin-top: 10px; }
-    .social-icons a {
-      color: white; margin: 0 8px; font-size: 20px;
-      text-decoration: none; transition: transform 0.3s ease;
-    }
-    .social-icons a:hover { transform: scale(1.2); }
-    .whatsapp-float {
-      position: fixed; bottom: 20px; right: 20px; z-index: 1000;
-    }
-    .whatsapp-float img {
-      width: 60px; height: 60px; transition: transform 0.3s ease;
-    }
-    .whatsapp-float img:hover { transform: scale(1.1); }
-  
-@media (max-width: 768px) {
-  .hero-overlay h1 { font-size: 20px; }
-  .hero-overlay p { font-size: 14px; padding: 0 10px; }
-  .hero-overlay img.symbol { width: 50px; }
-  .footer-grid { grid-template-columns: 1fr; text-align: center; }
-  section div[style*="display: flex"] > div,
-  section div[style*="display: flex"] > a {
-    width: 100% !important;
-    max-width: 300px;
-  }
-
-  nav {
-    position: relative;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .logo {
-    text-align: center;
-    width: 100%;
-    margin-bottom: 10px;
-  }
-
-  .menu-toggle {
-    display: block;
-    cursor: pointer;
-    font-size: 24px;
-    color: white;
-    margin-bottom: 10px;
-  }
-
-  #menu {
-    display: none;
-    flex-direction: column;
-    position: relative;
-    width: 100%;
-    background-color: #003366;
-    z-index: 1000;
-  }
-
-  #menu.active {
-    display: flex;
-  }
-}
-
 </style>
 </head>
 <body>
-<div id=\"header-container\"></div>
-<div style="background-color: #ffcc00; color: #000; padding: 10px 20px; text-align: center; font-weight: bold;">
-  📢 Atenção: A segunda listagem de implantação da VPE já foi protocolada. Não há prazo para implantação. Aguarde
-</div>
+
+<!-- HEADER carregado de header.html -->
+<div id="header-include" aria-label="Cabeçalho do site"></div>
 
 <section style="padding: 60px 20px; background-color: #f9f9f9;">
-<div style="max-width: 1000px; margin: auto; background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); font-size: 17px; line-height: 1.7; color: #333;">
+  <div style="max-width: 1000px; margin: auto; background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); font-size: 17px; line-height: 1.7; color: #333;">
 
-<h1 style="font-size: 28px; color: #003366; text-align: center; margin-bottom: 30px;">Esclarecimentos Importantes – Dra. Graziela Menini</h1>
+    <h1 style="font-size: 28px; color: #003366; text-align: center; margin-bottom: 30px;">Esclarecimentos Importantes – Dra. Graziela Menini</h1>
+    <p style="font-weight: bold; font-size: 18px; text-align: center; margin-bottom: 30px;">LEIAM COM ATENÇÃO</p>
+    <p style="margin-bottom: 25px;">A seguir, esclareço as principais dúvidas que têm sido enviadas ao meu WhatsApp:</p>
 
-<p style="font-weight: bold; font-size: 18px; text-align: center; margin-bottom: 30px;">LEIAM COM ATENÇÃO</p>
+    <ol style="padding-left: 20px;">
+      <li style="margin-bottom: 20px;">
+        <strong>A VPE terá aumento?</strong><br/>
+        Existe uma proposta em andamento, mas ainda não concretizada. Assim que houver confirmação, informaremos via WhatsApp da Associação.<br/><br/>
+        Importante: quando o valor bruto aumenta, os descontos obrigatórios — como pensão militar, adicional e IR — também aumentam. Com a inclusão da decisão judicial, muitos passaram a ter desconto. Um futuro reajuste pode gerar novos descontos.
+      </li>
 
-<p style="margin-bottom: 25px;">A seguir, esclareço as principais dúvidas que têm sido enviadas ao meu WhatsApp:</p>
+      <li style="margin-bottom: 20px;">
+        <strong>Quem tem direito à isenção de Imposto de Renda?</strong><br/>
+        Pessoas diagnosticadas com as doenças abaixo podem solicitar isenção e devolução dos valores desde a data do laudo. Via judicial, é possível obter suspensão e restituição com maior celeridade.
+        <ul style="columns: 2; margin-top: 10px;">
+          <li>AIDS</li><li>Alienação Mental</li><li>Cardiopatia Grave</li><li>Cegueira</li><li>Contaminação por Radiação</li><li>Doença de Paget</li>
+          <li>Doença de Parkinson</li><li>Esclerose Múltipla</li><li>Espondiloartrose</li><li>Fibrose Cística</li><li>Hanseníase</li><li>Nefropatia Grave</li>
+          <li>Hepatopatia Grave</li><li>Neoplasia Maligna</li><li>Paralisia Irreversível</li><li>Tuberculose Ativa</li>
+        </ul>
+      </li>
 
-<ol style="padding-left: 20px;">
-<li style="margin-bottom: 20px;">
-  <strong>A VPE terá aumento?</strong><br/>
-  Existe uma proposta em andamento, mas ainda não concretizada. Assim que houver confirmação, informaremos via WhatsApp da Associação.
-  <br/><br/>
-  Importante: quando o valor bruto aumenta, os descontos obrigatórios — como pensão militar, adicional e IR — também aumentam. Com a inclusão da decisão judicial, muitos passaram a ter desconto. Um futuro reajuste pode gerar novos descontos.
-</li>
+      <li style="margin-bottom: 20px;">
+        <strong>E os atrasados da VPE?</strong><br/>
+        Quem já recebe desde 2016 provavelmente já tem processo. A Associação pode confirmar. Se o instituidor faleceu, será necessário habilitar herdeiros e apresentar termo de inventariante ou partilha.<br/><br/>
+        Em casos sem bens ou com apenas um herdeiro, pode-se dispensar inventário. A distribuição da ação exige documentação completa.
+      </li>
 
-<li style="margin-bottom: 20px;">
-  <strong>Quem tem direito à isenção de Imposto de Renda?</strong><br/>
-  Pessoas diagnosticadas com as doenças abaixo podem solicitar isenção e devolução dos valores desde a data do laudo. Via judicial, é possível obter suspensão e restituição com maior celeridade.
-  <ul style="columns: 2; margin-top: 10px;">
-    <li>AIDS</li><li>Alienação Mental</li><li>Cardiopatia Grave</li><li>Cegueira</li><li>Contaminação por Radiação</li><li>Doença de Paget</li>
-    <li>Doença de Parkinson</li><li>Esclerose Múltipla</li><li>Espondiloartrose</li><li>Fibrose Cística</li><li>Hanseníase</li><li>Nefropatia Grave</li>
-    <li>Hepatopatia Grave</li><li>Neoplasia Maligna</li><li>Paralisia Irreversível</li><li>Tuberculose Ativa</li>
-  </ul>
-</li>
+      <li style="margin-bottom: 20px;">
+        <strong>O pagamento dos atrasados vai demorar?</strong><br/>
+        Sim. Os atrasados são pagos por precatório. É necessário cumprir etapas judiciais até emissão pelo TRF. A Associação e o escritório estão atuando para agilizar esse processo.
+      </li>
 
-<li style="margin-bottom: 20px;">
-  <strong>E os atrasados da VPE?</strong><br/>
-  Quem já recebe desde 2016 provavelmente já tem processo. A Associação pode confirmar. Se o instituidor faleceu, será necessário habilitar herdeiros e apresentar termo de inventariante ou partilha.
-  <br/><br/>
-  Em casos sem bens ou com apenas um herdeiro, pode-se dispensar inventário. A distribuição da ação exige documentação completa.
-</li>
+      <li style="margin-bottom: 20px;">
+        <strong>O Ministério não pagou o 13º sobre a VPE. O que fazer?</strong><br/>
+        Aguardar. O 13º referente à decisão judicial é pago no final do ano.
+      </li>
 
-<li style="margin-bottom: 20px;">
-  <strong>O pagamento dos atrasados vai demorar?</strong><br/>
-  Sim. Os atrasados são pagos por precatório. É necessário cumprir etapas judiciais até emissão pelo TRF. A Associação e o escritório estão atuando para agilizar esse processo.
-</li>
+      <li style="margin-bottom: 20px;">
+        <strong>Sobre o Auxílio Moradia – ação coletiva:</strong><br/>
+        Sem novidades para quem ainda não recebe. Quem já recebe e ainda não entregou os documentos deve fazê-lo com urgência. Se o instituidor faleceu, é necessário habilitar espólio e apresentar inventário.
+      </li>
 
-<li style="margin-bottom: 20px;">
-  <strong>O Ministério não pagou o 13º sobre a VPE. O que fazer?</strong><br/>
-  Aguardar. O 13º referente à decisão judicial é pago no final do ano.
-</li>
+      <li style="margin-bottom: 20px;">
+        <strong>Ações individuais (Auxílio Moradia):</strong><br/>
+        Estão aguardando resposta das Turmas Recursais ou do STF. Assim que houver decisão, todos serão informados.
+      </li>
 
-<li style="margin-bottom: 20px;">
-  <strong>Sobre o Auxílio Moradia – ação coletiva:</strong><br/>
-  Sem novidades para quem ainda não recebe. Quem já recebe e ainda não entregou os documentos deve fazê-lo com urgência. Se o instituidor faleceu, é necessário habilitar espólio e apresentar inventário.
-</li>
+      <li style="margin-bottom: 20px;">
+        <strong>Quem ainda não recebe a VPE tem previsão de pagamento?</strong><br/>
+        O despacho pode ser publicado a qualquer momento. Assim que ocorrer, será feita comunicação oficial com estimativa de implantação.
+      </li>
 
-<li style="margin-bottom: 20px;">
-  <strong>Ações individuais (Auxílio Moradia):</strong><br/>
-  Estão aguardando resposta das Turmas Recursais ou do STF. Assim que houver decisão, todos serão informados.
-</li>
+      <li style="margin-bottom: 20px;">
+        <strong>Comunicado sobre Reposição ao Erário:</strong><br/>
+        A notificação significa que o órgão público entendeu que houve pagamento indevido. Podem ser várias as razões: VPNI, diária de asilado, adicional de tempo de serviço etc.<br/><br/>
+        <u>Importante:</u> Nem toda cobrança está relacionada à VPE ou é devida. Algumas podem estar prescritas. <br/>
+        <ul style="margin-top: 10px;">
+          <li>Não assine o Termo de Ciência sem orientação jurídica.</li>
+          <li>Reúna documentação como contracheques, decisões e cópia de processo administrativo (DECIPEX).</li>
+          <li>Cada caso será avaliado individualmente para evitar prejuízos.</li>
+        </ul>
+      </li>
+    </ol>
 
-<li style="margin-bottom: 20px;">
-  <strong>Quem ainda não recebe a VPE tem previsão de pagamento?</strong><br/>
-  O despacho pode ser publicado a qualquer momento. Assim que ocorrer, será feita comunicação oficial com estimativa de implantação.
-</li>
+    <p style="margin-top: 30px;">📌 Em caso de dúvidas persistentes, agende atendimento jurídico presencial.</p>
+    <p style="text-align: right; margin-top: 40px; font-weight: bold;">Atenciosamente,<br/>Dra. Graziela Menini</p>
 
-<li style="margin-bottom: 20px;">
-  <strong>Comunicado sobre Reposição ao Erário:</strong><br/>
-  A notificação significa que o órgão público entendeu que houve pagamento indevido. Podem ser várias as razões: VPNI, diária de asilado, adicional de tempo de serviço etc.
-  <br/><br/>
-  <u>Importante:</u> Nem toda cobrança está relacionada à VPE ou é devida. Algumas podem estar prescritas. <br/>
-  <ul style="margin-top: 10px;">
-    <li>Não assine o Termo de Ciência sem orientação jurídica.</li>
-    <li>Reúna documentação como contracheques, decisões e cópia de processo administrativo (DECIPEX).</li>
-    <li>Cada caso será avaliado individualmente para evitar prejuízos.</li>
-  </ul>
-</li>
-</ol>
-
-<p style="margin-top: 30px;">📌 Em caso de dúvidas persistentes, agende atendimento jurídico presencial.</p>
-
-<p style="text-align: right; margin-top: 40px; font-weight: bold;">Atenciosamente,<br/>Dra. Graziela Menini</p>
-
-</div>
+  </div>
 </section>
 
 <section style="padding: 50px 20px; background-color: #003366; color: white; text-align: center;">
-<h2>Associe-se à APIPMCBDF</h2>
-<p style="max-width: 700px; margin: 20px auto;">
+  <h2>Associe-se à APIPMCBDF</h2>
+  <p style="max-width: 700px; margin: 20px auto;">
     Junte-se a centenas de associados que têm seus direitos defendidos com firmeza e comprometimento. Seja representado, tenha acesso a benefícios exclusivos e faça parte da nossa história!
   </p>
-<a href="seja-socio.html" style="display: inline-block; margin-top: 20px; padding: 12px 24px; background-color: #f5b200; color: black; text-decoration: none; border-radius: 5px; font-weight: bold;">Quero me associar</a>
-</section><section style="padding: 40px 20px; text-align: center; background-color: #fff;">
-<h2>Quem Somos</h2>
-<p style="max-width: 800px; margin: auto;">
-    A APIPMCBDF representa e apoia os pensionistas e inativos da Polícia Militar e Corpo de Bombeiros do Antigo e Atual Distrito Federal. Lutamos por direitos, assistência e valorização dos nossos associados.
-  </p>
-<a href="sobre.html" style="display: inline-block; margin-top: 20px; padding: 10px 20px; background-color: #003366; color: white; text-decoration: none; border-radius: 5px;">Saiba mais</a>
+  <a href="seja-socio.html" style="display: inline-block; margin-top: 20px; padding: 12px 24px; background-color: #f5b200; color: black; text-decoration: none; border-radius: 5px; font-weight: bold;">Quero me associar</a>
 </section>
-<div style="background: #001a33; color: #fff; text-align: center; padding: 10px; font-size: 14px;">
-  Um homem que esquece seu passado está condenado a viver sem futuro.
-</div>
 
-<div class="whatsapp-float">
-<a href="https://wa.me/5521984997413" target="_blank">
-<img alt="WhatsApp" src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg">
-</img></a>
-</div>
-<script>
-  const slides = document.querySelectorAll('.slideshow-img');
-  let index = 0;
-  setInterval(() => {
-    slides[index].classList.remove('active');
-    index = (index + 1) % slides.length;
-    slides[index].classList.add('active');
-  }, 5000);
-
-function toggleMenu() {
-  var menu = document.getElementById("menu");
-  if (menu) menu.classList.toggle("active");
-}
-
-</script>
-
-<div id="footer-container"></div>
+<!-- FOOTER carregado de footer.html -->
+<div id="footer-include" aria-label="Rodapé do site"></div>
 
   <script>
-    (function loadHeader(){
-      const el = document.getElementById('header-container');
+    async function include(path, targetId) {
+      const el = document.getElementById(targetId);
       if (!el) return;
-      fetch('header.html', { cache: 'no-store' })
-        .then(r => r.text()).then(html => el.innerHTML = html)
-        .catch(() => el.innerHTML = '<!-- falha ao carregar header -->');
-    })();
-    (function loadFooter(){
-      const el = document.getElementById('footer-container');
-      if (!el) return;
-      fetch('footer.html', { cache: 'no-store' })
-        .then(r => r.text()).then(html => el.innerHTML = html)
-        .catch(() => el.innerHTML = '<!-- falha ao carregar footer -->');
-    })();
+      try {
+        const res = await fetch(path, { cache: "no-store" });
+        el.innerHTML = await res.text();
+      } catch (e) {
+        console.error(`Falha ao carregar ${path}`, e);
+      }
+    }
+    // Toggle do menu (usado pelo header.html)
     function toggleMenu() {
       var menu = document.getElementById("menu");
       if (menu) menu.classList.toggle("active");
     }
+    // Carrega os includes
+    include('header.html', 'header-include');
+    include('footer.html', 'footer-include');
   </script>
-  <noscript>
-    <iframe src="header.html" title="Cabeçalho" style="width:100%; border:0; height:160px;"></iframe>
-    <iframe src="footer.html" title="Rodapé" style="width:100%; border:0; height:320px;"></iframe>
-  </noscript>
 
 </body>
 </html>
