@@ -4,7 +4,7 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Contato — APIPMCBDF</title>
-  <!-- Recursos comuns (ok manter aqui mesmo que também existam no head.html) -->
+  <!-- Recursos comuns (ok manter aqui mesmo que também existam no header.html) -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet"/>
   <style>
@@ -12,11 +12,6 @@
     :root { --azul:#003366; --bg:#f9f9f9; }
     * { box-sizing: border-box; margin:0; padding:0; }
     body { font-family: 'Inter', sans-serif; background: var(--bg); }
-
-    .alert-bar {
-      background-color:#ffcc00; color:#000; padding:10px 20px;
-      text-align:center; font-weight:700;
-    }
 
     .section-contact { padding:60px 20px; background-color:#f4f6f9; }
     .contact-card {
@@ -47,13 +42,8 @@
   </style>
 </head>
 <body>
-  <!-- AVISO / BANNER -->
-  <div class="alert-bar">
-    📢 Atenção: A segunda listagem de implantação da VPE já foi protocolada. Não há prazo para implantação. Aguarde
-  </div>
-
-  <!-- HEADER externo -->
-  <div data-include="head.html"></div>
+  <!-- HEADER externo (corrigido: estava 'head.html') -->
+  <div data-include="header.html"></div>
 
   <!-- CONTEÚDO DA PÁGINA -->
   <section class="section-contact">
@@ -81,11 +71,11 @@
     </div>
   </section>
 
-  <!-- FOOTER externo -->
+  <!-- FOOTER externo (opcional, manter se existir o arquivo) -->
   <div data-include="footer.html"></div>
 
   <script>
-    // Carrega arquivos com data-include="*.html" (ex.: head.html, footer.html)
+    // Carrega arquivos com data-include="*.html" (ex.: header.html, footer.html)
     (function() {
       async function includeFragments() {
         const nodes = document.querySelectorAll('[data-include]');
@@ -104,7 +94,7 @@
       }
       document.addEventListener('DOMContentLoaded', includeFragments);
 
-      // Fallback do menu mobile caso o head.html use .menu-toggle e #menu
+      // Fallback para o botão do menu mobile se o header usar .menu-toggle e #menu
       document.addEventListener('click', function(e) {
         const btn = e.target.closest('.menu-toggle');
         if (btn) {
@@ -112,6 +102,12 @@
           if (menu) menu.classList.toggle('active');
         }
       });
+
+      // Define a função global usada por header.html (evita erro de referência)
+      window.toggleMenu = function toggleMenu() {
+        const menu = document.getElementById('menu');
+        if (menu) menu.classList.toggle('active');
+      };
     })();
   </script>
 </body>
