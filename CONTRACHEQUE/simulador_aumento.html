@@ -5,74 +5,67 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Simulador de Reajustes do Contracheque 2025/2026</title>
 
-  <!-- Dependências comuns -->
+  <!-- Dependências opcionais desta página (não interferem no cabeçalho/rodapé externos) -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet"/>
 
   <style>
-    /* Reset e base */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body { font-family: 'Inter', sans-serif; background-color: #f9f9f9; color: #1b1b1b; line-height: 1.5; }
+    /* Estilos SOMENTE desta página. O header/rodapé são carregados de arquivos próprios. */
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; background:#f9f9f9; color:#1b1b1b; line-height:1.5; }
 
-    /* Layout da área principal desta página */
     .container-card {
       max-width: 1200px;
-      margin: 60px auto;
+      margin: 40px auto 60px;
       background: #fff;
-      padding: 0;
       border-radius: 12px;
       box-shadow: 0 4px 20px rgba(0,0,0,0.1);
       overflow: hidden;
     }
+    iframe.simulador-frame { width:100%; min-height:1100px; border:0; display:block; }
 
-    /* Seções auxiliares desta página */
     .cta-section {
       padding: 50px 20px;
-      background-color: #003366;
-      color: #fff;
-      text-align: center;
+      background-color:#003366;
+      color:#fff;
+      text-align:center;
     }
-    .cta-section h2 { margin-bottom: 10px; }
-    .cta-section p { max-width: 700px; margin: 20px auto; }
+    .cta-section h2 { margin-bottom:10px; font-size:22px; }
+    .cta-section p { max-width:700px; margin:20px auto; font-size:16px; }
     .cta-section a {
-      display: inline-block; margin-top: 20px; padding: 12px 24px;
-      background-color: #f5b200; color: #000; text-decoration: none; border-radius: 5px; font-weight: 700;
+      display:inline-block; margin-top:20px; padding:12px 24px;
+      background-color:#f5b200; color:#000; text-decoration:none; border-radius:8px; font-weight:700;
     }
 
-    .about-section {
-      padding: 40px 20px; text-align: center; background-color: #fff;
-    }
-    .about-section h2 { margin-bottom: 10px; }
-    .about-section p { max-width: 800px; margin: 0 auto; }
+    .about-section { padding:40px 20px; text-align:center; background:#fff; }
+    .about-section h2 { margin-bottom:10px; font-size:22px; color:#003366; }
+    .about-section p { max-width:800px; margin:0 auto; font-size:16px; }
     .about-section a {
-      display: inline-block; margin-top: 20px; padding: 10px 20px;
-      background-color: #003366; color: #fff; text-decoration: none; border-radius: 5px;
+      display:inline-block; margin-top:20px; padding:10px 20px;
+      background-color:#003366; color:#fff; text-decoration:none; border-radius:8px; font-weight:600;
     }
 
-    /* WhatsApp flutuante (permanece nesta página) */
-    .whatsapp-float { position: fixed; bottom: 20px; right: 20px; z-index: 1000; }
-    .whatsapp-float img { width: 60px; height: 60px; transition: transform .3s ease; }
-    .whatsapp-float img:hover { transform: scale(1.1); }
+    /* Botão flutuante do WhatsApp (permanece nesta página) */
+    .whatsapp-float { position:fixed; bottom:20px; right:20px; z-index:1000; }
+    .whatsapp-float img { width:60px; height:60px; transition:transform .3s ease; }
+    .whatsapp-float img:hover { transform:scale(1.1); }
 
-    /* Responsivo básico desta página */
     @media (max-width: 768px) {
-      .container-card { margin: 30px auto; border-radius: 10px; }
+      .container-card { margin: 20px auto 40px; border-radius:10px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Substituição: inclui cabeçalho global do SITE (um nível acima da pasta CONTRACHEQUE) -->
-  <div data-include="../cabeçalho.html"></div>
+  <!-- Direciona para os HTML do SITE (NÃO INCORPORA). Caminhos relativos sobem um nível de CONTRACHEQUE → SITE -->
+  <div data-include="../cabeçalho.html" data-fallback="../cabecalho.html|../header.html"></div>
 
-  <!-- CONTEÚDO ESPECÍFICO DESTA PÁGINA -->
   <main>
     <section>
       <div class="container-card">
         <iframe
+          class="simulador-frame"
           src="index_contracheque_wizard.html"
-          style="width: 100%; min-height: 1100px; border: 0; display:block;"
           title="Simulador de Reajustes do Contracheque 2025/2026">
         </iframe>
       </div>
@@ -90,17 +83,15 @@
     <section class="about-section">
       <h2>Quem Somos</h2>
       <p>
-        A APIPMCBDF representa e apoia os pensionistas e inativos da Polícia Militar e Corpo de Bombeiros do Antigo e Atual Distrito Federal.
-        Lutamos por direitos, assistência e valorização dos nossos associados.
+        A APIPMCBDF representa e apoia os pensionistas e inativos da Polícia Militar e Corpo de Bombeiros
+        do Antigo e Atual Distrito Federal. Lutamos por direitos, assistência e valorização dos nossos associados.
       </p>
       <a href="../sobre.html">Saiba mais</a>
     </section>
   </main>
 
-  <!-- Substituição: inclui rodapé global do SITE (um nível acima da pasta CONTRACHEQUE) -->
-  <div data-include="../rodapé.html"></div>
+  <div data-include="../rodapé.html" data-fallback="../rodape.html|../footer.html"></div>
 
-  <!-- Botão do WhatsApp (mantido nesta página) -->
   <div class="whatsapp-float">
     <a href="https://wa.me/5521984997413" target="_blank" rel="noopener">
       <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
@@ -108,33 +99,49 @@
   </div>
 
   <script>
-    // Carrega arquivos data-include="*.html" (ex.: ../cabeçalho.html e ../rodapé.html)
+    // Carrega arquivos em data-include apontando para os HTML externos do SITE.
+    // Mantém EXATAMENTE os arquivos separados (sem embed). Funciona em GitHub Pages/servidor.
     (function() {
+      async function fetchTry(url) {
+        const encoded = encodeURI(url); // lida bem com ç/ã/é nos nomes dos arquivos
+        const res = await fetch(encoded, { cache: 'no-store' });
+        if (!res.ok) throw new Error(res.status + ' ' + res.statusText);
+        return await res.text();
+      }
+
       async function includeFragments() {
         const nodes = document.querySelectorAll('[data-include]');
         for (const el of nodes) {
-          const url = el.getAttribute('data-include');
-          try {
-            const res = await fetch(url, { cache: 'no-store' });
-            if (!res.ok) throw new Error(res.status + ' ' + res.statusText);
-            const html = await res.text();
-            el.outerHTML = html;
-          } catch (err) {
-            console.error('Falha ao carregar include:', url, err);
-            el.outerHTML = '<!-- erro ao carregar ' + url + ': ' + err.message + ' -->';
+          const primary = el.getAttribute('data-include');
+          const fallbacks = (el.getAttribute('data-fallback') || '').split('|').map(s => s.trim()).filter(Boolean);
+          const candidates = [primary, ...fallbacks];
+
+          let loaded = false;
+          for (const url of candidates) {
+            try {
+              const html = await fetchTry(url);
+              el.outerHTML = html;
+              loaded = true;
+              break;
+            } catch (err) {
+              console.warn('Falha ao carregar', url, err);
+            }
+          }
+          if (!loaded) {
+            el.outerHTML = '<!-- erro ao carregar include -->';
           }
         }
       }
       document.addEventListener('DOMContentLoaded', includeFragments);
 
-      // Fallback: função global usada por alguns cabeçalhos
+      // Fallback global caso o cabeçalho use toggleMenu()
       window.toggleMenu = function toggleMenu() {
         const menu = document.getElementById('menu');
         if (menu) menu.classList.toggle('active');
       };
     })();
 
-    // Proteção: só roda slideshow se houver imagens com .slideshow-img
+    // Slideshow seguro: só executa se existir (evita erros caso o cabeçalho/rodapé tenham scripts)
     (function(){
       const slides = document.querySelectorAll('.slideshow-img');
       if (!slides || slides.length === 0) return;
