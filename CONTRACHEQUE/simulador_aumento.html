@@ -5,50 +5,74 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Simulador de Reajustes do Contracheque 2025/2026</title>
 
-  <!-- Dependências opcionais desta página (não interferem no cabeçalho/rodapé externos) -->
+  <!-- CSS GLOBAL do SITE (tentativas comuns; 404 são ignorados pelo navegador) -->
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../site.css">
+  <link rel="stylesheet" href="../main.css">
+  <link rel="stylesheet" href="../header.css">
+  <link rel="stylesheet" href="../menu.css">
+
+  <!-- Dependências opcionais desta página -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet"/>
 
   <style>
-    /* Estilos SOMENTE desta página. O header/rodapé são carregados de arquivos próprios. */
+    /* ===== Fallback mínimo para o cabeçalho (aplicado só se o CSS global não cobrir) ===== */
+    :root { --azul:#003366; --bg:#f9f9f9; --texto:#1b1b1b; }
     * { margin:0; padding:0; box-sizing:border-box; }
-    body { font-family:'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; background:#f9f9f9; color:#1b1b1b; line-height:1.5; }
+    body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; background:var(--bg); color:var(--texto); line-height:1.5; }
 
-    .container-card {
-      max-width: 1200px;
-      margin: 40px auto 60px;
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-      overflow: hidden;
-    }
-    iframe.simulador-frame { width:100%; min-height:1100px; border:0; display:block; }
+    header { background: var(--azul); color:#fff; }
+    header nav { max-width:1200px; margin:0 auto; padding:12px 16px; display:flex; align-items:center; gap:16px; position:relative; }
+    header .logo img { height:44px; display:block; }
+    .menu-toggle { display:none; font-size:24px; cursor:pointer; user-select:none; color:#fff; }
 
-    .cta-section {
-      padding: 50px 20px;
-      background-color:#003366;
-      color:#fff;
-      text-align:center;
+    /* Reset básico de listas/links no menu */
+    #menu { list-style:none; display:flex; align-items:center; gap:10px; margin-left:auto; }
+    #menu > li { position:relative; }
+    #menu > li > a { color:#fff; text-decoration:none; font-weight:600; padding:8px 10px; border-radius:8px; display:inline-flex; align-items:center; gap:8px; }
+    #menu > li > a:hover { background:rgba(255,255,255,.12); }
+
+    /* Submenus */
+    #menu li ul { list-style:none; position:absolute; left:0; top:calc(100% + 8px); min-width:220px;
+                  background:#fff; color:#000; border-radius:12px; box-shadow:0 12px 28px rgba(0,0,0,.18);
+                  padding:8px; display:none; z-index:50; }
+    #menu li:hover > ul { display:block; }
+    #menu li ul li a { color:#000; text-decoration:none; display:block; padding:10px 12px; border-radius:8px; }
+    #menu li ul li a:hover { background:#eef4ff; color:var(--azul); }
+
+    /* Mobile */
+    @media (max-width:980px) {
+      .menu-toggle { display:block; }
+      #menu { position:absolute; right:16px; top:60px; flex-direction:column; align-items:stretch;
+              background:#fff; color:#000; border-radius:12px; box-shadow:0 12px 28px rgba(0,0,0,.18);
+              padding:8px; width:min(90vw,360px); max-height:70vh; overflow:auto; display:none; }
+      #menu.active { display:flex; }
+      #menu > li > a { color:#000; }
+      #menu li ul { position:static; box-shadow:none; padding:0; }
+      #menu li:hover > ul { display:block; }
+      #menu li ul li a { padding-left:18px; }
     }
+
+    /* ===== Estilos desta página ===== */
+    .container-card { max-width: 1200px; margin: 40px auto 60px; background: #fff;
+                      border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); overflow: hidden; }
+    iframe.simulador-frame { width: 100%; min-height: 1100px; border: 0; display: block; }
+
+    .cta-section { padding: 50px 20px; background-color: var(--azul); color: #fff; text-align: center; }
     .cta-section h2 { margin-bottom:10px; font-size:22px; }
     .cta-section p { max-width:700px; margin:20px auto; font-size:16px; }
-    .cta-section a {
-      display:inline-block; margin-top:20px; padding:12px 24px;
-      background-color:#f5b200; color:#000; text-decoration:none; border-radius:8px; font-weight:700;
-    }
+    .cta-section a { display:inline-block; margin-top:20px; padding:12px 24px; background:#f5b200; color:#000; text-decoration:none; border-radius:8px; font-weight:700; }
 
     .about-section { padding:40px 20px; text-align:center; background:#fff; }
-    .about-section h2 { margin-bottom:10px; font-size:22px; color:#003366; }
+    .about-section h2 { margin-bottom:10px; font-size:22px; color:var(--azul); }
     .about-section p { max-width:800px; margin:0 auto; font-size:16px; }
-    .about-section a {
-      display:inline-block; margin-top:20px; padding:10px 20px;
-      background-color:#003366; color:#fff; text-decoration:none; border-radius:8px; font-weight:600;
-    }
+    .about-section a { display:inline-block; margin-top:20px; padding:10px 20px; background:var(--azul); color:#fff; text-decoration:none; border-radius:8px; font-weight:600; }
 
-    /* Botão flutuante do WhatsApp (permanece nesta página) */
-    .whatsapp-float { position:fixed; bottom:20px; right:20px; z-index:1000; }
-    .whatsapp-float img { width:60px; height:60px; transition:transform .3s ease; }
-    .whatsapp-float img:hover { transform:scale(1.1); }
+    .whatsapp-float { position: fixed; bottom: 20px; right: 20px; z-index: 1000; }
+    .whatsapp-float img { width: 60px; height: 60px; transition: transform .3s ease; }
+    .whatsapp-float img:hover { transform: scale(1.1); }
 
     @media (max-width: 768px) {
       .container-card { margin: 20px auto 40px; border-radius:10px; }
@@ -57,7 +81,7 @@
 </head>
 <body>
 
-  <!-- Direciona para os HTML do SITE (NÃO INCORPORA). Caminhos relativos sobem um nível de CONTRACHEQUE → SITE -->
+  <!-- Carrega os HTML externos do SITE (sem incorporar conteúdo aqui) -->
   <div data-include="../cabeçalho.html" data-fallback="../cabecalho.html|../header.html"></div>
 
   <main>
@@ -99,23 +123,20 @@
   </div>
 
   <script>
-    // Carrega arquivos em data-include apontando para os HTML externos do SITE.
-    // Mantém EXATAMENTE os arquivos separados (sem embed). Funciona em GitHub Pages/servidor.
+    // Loader que DIRECIONA para os HTML externos e insere o conteúdo na página.
     (function() {
       async function fetchTry(url) {
-        const encoded = encodeURI(url); // lida bem com ç/ã/é nos nomes dos arquivos
+        const encoded = encodeURI(url);
         const res = await fetch(encoded, { cache: 'no-store' });
         if (!res.ok) throw new Error(res.status + ' ' + res.statusText);
         return await res.text();
       }
-
       async function includeFragments() {
         const nodes = document.querySelectorAll('[data-include]');
         for (const el of nodes) {
           const primary = el.getAttribute('data-include');
           const fallbacks = (el.getAttribute('data-fallback') || '').split('|').map(s => s.trim()).filter(Boolean);
           const candidates = [primary, ...fallbacks];
-
           let loaded = false;
           for (const url of candidates) {
             try {
@@ -134,24 +155,11 @@
       }
       document.addEventListener('DOMContentLoaded', includeFragments);
 
-      // Fallback global caso o cabeçalho use toggleMenu()
+      // Fallback global (caso o cabeçalho use toggleMenu())
       window.toggleMenu = function toggleMenu() {
         const menu = document.getElementById('menu');
         if (menu) menu.classList.toggle('active');
       };
-    })();
-
-    // Slideshow seguro: só executa se existir (evita erros caso o cabeçalho/rodapé tenham scripts)
-    (function(){
-      const slides = document.querySelectorAll('.slideshow-img');
-      if (!slides || slides.length === 0) return;
-      let index = 0;
-      slides[index].classList.add('active');
-      setInterval(() => {
-        slides[index].classList.remove('active');
-        index = (index + 1) % slides.length;
-        slides[index].classList.add('active');
-      }, 5000);
     })();
   </script>
 </body>
