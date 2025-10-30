@@ -4,48 +4,203 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Contato — APIPMCBDF</title>
-  <!-- Recursos comuns (ok manter aqui mesmo que também existam no header.html) -->
+
+  <!-- Dependências -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet"/>
-  <style>
-    /* Estilos específicos desta página (não duplicam header/footer) */
-    :root { --azul:#003366; --bg:#f9f9f9; }
-    * { box-sizing: border-box; margin:0; padding:0; }
-    body { font-family: 'Inter', sans-serif; background: var(--bg); }
 
-    .section-contact { padding:60px 20px; background-color:#f4f6f9; }
-    .contact-card {
-      max-width:850px; margin:auto; background:#fff; padding:40px;
-      border-radius:12px; box-shadow:0 4px 20px rgba(0,0,0,0.1);
-      line-height:1.7;
+  <style>
+    :root {
+      --azul:#0b3a6b;
+      --azul-escuro:#072845;
+      --azul-claro:#e8f1fb;
+      --texto:#1b1b1b;
+      --bg:#f7f8fa;
+      --amarelo:#ffcc00;
     }
-    .contact-card h1 { color:var(--azul); font-size:28px; margin-bottom:20px; text-align:center; }
+    * { box-sizing: border-box; margin:0; padding:0; }
+    body { font-family: 'Inter', sans-serif; color:var(--texto); background:var(--bg); line-height:1.5; }
+
+    /* ===== HEADER (estilo aplicado ao header.html incluído) ===== */
+    header { background: var(--azul); color:#fff; box-shadow: 0 2px 12px rgba(0,0,0,.12); }
+    header nav {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      position: relative;
+    }
+    header .logo img { height: 44px; display:block; }
+    header .menu-toggle {
+      display: none;
+      font-size: 24px;
+      cursor: pointer;
+      user-select: none;
+    }
+    header #menu {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-left: auto;
+    }
+    header #menu > li { position: relative; }
+    header #menu > li > a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      border-radius: 10px;
+      transition: background .2s ease, color .2s ease, transform .08s ease;
+      white-space: nowrap;
+    }
+    header #menu > li > a:hover { background: rgba(255,255,255,.12); transform: translateY(-1px); }
+
+    /* Submenus de 1º nível */
+    header #menu li ul {
+      list-style: none;
+      position: absolute;
+      left: 0;
+      top: calc(100% + 8px);
+      min-width: 260px;
+      background: #fff;
+      color: var(--texto);
+      border-radius: 12px;
+      box-shadow: 0 12px 28px rgba(0,0,0,.18);
+      padding: 10px;
+      display: none;
+      z-index: 50;
+    }
+    header #menu li:hover > ul { display: block; }
+    header #menu li ul li a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      color: var(--texto);
+      text-decoration: none;
+      font-weight: 500;
+    }
+    header #menu li ul li a:hover { background: var(--azul-claro); color: var(--azul); }
+
+    /* Submenus de 2º nível (cascata) */
+    header #menu li ul li { position: relative; }
+    header #menu li ul li ul {
+      top: 0;
+      left: calc(100% + 8px);
+    }
+
+    /* Badge "NOVO" */
+    .badge-novo {
+      background: #16a34a;
+      color:#fff;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      margin-left: 6px;
+    }
+
+    /* Barra de aviso (opcional, o header.html já contém um bloco inline) */
+    .aviso-topo {
+      background: var(--amarelo);
+      color:#000;
+      padding:10px 20px;
+      text-align:center;
+      font-weight:700;
+    }
+
+    /* ===== RESPONSIVO ===== */
+    @media (max-width: 980px) {
+      header .menu-toggle { display: block; color:#fff; }
+      header #menu {
+        position: absolute;
+        right: 20px;
+        top: 70px;
+        flex-direction: column;
+        align-items: stretch;
+        background: #fff;
+        color: var(--texto);
+        border-radius: 14px;
+        box-shadow: 0 12px 28px rgba(0,0,0,.18);
+        padding: 8px;
+        width: min(90vw, 360px);
+        max-height: 70vh;
+        overflow: auto;
+        display: none;
+      }
+      header #menu.active { display: flex; }
+      header #menu > li > a { color: var(--texto); }
+      header #menu > li > a:hover { background: var(--azul-claro); color: var(--azul); }
+      header #menu li ul {
+        position: static;
+        box-shadow: none;
+        padding: 0;
+        background: transparent;
+      }
+      header #menu li:hover > ul { display: block; }
+      header #menu li ul li a { padding-left: 18px; }
+      header #menu li ul li ul li a { padding-left: 32px; }
+    }
+
+    /* ===== CONTEÚDO CONTATO ===== */
+    .section-contact { padding: 60px 20px; }
+    .contact-card {
+      max-width: 900px;
+      margin: auto;
+      background: #fff;
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 8px 30px rgba(11,58,107,0.12);
+    }
+    .contact-card h1 {
+      color: var(--azul);
+      font-size: 28px;
+      margin-bottom: 18px;
+      text-align: center;
+    }
     .contact-card p { margin: 6px 0; }
-    .contact-card a { color: var(--azul); }
-    .contact-form { margin-top:30px; display:flex; flex-direction:column; gap:15px; text-align:left; }
-    .contact-form input,
-    .contact-form textarea {
-      padding:12px; border:1px solid #ccc; border-radius:6px; font-size:15px;
+    .contact-card a { color: var(--azul); text-decoration: underline; }
+    .contact-form { margin-top: 26px; display: flex; flex-direction: column; gap: 14px; }
+    .contact-form input, .contact-form textarea {
+      padding: 12px;
+      border: 1px solid #d9e2ef;
+      border-radius: 10px;
+      font-size: 15px;
+      outline: none;
+    }
+    .contact-form input:focus, .contact-form textarea:focus {
+      border-color: var(--azul);
+      box-shadow: 0 0 0 4px rgba(11,58,107,.08);
     }
     .contact-form button {
-      padding:12px; background-color:var(--azul); color:#fff; border:none;
-      border-radius:6px; font-weight:700; cursor:pointer;
+      padding: 12px 18px;
+      background: var(--azul);
+      color:#fff;
+      border: none;
+      border-radius: 10px;
+      font-weight: 700;
+      cursor: pointer;
     }
-    .map-frame {
-      border:0; width:100%; height:350px; border-radius:12px; margin-top:30px;
-    }
+    .contact-form button:hover { background: var(--azul-escuro); }
+    .map-frame { border:0; width:100%; height:350px; border-radius: 12px; margin-top: 24px; }
 
-    @media (max-width:768px) {
-      .contact-card { padding:24px; }
-      .contact-card h1 { font-size:22px; }
+    @media (max-width: 768px) {
+      .contact-card { padding: 24px; }
+      .contact-card h1 { font-size: 22px; }
     }
   </style>
 </head>
 <body>
-  <!-- HEADER externo (corrigido: estava 'head.html') -->
+  <!-- Inclui header e (opcional) footer via fetch -->
   <div data-include="header.html"></div>
 
-  <!-- CONTEÚDO DA PÁGINA -->
   <section class="section-contact">
     <div class="contact-card">
       <h1>📞 Fale Conosco</h1>
@@ -55,7 +210,7 @@
       <p><strong>E-mail:</strong><br><a href="mailto:atendimento@apipmcbdf.com.br">atendimento@apipmcbdf.com.br</a></p>
       <p><strong>Atendimento:</strong><br>Segunda a Sexta, das 9h às 13h</p>
 
-      <form class="contact-form">
+      <form class="contact-form" onsubmit="event.preventDefault(); alert('Mensagem enviada! (exemplo)');">
         <input type="text" name="nome" placeholder="Seu nome" required>
         <input type="email" name="email" placeholder="Seu e-mail" required>
         <textarea name="mensagem" placeholder="Sua mensagem" rows="5" required></textarea>
@@ -71,11 +226,10 @@
     </div>
   </section>
 
-  <!-- FOOTER externo (opcional, manter se existir o arquivo) -->
   <div data-include="footer.html"></div>
 
   <script>
-    // Carrega arquivos com data-include="*.html" (ex.: header.html, footer.html)
+    // Inclui fragments *.html (header/footer)
     (function() {
       async function includeFragments() {
         const nodes = document.querySelectorAll('[data-include]');
@@ -85,6 +239,7 @@
             const res = await fetch(url, { cache: 'no-store' });
             if (!res.ok) throw new Error(res.status + ' ' + res.statusText);
             const html = await res.text();
+            // Insere o HTML retornado no lugar do placeholder
             el.outerHTML = html;
           } catch (err) {
             console.error('Falha ao carregar include:', url, err);
@@ -94,7 +249,7 @@
       }
       document.addEventListener('DOMContentLoaded', includeFragments);
 
-      // Fallback para o botão do menu mobile se o header usar .menu-toggle e #menu
+      // Toggle do menu mobile (utilizado pelo header.html)
       document.addEventListener('click', function(e) {
         const btn = e.target.closest('.menu-toggle');
         if (btn) {
@@ -102,8 +257,6 @@
           if (menu) menu.classList.toggle('active');
         }
       });
-
-      // Define a função global usada por header.html (evita erro de referência)
       window.toggleMenu = function toggleMenu() {
         const menu = document.getElementById('menu');
         if (menu) menu.classList.toggle('active');
