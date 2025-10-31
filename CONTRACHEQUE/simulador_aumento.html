@@ -100,7 +100,7 @@
   <section style="padding: 60px 20px; background-color: #f9f9f9;">
     <div style="max-width: 1200px; margin: auto; background: white; padding: 0; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); overflow: hidden;">
       <iframe
-        src="index_contracheque_wizard.html"
+        src="./index_contracheque_wizard.html"
         style="width: 100%; min-height: 1100px; border: 0; display:block;"
         title="Simulador de Reajustes do Contracheque 2025/2026">
       </iframe>
@@ -112,7 +112,7 @@
     <p style="max-width: 700px; margin: 20px auto;">
       Junte-se a centenas de associados que têm seus direitos defendidos com firmeza e comprometimento. Seja representado, tenha acesso a benefícios exclusivos e faça parte da nossa história!
     </p>
-    <a href="seja-socio.html" style="display: inline-block; margin-top: 20px; padding: 12px 24px; background-color: #f5b200; color: black; text-decoration: none; border-radius: 5px; font-weight: bold;">Quero me associar</a>
+    <a href="/SITE/seja-socio.html" style="display: inline-block; margin-top: 20px; padding: 12px 24px; background-color: #f5b200; color: black; text-decoration: none; border-radius: 5px; font-weight: bold;">Quero me associar</a>
   </section>
 
   <section style="padding: 40px 20px; text-align: center; background-color: #fff;">
@@ -120,7 +120,7 @@
     <p style="max-width: 800px; margin: auto;">
       A APIPMCBDF representa e apoia os pensionistas e inativos da Polícia Militar e Corpo de Bombeiros do Antigo e Atual Distrito Federal. Lutamos por direitos, assistência e valorização dos nossos associados.
     </p>
-    <a href="sobre.html" style="display: inline-block; margin-top: 20px; padding: 10px 20px; background-color: #003366; color: white; text-decoration: none; border-radius: 5px;">Saiba mais</a>
+    <a href="/SITE/sobre.html" style="display: inline-block; margin-top: 20px; padding: 10px 20px; background-color: #003366; color: white; text-decoration: none; border-radius: 5px;">Saiba mais</a>
   </section>
 
   <!-- ===== FOOTER CARREGADO EXTERNAMENTE ===== -->
@@ -151,10 +151,27 @@
       if (menu) menu.classList.toggle("active");
     }
 
-    // ===== Carregamento dos fragmentos =====
+    // ===== Utilitário para reescrever URLs relativas dentro de um container =====
+    function rewriteRelativeUrls(container, attrList = ['href','src','action']) {
+      const isAbsolute = (u) => /^(?:[a-z]+:)?\/\//i.test(u);
+      const isSpecial = (u) => u.startsWith('#') || u.startsWith('mailto:') || u.startsWith('tel:');
+      const toAbsolute = (u) => '/SITE/' + u.replace(/^\.\//, '').replace(/^\//, '');
+
+      attrList.forEach(attr => {
+        container.querySelectorAll('[' + attr + ']').forEach(el => {
+          const v = el.getAttribute(attr);
+          if (!v) return;
+          if (isAbsolute(v) || isSpecial(v) || v.startsWith('/')) return;
+          // Só reescreve se for caminho relativo simples (ex.: "esclarecimentos.html" ou "pasta/pagina.html")
+          el.setAttribute(attr, toAbsolute(v));
+        });
+      });
+    }
+
+    // ===== Carregamento dos fragmentos + correção de links =====
     async function loadFragment(targetSelector, paths) {
       const target = document.querySelector(targetSelector);
-      if (!target) return;
+      if (!target) return false;
 
       for (const p of paths) {
         try {
@@ -162,18 +179,24 @@
           if (!res.ok) continue;
           const html = await res.text();
           target.innerHTML = html;
-          return; // sucesso
+
+          // Após injetar, corrigimos URLs relativas para apontarem para /SITE/...
+          rewriteRelativeUrls(target);
+          return true; // sucesso
         } catch (e) {
           // tenta próximo caminho
         }
       }
       console.warn('Não foi possível carregar', targetSelector, 'a partir de', paths);
+      return false;
     }
 
     // De SITE/CONTRACHEQUE/ para SITE/
-    // Prioriza o caminho exato informado e mantém um fallback absoluto para GitHub Pages
-    loadFragment('#site-header', ['../header.html', '/SITE/header.html']);
-    loadFragment('#site-footer', ['../footer.html', '/SITE/footer.html']);
+    // Prioriza o caminho relativo e mantém um fallback absoluto para GitHub Pages
+    (async () => {
+      await loadFragment('#site-header', ['../header.html', '/SITE/header.html']);
+      await loadFragment('#site-footer', ['../footer.html', '/SITE/footer.html']);
+    })();
   </script>
 </body>
 </html>
