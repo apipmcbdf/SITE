@@ -461,5 +461,23 @@
     resetAll();
   })();
   </script>
+
+<script>
+(function(){
+  function send(){
+    const h = Math.max(
+      document.documentElement.scrollHeight,
+      document.body ? document.body.scrollHeight : 0
+    );
+    try { parent.postMessage({ type: 'APIP-IFRAME-HEIGHT', height: h }, location.origin); } catch(e){}
+  }
+  window.addEventListener('load', send);
+  window.addEventListener('resize', () => requestAnimationFrame(send));
+  new MutationObserver(() => send()).observe(document.documentElement, { childList: true, subtree: true, attributes: true, characterData: true });
+  window.addEventListener('message', (ev) => {
+    if (ev.origin === location.origin && ev.data && ev.data.type === 'APIP-REQUEST-HEIGHT') send();
+  });
+})();
+</script>
 </body>
 </html>

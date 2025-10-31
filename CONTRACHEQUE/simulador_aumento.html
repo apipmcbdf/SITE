@@ -1,201 +1,197 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8"/>
-  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Simulador de Reajustes do Contracheque 2025/2026</title>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
-    body { font-family: 'Inter', sans-serif; background-color: #f9f9f9; }
+    body { margin: 0; font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; background: #f6f7fb; color: #0f172a; line-height: 1.6; }
 
-    /* Estilos do cabeçalho/menus (mantidos para compatibilidade com header.html) */
-    header { background-color: #003366; padding: 20px; color: white; }
-    nav { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
-    .logo img { height: 50px; }
-    nav ul { display: flex; list-style: none; gap: 20px; flex-wrap: wrap; }
+    /* Cabeçalho / navegação (compatível com header.html) */
+    header { background: #003366; color: #fff; }
+    nav { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; padding: 16px; }
+    .logo img { height: 44px; }
+    nav ul { list-style: none; display: flex; gap: 16px; padding: 0; margin: 0; }
     nav ul li { position: relative; }
-    nav ul li a {
-      color: white; text-decoration: none; font-weight: 600;
-      padding: 8px 12px; display: block; transition: background-color 0.3s ease;
-    }
-    nav ul li a:hover { background-color: #005599; border-radius: 4px; }
-    nav ul li ul {
-      display: none; position: absolute; background-color: #004080;
-      top: 100%; left: 0; min-width: 220px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2); z-index: 10;
-    }
-    nav ul li:hover ul { display: block; animation: fadeIn 0.3s ease-in-out; }
+    nav ul li a { color: #fff; text-decoration: none; font-weight: 600; padding: 8px 12px; display: block; border-radius: 6px; }
+    nav ul li a:hover { background: #005599; }
+    nav ul li ul { display: none; position: absolute; left: 0; top: 100%; min-width: 220px; background: #004080; box-shadow: 0 6px 18px rgba(0,0,0,.25); z-index: 10; }
+    nav ul li:hover > ul { display: block; animation: fadeIn .25s ease; }
 
-    @keyframes fadeIn {
-      from {opacity: 0; transform: translateY(-10px);}
-      to {opacity: 1; transform: translateY(0);}
-    }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
 
-    .hero { position: relative; height: 90vh; overflow: hidden; }
-    .hero img.slideshow-img {
-      position: absolute; width: 100%; height: 100%;
-      object-fit: cover; opacity: 0; transition: opacity 1s ease-in-out;
-    }
-    .hero img.slideshow-img.active { opacity: 1; z-index: 1; }
-    .hero-overlay {
-      position: relative; z-index: 2; background-color: rgba(0,0,0,0.5);
-      height: 100%; display: flex; flex-direction: column;
-      justify-content: center; align-items: center; color: white; text-align: center; padding: 20px;
-      animation: fadeIn 1s ease-in-out;
-    }
-    .hero-overlay img.symbol { width: 80px; margin-bottom: 20px; }
-    .hero-overlay h1 { font-size: 28px; margin-bottom: 10px; }
-    .hero-overlay p { font-size: 18px; max-width: 800px; }
+    /* Layout principal */
+    .section { padding: clamp(16px, 5vw, 48px) 16px; }
+    .main-card { max-width: min(1000px, 96vw); margin: 0 auto; background: #fff; border-radius: 14px; box-shadow: 0 10px 30px rgba(2,6,23,.08); overflow: hidden; }
 
-    section { animation: fadeIn 0.8s ease-in-out; }
+    /* Iframe responsivo (auto-altura) */
+    .iframe-wrap { position: relative; }
+    #wizardFrame { width: 100%; border: 0; display: block; height: 70dvh; }
+    #wizardFrame { overflow: hidden; } /* Evita barra dupla de rolagem no iOS/Android */
 
-    footer { background-color: #002244; color: white; padding: 40px 20px; }
-    .footer-grid {
-      max-width: 1200px; margin: auto;
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 30px; text-align: center;
-    }
-    .footer-grid div p { font-size: 14px; margin: 8px 0; }
-    .footer-bottom { text-align: center; margin-top: 30px; font-size: 13px; }
-    .social-icons { margin-top: 10px; }
-    .social-icons a { color: white; margin: 0 8px; font-size: 20px; text-decoration: none; transition: transform 0.3s ease; }
-    .social-icons a:hover { transform: scale(1.2); }
+    /* CTA azul */
+    .cta { background: #003366; color: #fff; text-align: center; padding: clamp(24px, 6vw, 56px) 16px; }
+    .cta h2 { font-size: clamp(20px, 5vw, 28px); margin: 0 0 8px; }
+    .cta p { max-width: 720px; margin: 12px auto 0; font-size: clamp(14px, 3.5vw, 16px); opacity: .95; }
+    .cta a { display: inline-block; margin-top: 18px; padding: 12px 20px; background: #f5b200; color: #000; text-decoration: none; border-radius: 10px; font-weight: 700; }
 
-    .whatsapp-float { position: fixed; bottom: 20px; right: 20px; z-index: 1000; }
-    .whatsapp-float img { width: 60px; height: 60px; transition: transform 0.3s ease; }
-    .whatsapp-float img:hover { transform: scale(1.1); }
+    /* Quem somos */
+    .about { text-align: center; background: #fff; }
+    .about h2 { font-size: clamp(20px, 5vw, 26px); margin: 0 0 8px; }
+    .about p { max-width: 840px; margin: 8px auto 0; font-size: clamp(14px, 3.5vw, 16px); color: #334155; }
+    .about a { display: inline-block; margin-top: 16px; padding: 10px 16px; background: #003366; color: #fff; text-decoration: none; border-radius: 10px; }
 
+    /* Footer (compatível com footer.html) */
+    footer { background: #002244; color: #fff; padding: 32px 16px; }
+    .footer-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; text-align: center; }
+    .footer-bottom { text-align: center; margin-top: 18px; font-size: 13px; opacity: .9; }
+    .social-icons a { color: #fff; margin: 0 8px; font-size: 20px; text-decoration: none; }
+
+    /* WhatsApp flutuante */
+    .whatsapp-float { position: fixed; right: 16px; bottom: 16px; z-index: 1000; }
+    .whatsapp-float img { width: 58px; height: 58px; transition: transform .2s ease; }
+    .whatsapp-float img:hover { transform: scale(1.06); }
+
+    /* Mobile refinements */
     @media (max-width: 768px) {
-      nav ul { flex-direction: column; align-items: flex-start; }
-      .footer-grid { grid-template-columns: 1fr; text-align: center; }
+      nav { flex-direction: column; gap: 8px; }
+      nav ul { flex-direction: column; align-items: stretch; gap: 8px; width: 100%; }
+      .main-card { border-radius: 12px; }
+      #wizardFrame { height: 78svh; }
+    }
 
-      .hero-overlay h1 { font-size: 20px; }
-      .hero-overlay p { font-size: 14px; padding: 0 10px; }
-      .hero-overlay img.symbol { width: 50px; }
+    @media (max-width: 480px) {
+      .whatsapp-float { bottom: 12px; right: 12px; }
+      .whatsapp-float img { width: 54px; height: 54px; }
+    }
 
-      nav {
-        position: relative;
-        flex-direction: column;
-        align-items: center;
-      }
-      .logo { text-align: center; width: 100%; margin-bottom: 10px; }
-      .menu-toggle {
-        display: block; cursor: pointer; font-size: 24px; color: white; margin-bottom: 10px;
-      }
-      #menu {
-        display: none; flex-direction: column; position: relative; width: 100%;
-        background-color: #003366; z-index: 1000;
-      }
-      #menu.active { display: flex; }
+    /* Acessibilidade / redução de movimento */
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; transition: none !important; }
     }
   </style>
 </head>
 <body>
-  <!-- ===== HEADER CARREGADO EXTERNAMENTE ===== -->
+  <!-- HEADER externo -->
   <div id="site-header"></div>
 
-  <section style="padding: 60px 20px; background-color: #f9f9f9;">
-    <div style="max-width: 1200px; margin: auto; background: white; padding: 0; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); overflow: hidden;">
-      <iframe
-        src="./index_contracheque_wizard.html"
-        style="width: 100%; min-height: 1100px; border: 0; display:block;"
-        title="Simulador de Reajustes do Contracheque 2025/2026">
-      </iframe>
+  <section class="section">
+    <div class="main-card">
+      <div class="iframe-wrap">
+        <iframe
+          id="wizardFrame"
+          src="./index_contracheque_wizard.html"
+          title="Simulador de Reajustes do Contracheque 2025/2026"
+          loading="eager"
+          referrerpolicy="no-referrer-when-downgrade"
+          aria-label="Simulador de reajustes">
+        </iframe>
+      </div>
     </div>
   </section>
 
-  <section style="padding: 50px 20px; background-color: #003366; color: white; text-align: center;">
+  <section class="cta">
     <h2>Associe-se à APIPMCBDF</h2>
-    <p style="max-width: 700px; margin: 20px auto;">
-      Junte-se a centenas de associados que têm seus direitos defendidos com firmeza e comprometimento. Seja representado, tenha acesso a benefícios exclusivos e faça parte da nossa história!
-    </p>
-    <a href="/seja-socio.html" style="display: inline-block; margin-top: 20px; padding: 12px 24px; background-color: #f5b200; color: black; text-decoration: none; border-radius: 5px; font-weight: bold;">Quero me associar</a>
+    <p>Junte-se a centenas de associados que têm seus direitos defendidos com firmeza e comprometimento. Seja representado, tenha acesso a benefícios exclusivos e faça parte da nossa história!</p>
+    <a href="/seja-socio.html">Quero me associar</a>
   </section>
 
-  <section style="padding: 40px 20px; text-align: center; background-color: #fff;">
+  <section class="section about">
     <h2>Quem Somos</h2>
-    <p style="max-width: 800px; margin: auto;">
-      A APIPMCBDF representa e apoia os pensionistas e inativos da Polícia Militar e Corpo de Bombeiros do Antigo e Atual Distrito Federal. Lutamos por direitos, assistência e valorização dos nossos associados.
-    </p>
-    <a href="/sobre.html" style="display: inline-block; margin-top: 20px; padding: 10px 20px; background-color: #003366; color: white; text-decoration: none; border-radius: 5px;">Saiba mais</a>
+    <p>A APIPMCBDF representa e apoia os pensionistas e inativos da Polícia Militar e Corpo de Bombeiros do Antigo e Atual Distrito Federal. Lutamos por direitos, assistência e valorização dos nossos associados.</p>
+    <a href="/sobre.html">Saiba mais</a>
   </section>
 
-  <!-- ===== FOOTER CARREGADO EXTERNAMENTE ===== -->
+  <!-- FOOTER externo -->
   <div id="site-footer"></div>
 
-  <!-- WhatsApp flutuante (mantido) -->
+  <!-- WhatsApp -->
   <div class="whatsapp-float">
     <a href="https://wa.me/5521984997413" target="_blank" rel="noopener">
-      <img alt="WhatsApp" src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"/>
+      <img alt="WhatsApp" src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" />
     </a>
   </div>
 
   <script>
-    // Slideshow (mantido – caso o header/footer adicionem imagens com .slideshow-img)
+    // ===== Slideshow (mantido — caso header/footer tragam .slideshow-img) =====
     const slides = document.querySelectorAll('.slideshow-img');
-    let index = 0;
+    let slideIndex = 0;
     if (slides.length) {
       setInterval(() => {
-        slides[index].classList.remove('active');
-        index = (index + 1) % slides.length;
-        slides[index].classList.add('active');
+        slides[slideIndex].classList.remove('active');
+        slideIndex = (slideIndex + 1) % slides.length;
+        slides[slideIndex].classList.add('active');
       }, 5000);
     }
 
-    // Função de menu usada pelo header
-    function toggleMenu() {
-      var menu = document.getElementById("menu");
-      if (menu) menu.classList.toggle("active");
-    }
+    // ===== Menu (compatível com header) =====
+    function toggleMenu(){ const m = document.getElementById('menu'); if (m) m.classList.toggle('active'); }
 
-    // ===== Utilitário para reescrever URLs relativas dentro de um container =====
-    function rewriteRelativeUrls(container, attrList = ['href','src','action']) {
-      const isAbsolute = (u) => /^(?:[a-z]+:)?\/\//i.test(u);
+    // ===== Reescrita de URLs relativas (fragmentos) =====
+    function rewriteRelativeUrls(container, attrs=['href','src','action']){
+      const isAbs = (u) => /^(?:[a-z]+:)?\/\//i.test(u);
       const isSpecial = (u) => u.startsWith('#') || u.startsWith('mailto:') || u.startsWith('tel:');
-      const toAbsolute = (u) => '/' + u.replace(/^\.\//, '').replace(/^\//, '');
-
-      attrList.forEach(attr => {
-        container.querySelectorAll('[' + attr + ']').forEach(el => {
-          const v = el.getAttribute(attr);
-          if (!v) return;
-          if (isAbsolute(v) || isSpecial(v) || v.startsWith('/')) return;
-          // Só reescreve se for caminho relativo simples (ex.: "esclarecimentos.html" ou "pasta/pagina.html")
-          el.setAttribute(attr, toAbsolute(v));
+      const toAbs = (u) => '/' + u.replace(/^\.\//,'').replace(/^\//,'');
+      attrs.forEach(attr => {
+        container.querySelectorAll('['+attr+']').forEach(el => {
+          const v = el.getAttribute(attr); if (!v) return;
+          if (isAbs(v) || isSpecial(v) || v.startsWith('/')) return;
+          el.setAttribute(attr, toAbs(v));
         });
       });
     }
 
-    // ===== Carregamento dos fragmentos + correção de links =====
-    async function loadFragment(targetSelector, paths) {
-      const target = document.querySelector(targetSelector);
-      if (!target) return false;
-
-      for (const p of paths) {
+    async function loadFragment(targetSelector, paths){
+      const target = document.querySelector(targetSelector); if (!target) return false;
+      for (const p of paths){
         try {
           const res = await fetch(p, { cache: 'no-store' });
           if (!res.ok) continue;
           const html = await res.text();
-          target.innerHTML = html;
-
-          // Após injetar, corrigimos URLs relativas para apontarem para /...
-          rewriteRelativeUrls(target);
-          return true; // sucesso
-        } catch (e) {
-          // tenta próximo caminho
-        }
+          target.innerHTML = html; rewriteRelativeUrls(target); return true;
+        } catch(e){ /* tenta próximo */ }
       }
-      console.warn('Não foi possível carregar', targetSelector, 'a partir de', paths);
+      console.warn('Não foi possível carregar', targetSelector, 'de', paths);
       return false;
     }
 
-    // De SITE/CONTRACHEQUE/ para raiz do site
-    // Prioriza o caminho relativo e mantém fallbacks para servidores onde o conteúdo pode estar publicado na raiz ou em /SITE
     (async () => {
-      await loadFragment('#site-header', ['../header.html', '/header.html', '/SITE/header.html']);
-      await loadFragment('#site-footer', ['../footer.html', '/footer.html', '/SITE/footer.html']);
+      await loadFragment('#site-header', ['../header.html','/header.html','/SITE/header.html']);
+      await loadFragment('#site-footer', ['../footer.html','/footer.html','/SITE/footer.html']);
+    })();
+
+    // ===== Auto-altura do iframe do simulador (sem rolagem dupla no mobile) =====
+    (function(){
+      const frame = document.getElementById('wizardFrame');
+      if (!frame) return;
+      const ORIGIN = location.origin; // assumindo mesma origem do wizard
+
+      function setHeight(h){
+        const height = Number(h);
+        if (!Number.isFinite(height)) return;
+        if (height < 320) return; // evita collapses
+        frame.style.height = height + 'px';
+      }
+
+      // Recebe altura do filho
+      window.addEventListener('message', (ev) => {
+        if (ev.origin !== ORIGIN) return; // segurança
+        const data = ev.data || {};
+        if (data.type === 'APIP-IFRAME-HEIGHT') setHeight(data.height);
+      });
+
+      // Solicita altura ao carregar e em resize
+      function requestHeight(){
+        try { frame.contentWindow.postMessage({ type: 'APIP-REQUEST-HEIGHT' }, ORIGIN); } catch(e){}
+      }
+      frame.addEventListener('load', requestHeight);
+      window.addEventListener('resize', () => { requestHeight(); });
     })();
   </script>
 </body>
