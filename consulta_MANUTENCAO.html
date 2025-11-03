@@ -4,32 +4,12 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Consulta de Documentação</title>
+  <!-- Dependências globais necessárias para header/footer -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet"/>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: 'Inter', sans-serif; background-color: #f9f9f9; }
-    header { background-color: #003366; padding: 20px; color: white; }
-    nav { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
-    .logo img { height: 50px; }
-    nav ul { display: flex; list-style: none; gap: 20px; flex-wrap: wrap; }
-    nav ul li { position: relative; }
-    nav ul li a { color: white; text-decoration: none; font-weight: 600; padding: 8px 12px; display: block; transition: background-color 0.3s ease; }
-    nav ul li a:hover { background-color: #005599; border-radius: 4px; }
-    nav ul li ul { display: none; position: absolute; background-color: #004080; top: 100%; left: 0; min-width: 220px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); z-index: 10; }
-    nav ul li:hover ul { display: block; animation: fadeIn 0.3s ease-in-out; }
-    nav ul li ul li a { padding: 10px; font-weight: 400; }
-    @keyframes fadeIn { from {opacity: 0; transform: translateY(-10px);} to {opacity: 1; transform: translateY(0);} }
-    footer { background-color: #002244; color: white; padding: 40px 20px; }
-    .footer-grid { max-width: 1200px; margin: auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; text-align: center; }
-    .footer-grid div p { font-size: 14px; margin: 8px 0; }
-    .footer-bottom { text-align: center; margin-top: 30px; font-size: 13px; }
-    .social-icons { margin-top: 10px; }
-    .social-icons a { color: white; margin: 0 8px; font-size: 20px; text-decoration: none; transition: transform 0.3s ease; }
-    .social-icons a:hover { transform: scale(1.2); }
-    .whatsapp-float { position: fixed; bottom: 20px; right: 20px; z-index: 1000; }
-    .whatsapp-float img { width: 60px; height: 60px; transition: transform 0.3s ease; }
-    .whatsapp-float img:hover { transform: scale(1.1); }
     /* Estilo da consulta */
     .consulta-container { max-width: 700px; margin: 60px auto; background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
     .consulta-container h1 { text-align: center; margin-bottom: 30px; font-weight: 600; font-size: 24px; color: #003366; }
@@ -56,49 +36,26 @@
     li[data-status="EM FILA"]::before { content: "⏳ "; color: #007bff; }
     li[data-status*="LISTA"]::before { content: "🟢 "; color: green; }
     li[data-status*="NÃO"]::before { content: "❌ "; color: red; }
-  
-    /* Estilo aprimorado para avisos */
+
+    /* Avisos */
     .warning {
-      background-color: #fffae6;
-      border-left: 6px solid #ffca28;
-      color: #665c00;
-      padding: 15px 20px;
-      margin-top: 20px;
-      border-radius: 8px;
-      font-size: 16px;
+      background-color: #fff8e1;
+      border-left: 6px solid #ffb300;
+      color: #333;
+      padding: 16px 20px;
+      margin: 20px 0;
+      font-size: 15px;
       line-height: 1.6;
+      border-radius: 8px;
     }
-    .warning h4 {
-      margin: 10px 0 5px;
-      font-size: 18px;
-      color: #444;
-    }
-    .warning ul {
-      margin: 5px 0 10px 20px;
-    }
-    .warning ul li {
-      margin-bottom: 5px;
-    }
-    .warning p {
-      margin: 8px 0;
-    }
-
-.warning {
-  background-color: #fff8e1;
-  border-left: 6px solid #ffb300;
-  color: #333;
-  padding: 16px 20px;
-  margin: 20px 0;
-  font-size: 15px;
-  line-height: 1.6;
-  border-radius: 8px;
-}
-
-</style>
+  </style>
 </head>
 <body>
+  <!-- Header externo -->
   <div id="header-include"></div>
-<section style="padding: 60px 20px; background-color: #f4f6f9;">
+
+  <!-- CONTEÚDO PRINCIPAL -->
+  <section style="padding: 60px 20px; background-color: #f4f6f9;">
     <div class="consulta-container">
       <h1>CONSULTA DE DOCUMENTAÇÃO</h1>
       <label for="cpfInput">Digite seu CPF:</label>
@@ -120,13 +77,27 @@
     <a href="sobre.html" style="display: inline-block; margin-top: 20px; padding: 10px 20px; background-color: #003366; color: white; text-decoration: none; border-radius: 5px;">Saiba mais</a>
   </section>
 
-  <div style="background: #001a33; color: #fff; text-align: center; padding: 10px; font-size: 14px;">
-    </div>
-<div class="whatsapp-float">
-    <a href="https://wa.me/5521984997413" target="_blank">
-      <img alt="WhatsApp" src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"/>
-    </a>
-  </div>
+  <!-- Footer externo -->
+  <div id="footer-include"></div>
+
+  <!-- Scripts -->
+  <script>
+    // Inclui arquivos HTML externos no mesmo diretório
+    async function includeInto(elId, file) {
+      try {
+        const res = await fetch(file, { cache: "no-cache" });
+        const html = await res.text();
+        const el = document.getElementById(elId);
+        if (el) el.innerHTML = html;
+      } catch (e) {
+        console.error("Falha ao carregar", file, e);
+      }
+    }
+    document.addEventListener("DOMContentLoaded", () => {
+      includeInto("header-include", "header.html");
+      includeInto("footer-include", "footer.html");
+    });
+  </script>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
@@ -147,7 +118,7 @@
       return cpf.replace(/\D/g, '').padStart(11, '0');
     }
 
-function criarLista(campos, data) {
+    function criarLista(campos, data) {
       const ul = document.createElement('ul');
       for (let campo of campos) {
         let valor = data[campo];
@@ -167,15 +138,15 @@ function criarLista(campos, data) {
         }
 
         const li = document.createElement('li');
-    li.setAttribute('data-status', status);
+        li.setAttribute('data-status', status);
 
-    // Formatação amigável com quebra de linhas para pendências
-    if (campo === 'Pendências') {
-      const pendencias = valor.split(';').map(p => `<li>📌 ${p.trim()}</li>`).join('');
-      li.innerHTML = `<strong>Pendências:</strong><ul style='margin-top:8px; padding-left: 18px;'>${pendencias}</ul>`;
-    } else {
-      li.textContent = `${campo}: ${valor}`;
-    }
+        // Formatação amigável com quebra de linhas para pendências
+        if (campo === 'Pendências') {
+          const pendencias = valor.split(';').map(p => `<li>📌 ${p.trim()}</li>`).join('');
+          li.innerHTML = `<strong>Pendências:</strong><ul style='margin-top:8px; padding-left: 18px;'>${pendencias}</ul>`;
+        } else {
+          li.textContent = `${campo}: ${valor}`;
+        }
         ul.appendChild(li);
       }
       return ul.childElementCount ? ul : null;
@@ -225,39 +196,37 @@ function criarLista(campos, data) {
       if (docVPE === 'INCOMPLETA' || docAUX === 'INCOMPLETA' || docVPE === 'NCOMPLETA' || docAUX === 'NCOMPLETA') {
         warnings.push(`📢 Atenção! Envio de Documentos Pendentes<br>Para dar continuidade ao seu processo, encaminhe os documentos pendentes conforme as instruções abaixo:<br><br>📧 Documentos que podem ser enviados por e-mail:<br><br>✅ Contracheque  <br>✅ Ficha Financeira (preferencialmente por e-mail)  <br>✅ Comprovante de residência  <br>✅ Documento de identidade (RG ou CNH)<br><br>Enviar para: documentos@apipmcbdf.com.br  <br>Assunto: Documentação Pendente<br><br>⚠️ Importante:<br>- NÃO ACEITAMOS PRINTS DE TELA<br>- CUIDADO COM PDF PROTEGIDO POR SENHA<br>- Somente arquivos PDF, legíveis e em boa qualidade.<br><br>📮 Entrega física ou pelos Correios:<br>🔹 Contrato<br>🔹 Procuração<br>🔹 Declaração de Inexistência de Ação<br><br>Rua Evaristo da Veiga, 55, 10º andar – CEP: 20031-040  <br>Presencial: 09h às 13h<br><br>📞 (21) 2532-6974 / 2220-6154 / 2544-2607  <br>💬 WhatsApp: (21) 98499-7413  <br>📧 atendimento@apipmcbdf.com.br`);
 
-        
-let linksHtml = '<div>📌 Baixe aqui os documentos padrão pendentes:<ul>';
+        let linksHtml = '<div>📌 Baixe aqui os documentos padrão pendentes:<ul>';
 
-const statusAuxStr = statusAUX.toUpperCase();
-const statusVpeStr = statusVPE.toUpperCase();
+        const statusAuxStr = statusAUX.toUpperCase();
+        const statusVpeStr = statusVPE.toUpperCase();
 
-if (docAUX === 'INCOMPLETA' || docAUX === 'NCOMPLETA') {
-  if (statusAuxStr.includes('PROCURAÇÃO')) {
-    linksHtml += '<li><a href="https://drive.google.com/file/d/1rsujXVdCMEiIO0di30OoUAuKwO4JEnvK/view?usp=drive_link" target="_blank">PROCURAÇÃO AUX</a></li>';
-  }
-  if (statusAuxStr.includes('CONTRATO')) {
-    linksHtml += '<li><a href="https://drive.google.com/file/d/1rryE7Kworr16Qhb6-i1TGXZXQyPImiI-/view?usp=drive_link" target="_blank">CONTRATO AUX</a></li>';
-  }
-  if (statusAuxStr.includes('DECLARAÇÃO')) {
-    linksHtml += '<li><a href="https://drive.google.com/file/d/1rt4tOVPEQuU7Nj1mHEIMlx25L2ZqaXjp/view?usp=drive_link" target="_blank">DECLARAÇÃO DE INEXISTÊNCIA DE AÇÃO AUX</a></li>';
-  }
-}
+        if (docAUX === 'INCOMPLETA' || docAUX === 'NCOMPLETA') {
+          if (statusAuxStr.includes('PROCURAÇÃO')) {
+            linksHtml += '<li><a href="https://drive.google.com/file/d/1rsujXVdCMEiIO0di30OoUAuKwO4JEnvK/view?usp=drive_link" target="_blank">PROCURAÇÃO AUX</a></li>';
+          }
+          if (statusAuxStr.includes('CONTRATO')) {
+            linksHtml += '<li><a href="https://drive.google.com/file/d/1rryE7Kworr16Qhb6-i1TGXZXQyPImiI-/view?usp=drive_link" target="_blank">CONTRATO AUX</a></li>';
+          }
+          if (statusAuxStr.includes('DECLARAÇÃO')) {
+            linksHtml += '<li><a href="https://drive.google.com/file/d/1rt4tOVPEQuU7Nj1mHEIMlx25L2ZqaXjp/view?usp=drive_link" target="_blank">DECLARAÇÃO DE INEXISTÊNCIA DE AÇÃO AUX</a></li>';
+          }
+        }
 
-if (docVPE === 'INCOMPLETA' || docVPE === 'NCOMPLETA') {
-  if (statusVpeStr.includes('PROCURAÇÃO')) {
-    linksHtml += '<li><a href="https://drive.google.com/file/d/1-1IL4GtaIA0uE_OeSJuvqNtuAGiWF-4D/view?usp=drive_link" target="_blank">PROCURAÇÃO VPE</a></li>';
-  }
-  if (statusVpeStr.includes('CONTRATO')) {
-    linksHtml += '<li><a href="https://drive.google.com/file/d/1-0PkD2Y9azc6TxnDzl1SmPHfXlKFyj7g/view?usp=drive_link" target="_blank">CONTRATO VPE</a></li>';
-  }
-  if (statusVpeStr.includes('DECLARAÇÃO')) {
-    linksHtml += '<li><a href="https://drive.google.com/file/d/1-0Ee-gDuO4jHjOGBLFQHNR7pVcn8eKSf/view?usp=drive_link" target="_blank">DECLARAÇÃO DE INEXISTÊNCIA DE AÇÃO VPE</a></li>';
-  }
-}
+        if (docVPE === 'INCOMPLETA' || docVPE === 'NCOMPLETA') {
+          if (statusVpeStr.includes('PROCURAÇÃO')) {
+            linksHtml += '<li><a href="https://drive.google.com/file/d/1-1IL4GtaIA0uE_OeSJuvqNtuAGiWF-4D/view?usp=drive_link" target="_blank">PROCURAÇÃO VPE</a></li>';
+          }
+          if (statusVpeStr.includes('CONTRATO')) {
+            linksHtml += '<li><a href="https://drive.google.com/file/d/1-0PkD2Y9azc6TxnDzl1SmPHfXlKFyj7g/view?usp=drive_link" target="_blank">CONTRATO VPE</a></li>';
+          }
+          if (statusVpeStr.includes('DECLARAÇÃO')) {
+            linksHtml += '<li><a href="https://drive.google.com/file/d/1-0Ee-gDuO4jHjOGBLFQHNR7pVcn8eKSf/view?usp=drive_link" target="_blank">DECLARAÇÃO DE INEXISTÊNCIA DE AÇÃO VPE</a></li>';
+          }
+        }
 
-linksHtml += '</ul></div>';
-warnings.push(linksHtml);
-
+        linksHtml += '</ul></div>';
+        warnings.push(linksHtml);
       }
 
       if (statusAUX.includes('LITISPENDENCIA') || statusVPE.includes('LITISPENDENCIA')) {
@@ -273,47 +242,44 @@ warnings.push(linksHtml);
         warnings.push('Sua documentação está completa e foi enviada ao contador para cálculo dos atrasados. Não há prazo definido nem necessidade de contato no momento. Acompanhe o andamento por este canal.');
       }
 
-      
-tabData.forEach((tab) => {
-  let temConteudo = false;
-  for (const campo of tab.campos) {
-    const valor = data[campo];
-    if (valor && valor.toString().trim()) {
-      temConteudo = true;
-      break;
-    }
-  }
-  if (!temConteudo) return; // pula esta seção
+      tabData.forEach((tab) => {
+        let temConteudo = false;
+        for (const campo of tab.campos) {
+          const valor = data[campo];
+          if (valor && valor.toString().trim()) {
+            temConteudo = true;
+            break;
+          }
+        }
+        if (!temConteudo) return; // pula esta seção
 
-  const section = document.createElement('div');
-  section.className = 'data-section';
+        const section = document.createElement('div');
+        section.className = 'data-section';
 
-  const h3 = document.createElement('h3');
-  h3.textContent = tab.title;
-  section.appendChild(h3);
+        const h3 = document.createElement('h3');
+        h3.textContent = tab.title;
+        section.appendChild(h3);
 
-  const ul = criarLista(tab.campos, data);
-  if (ul) {
-    section.appendChild(ul);
-  } else {
-    section.innerHTML += '<p>❌ Nenhum dado disponível.</p>';
-  }
+        const ul = criarLista(tab.campos, data);
+        if (ul) {
+          section.appendChild(ul);
+        } else {
+          section.innerHTML += '<p>❌ Nenhum dado disponível.</p>';
+        }
 
-  card.appendChild(section);
-});
-
+        card.appendChild(section);
+      });
 
       if (warnings.length > 0) {
         warnings.forEach(msg => {
-        const avisoDiv = document.createElement('div');
-        avisoDiv.className = 'warning';
-        avisoDiv.innerHTML = msg;
-        card.appendChild(avisoDiv);
-      });
+          const avisoDiv = document.createElement('div');
+          avisoDiv.className = 'warning';
+          avisoDiv.innerHTML = msg;
+          card.appendChild(avisoDiv);
+        });
       }
 
       container.appendChild(card);
-
     }
 
     window.addEventListener('DOMContentLoaded', () => {
@@ -326,16 +292,5 @@ tabData.forEach((tab) => {
       };
     });
   </script>
-  <div id="footer-include"></div>
-
-<script>
-function include(path, targetId) {
-      const el = document.getElementById(targetId);
-      if (!el) return;
-      try {
-        const res = await fetch(path, { cache: "no-store" });
-include('header.html','header-include');
-include('footer.html','footer-include');
-</script>
 </body>
 </html>
