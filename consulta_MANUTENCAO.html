@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet"/>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     body { font-family: 'Inter', sans-serif; background-color: #f9f9f9; }
     /* Estilo da consulta */
     .consulta-container { max-width: 700px; margin: 60px auto; background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
@@ -49,21 +50,7 @@
       border-radius: 8px;
     }
   
-    /* ====== Estilo do HEADER/NAV ====== */
-    header { background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,.08); position: sticky; top: 0; z-index: 100; }
-    nav { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; gap: 20px; padding: 10px 16px; }
-    .logo img { height: 48px; display:block; }
-    #menu { list-style: none; display: flex; gap: 18px; flex-wrap: wrap; align-items: center; }
-    #menu > li { position: relative; }
-    #menu a { text-decoration: none; color: #003366; font-weight: 600; padding: 10px 8px; display: block; }
-    #menu > li > ul { position: absolute; left: 0; top: 100%; background: #fff; border: 1px solid #e5e7eb; box-shadow: 0 10px 20px rgba(0,0,0,.08); display: none; min-width: 240px; z-index: 200; }
-    #menu > li:hover > ul { display: block; }
-    #menu > li > ul li a { font-weight: 500; padding: 10px 12px; white-space: nowrap; color: #0f2441; }
-    .badge-novo { background: #ffcc00; color: #000; border-radius: 10px; padding: 2px 6px; font-size: 11px; margin-left: 6px; }
-    .menu-toggle { font-size: 24px; cursor: pointer; display: none; color: #003366; user-select: none; }
-    @media (max-width: 900px) {
-      .menu-toggle { display: block; }
-      nav { padding: 10px 12px; }
+    nav { padding: 10px 12px; }
       #menu { display: none; flex-direction: column; width: 100%; background: #fff; border-top: 1px solid #eee; padding: 8px 0; }
       #menu.open { display: flex; }
       #menu > li > ul { position: static; border: 0; box-shadow: none; display: none; }
@@ -71,11 +58,35 @@
       #menu > li:hover > ul { display: none; }
     }
 
+  
+    /* Estilos mínimos para o header carregado (igual ao diretoria.html) */
+    header { background-color: #003366; padding: 20px; color: white; }
+    nav { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+    .logo img { height: 50px; }
+    nav ul { display: flex; list-style: none; gap: 20px; flex-wrap: wrap; }
+    nav ul li { position: relative; }
+    nav ul li a {
+      color: white; text-decoration: none; font-weight: 600;
+      padding: 8px 12px; display: block; transition: background-color 0.3s ease;
+    }
+    nav ul li a:hover { background-color: #005599; border-radius: 4px; }
+    nav ul li ul {
+      display: none; position: absolute; background-color: #004080;
+      top: 100%; left: 0; min-width: 220px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2); z-index: 10;
+    }
+    nav ul li:hover ul { display: block; animation: fadeIn 0.3s ease-in-out; }
+    nav ul li ul li a { padding: 10px; font-weight: 400; }
+    @keyframes fadeIn { from {opacity: 0; transform: translateY(-8px);} to {opacity: 1; transform: translateY(0);} }
+    @media (max-width: 768px) {
+      nav ul { flex-direction: column; align-items: flex-start; }
+    }
+
   </style>
 </head>
 <body>
   <!-- Header externo -->
-  <div id="header-include"></div>
+  <div id="header-container"></div>
 
   <!-- CONTEÚDO PRINCIPAL -->
   <section style="padding: 60px 20px; background-color: #f4f6f9;">
@@ -101,44 +112,28 @@
   </section>
 
   <!-- Footer externo -->
-  <div id="footer-include"></div>
+  <div id="footer-container"></div>
 
-  <!-- Scripts -->
+  <!-- Includes de header e footer -->
   <script>
-    // Inclui arquivos HTML externos no mesmo diretório
-    async function includeInto(elId, file) {
-      try {
-        const res = await fetch(file, { cache: "no-cache" });
-        const html = await res.text();
-        const el = document.getElementById(elId);
-        if (el) el.innerHTML = html;
-      } catch (e) {
-        console.error("Falha ao carregar", file, e);
-      }
-    }
-    
-    // Menu mobile
+    (function loadHeader(){
+      const el = document.getElementById('header-container');
+      if (!el) return;
+      fetch('header.html', { cache: 'no-store' })
+        .then(r => r.text()).then(html => el.innerHTML = html)
+        .catch(() => el.innerHTML = '<!-- falha ao carregar header -->');
+    })();
+    (function loadFooter(){
+      const el = document.getElementById('footer-container');
+      if (!el) return;
+      fetch('footer.html', { cache: 'no-store' })
+        .then(r => r.text()).then(html => el.innerHTML = html)
+        .catch(() => el.innerHTML = '<!-- falha ao carregar footer -->');
+    })();
     function toggleMenu() {
-      const menu = document.getElementById('menu');
-      if (menu) menu.classList.toggle('open');
+      var menu = document.getElementById("menu");
+      if (menu) menu.classList.toggle("active");
     }
-    // Abre/fecha submenus no mobile ao clicar no pai
-    document.addEventListener('click', (ev) => {
-      if (window.innerWidth > 900) return;
-      const link = ev.target.closest('#menu > li > a');
-      if (!link) return;
-      const li = link.parentElement;
-      const sub = li && li.querySelector('ul');
-      if (sub) {
-        ev.preventDefault();
-        li.classList.toggle('open');
-      }
-    });
-
-    document.addEventListener("DOMContentLoaded", () => {
-      includeInto("header-include", "header.html");
-      includeInto("footer-include", "footer.html");
-    });
   </script>
 
   <script type="module">
