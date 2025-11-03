@@ -48,6 +48,29 @@
       line-height: 1.6;
       border-radius: 8px;
     }
+  
+    /* ====== Estilo do HEADER/NAV ====== */
+    header { background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,.08); position: sticky; top: 0; z-index: 100; }
+    nav { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; gap: 20px; padding: 10px 16px; }
+    .logo img { height: 48px; display:block; }
+    #menu { list-style: none; display: flex; gap: 18px; flex-wrap: wrap; align-items: center; }
+    #menu > li { position: relative; }
+    #menu a { text-decoration: none; color: #003366; font-weight: 600; padding: 10px 8px; display: block; }
+    #menu > li > ul { position: absolute; left: 0; top: 100%; background: #fff; border: 1px solid #e5e7eb; box-shadow: 0 10px 20px rgba(0,0,0,.08); display: none; min-width: 240px; z-index: 200; }
+    #menu > li:hover > ul { display: block; }
+    #menu > li > ul li a { font-weight: 500; padding: 10px 12px; white-space: nowrap; color: #0f2441; }
+    .badge-novo { background: #ffcc00; color: #000; border-radius: 10px; padding: 2px 6px; font-size: 11px; margin-left: 6px; }
+    .menu-toggle { font-size: 24px; cursor: pointer; display: none; color: #003366; user-select: none; }
+    @media (max-width: 900px) {
+      .menu-toggle { display: block; }
+      nav { padding: 10px 12px; }
+      #menu { display: none; flex-direction: column; width: 100%; background: #fff; border-top: 1px solid #eee; padding: 8px 0; }
+      #menu.open { display: flex; }
+      #menu > li > ul { position: static; border: 0; box-shadow: none; display: none; }
+      #menu > li.open > ul { display: block; }
+      #menu > li:hover > ul { display: none; }
+    }
+
   </style>
 </head>
 <body>
@@ -93,6 +116,25 @@
         console.error("Falha ao carregar", file, e);
       }
     }
+    
+    // Menu mobile
+    function toggleMenu() {
+      const menu = document.getElementById('menu');
+      if (menu) menu.classList.toggle('open');
+    }
+    // Abre/fecha submenus no mobile ao clicar no pai
+    document.addEventListener('click', (ev) => {
+      if (window.innerWidth > 900) return;
+      const link = ev.target.closest('#menu > li > a');
+      if (!link) return;
+      const li = link.parentElement;
+      const sub = li && li.querySelector('ul');
+      if (sub) {
+        ev.preventDefault();
+        li.classList.toggle('open');
+      }
+    });
+
     document.addEventListener("DOMContentLoaded", () => {
       includeInto("header-include", "header.html");
       includeInto("footer-include", "footer.html");
