@@ -122,6 +122,12 @@ const row = __lookup(DATA.aux, p);
         const vJ = row ? row[auxOpt]?.JAN   : null;
         tdA.textContent = fmt(vA); tdD.textContent = fmt(vD); tdJ.textContent = fmt(vJ);
       
+      } else if (key==='AUX_MORADIA') {
+        const row = (DATA.aux && DATA.aux[p]) ? DATA.aux[p] : null;
+        const vA = row ? row[auxOpt]?.ATUAL : null;
+        const vD = row ? row[auxOpt]?.DEZ   : null;
+        const vJ = row ? row[auxOpt]?.JAN   : null;
+        tdA.textContent = fmt(vA); tdD.textContent = fmt(vD); tdJ.textContent = fmt(vJ);
       } else if (key==='GRAT_REP_MILITAR') {
         // 1% do SOLDO nas três colunas
         const soldo = DATA.rubricas.SOLDO || {ATUAL:{},DEZ:{},JAN:{}};
