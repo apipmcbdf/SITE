@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Tempo de Serviço</title>
+  <style>
+    :root { color-scheme: light dark; }
+    body {
+      margin:0;
+      font-family: system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      background:#0b1020; color:#eef1ff;
+    }
+    .wrap {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 18px 14px 28px;
+    }
+    .card {
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.25);
+    }
+    h1 {
+      margin: 0 0 12px;
+      font-size: 22px;
+      letter-spacing: -.01em;
+    }
+    label {
+      display:block;
+      font-size: 16px;
+      margin: 12px 0 6px;
+      color: rgba(238,241,255,.92);
+    }
+    select, input {
+      width: 100%;
+      padding: 14px 14px;
+      font-size: 18px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(0,0,0,.25);
+      color: #fff;
+      outline: none;
+    }
+    select:focus, input:focus {
+      border-color: rgba(120,170,255,.75);
+      box-shadow: 0 0 0 4px rgba(120,170,255,.16);
+    }
+    .row {
+      display:flex;
+      gap: 10px;
+      margin-top: 14px;
+      flex-wrap: wrap;
+    }
+    button {
+      flex: 1 1 160px;
+      border:0;
+      border-radius: 14px;
+      padding: 14px 16px;
+      font-size: 18px;
+      font-weight: 800;
+      cursor: pointer;
+      background: linear-gradient(135deg,#6aa7ff,#8b7bff);
+      color:#0b1020;
+    }
+    button.secondary {
+      background: transparent;
+      color: #eef1ff;
+      border: 1px solid rgba(255,255,255,.22);
+      font-weight: 700;
+    }
+    .result {
+      margin-top: 14px;
+      border-radius: 16px;
+      padding: 14px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.28);
+      display: none;
+    }
+    .result .title {
+      font-size: 16px;
+      color: rgba(238,241,255,.78);
+    }
+    .big {
+      font-size: 52px;
+      font-weight: 900;
+      margin: 6px 0 2px;
+      letter-spacing: -.03em;
+    }
+    .small {
+      font-size: 14px;
+      color: rgba(238,241,255,.72);
+    }
+    .warn {
+      display:none;
+      margin-top: 12px;
+      padding: 12px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,205,77,.35);
+      background: rgba(255,205,77,.12);
+      color: rgba(255,240,200,.95);
+      font-size: 15px;
+      line-height: 1.35;
+    }
+    .muted {
+      margin-top: 12px;
+      font-size: 14px;
+      color: rgba(238,241,255,.70);
+      line-height: 1.35;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h1>Tempo de Serviço (anos)</h1>
+
+      <label for="posto">Posto/Graduação</label>
+      <select id="posto"></select>
+
+      <label for="soldoContra">Soldo no contracheque (R$)</label>
+      <input id="soldoContra" inputmode="decimal" placeholder="Ex.: 2.500,00" />
+
+      <div class="row">
+        <button id="btnCalc">Calcular</button>
+        <button id="btnLimpar" class="secondary">Limpar</button>
+      </div>
+
+      <div class="warn" id="warn"></div>
+
+      <div class="result" id="boxResult">
+        <div class="title">Tempo de serviço (anos)</div>
+        <div class="big" id="tempo">—</div>
+        <div class="small" id="nota"></div>
+      </div>
+
+      
+      <div class="row" style="margin-top:14px;">
+        <a class="backbtn" href="https://apipmcbdf.com.br/CONTRACHEQUE/simulador_aumento.html"
+           style="display:block;width:100%;text-align:center;text-decoration:none;
+                  border-radius:14px;padding:14px 16px;font-size:18px;font-weight:800;
+                  background:linear-gradient(135deg,#6aa7ff,#8b7bff);color:#0b1020;">
+          Já tem o tempo de serviço? Volte ao simulador
+        </a>
+      </div>
+      <div class="muted" style="margin-top:10px;">
+        Abra o simulador e preencha o número em “Tempo de serviço”.
+      </div>
+
+      <div class="muted">
+        (Base: soldo integral ÷ 30 • tabela até 30/11/2025)
+      </div>
+    </div>
+  </div>
+
+<script>
+  const SOLDOS_30 = {"Coronel": 4352.85, "Tenente-Coronel": 4179.87, "Major": 3982.98, "Capitão": 3328.06, "Primeiro-Tenente": 3081.39, "Segundo-Tenente": 2852.19, "Aspirante a Oficial": 2456.8, "Cadete (último ano)": 986.84, "Cadete (demais anos)": 710.07, "Subtenente": 2197.04, "Primeiro-Sargento": 1916.76, "Segundo-Sargento": 1644.7, "Terceiro-Sargento": 1467.77, "Cabo": 1110.73, "Soldado - Primeira Classe": 980.99, "Soldado - Segunda Classe": 710.07};
+
+  function parseBRL(v){
+    if(!v) return NaN;
+    v = String(v).trim();
+    v = v.replace(/\s/g,'').replace(/^R\$\s*/,'');
+    if(v.includes(',') && v.includes('.')) v = v.replace(/\./g,'').replace(',', '.');
+    else v = v.replace(',', '.');
+    v = v.replace(/[^0-9.\-]/g,'');
+    return Number(v);
+  }
+
+  function showWarn(msg){
+    const w = document.getElementById('warn');
+    w.textContent = msg;
+    w.style.display = 'block';
+  }
+  function hideWarn(){
+    const w = document.getElementById('warn');
+    w.style.display = 'none';
+  }
+
+  function fillPostos(){
+    const sel = document.getElementById('posto');
+    const postos = Object.keys(SOLDOS_30);
+    postos.forEach(p=>{
+      const opt = document.createElement('option');
+      opt.value = p;
+      opt.textContent = p;
+      sel.appendChild(opt);
+    });
+    sel.value = postos.includes('Soldado - Primeira Classe') ? 'Soldado - Primeira Classe' : postos[0];
+  }
+
+  function calc(){
+    hideWarn();
+
+    const posto = document.getElementById('posto').value;
+    const soldoIntegral = SOLDOS_30?.[posto];
+    const soldoContra = parseBRL(document.getElementById('soldoContra').value);
+
+    if(!Number.isFinite(soldoIntegral) || soldoIntegral <= 0){
+      showWarn('Selecione o posto/graduação.');
+      return;
+    }
+    if(!Number.isFinite(soldoContra) || soldoContra <= 0){
+      showWarn('Digite o soldo do contracheque.');
+      return;
+    }
+
+    const base = soldoIntegral / 30;
+    const tempo = Math.ceil(soldoContra / base);
+    const tempoFinal = Math.max(1, Math.min(40, tempo));
+
+    document.getElementById('boxResult').style.display = 'block';
+    document.getElementById('tempo').textContent = String(tempoFinal);
+
+    const nota = document.getElementById('nota');
+    nota.textContent = (tempo !== tempoFinal) ? `Resultado: ${tempo}. Usando ${tempoFinal} (limite 1–40).` : '';
+  }
+
+  document.getElementById('btnCalc').addEventListener('click', calc);
+  document.getElementById('btnLimpar').addEventListener('click', ()=>{
+    document.getElementById('soldoContra').value = '';
+    document.getElementById('boxResult').style.display = 'none';
+    hideWarn();
+  });
+  document.getElementById('soldoContra').addEventListener('keydown', (e)=>{ if(e.key==='Enter') calc(); });
+
+  fillPostos();
+</script>
+</body>
+</html>
