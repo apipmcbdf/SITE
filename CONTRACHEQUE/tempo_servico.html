@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tempo de Serviço</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: #f6f7fb;
+      color: #0f172a;
+      line-height: 1.6;
+    }
+
+    /* Cabeçalho / navegação (compatível com header.html e simulador_aumento.html) */
+    header { background: #003366; color: #fff; }
+    nav { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; padding: 16px; }
+    .logo img { height: 44px; }
+    nav ul { list-style: none; display: flex; gap: 16px; padding: 0; margin: 0; }
+    nav ul li { position: relative; }
+    nav ul li a { color: #fff; text-decoration: none; font-weight: 600; padding: 8px 12px; display: block; border-radius: 6px; }
+    nav ul li a:hover { background: #005599; }
+    nav ul li ul { display: none; position: absolute; left: 0; top: 100%; min-width: 220px; background: #004080; box-shadow: 0 6px 18px rgba(0,0,0,.25); z-index: 10; }
+    nav ul li:hover > ul { display: block; animation: fadeIn .25s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+    .menu-toggle { display: none; cursor: pointer; font-size: 24px; user-select: none; padding: 8px 10px; border-radius: 8px; }
+    .menu-toggle:hover { background: rgba(255,255,255,.12); }
+
+    /* Layout */
+    .section { padding: clamp(16px, 5vw, 48px) 16px; }
+    .main-card {
+      max-width: min(1000px, 96vw);
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 10px 30px rgba(2,6,23,.08);
+      overflow: hidden;
+    }
+    .card-pad { padding: clamp(16px, 3.5vw, 28px); }
+    .title {
+      display:flex;
+      align-items:flex-start;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+    .title h1 {
+      margin: 0;
+      font-size: clamp(20px, 5vw, 28px);
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+    }
+    .subtitle {
+      margin: 8px 0 0;
+      color: #334155;
+      font-size: clamp(14px, 3.5vw, 16px);
+      max-width: 72ch;
+    }
+
+    .form-grid {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .field { display:flex; flex-direction: column; gap: 6px; }
+    label { font-weight: 700; color:#0f172a; font-size: 14px; }
+    select, input {
+      width: 100%;
+      padding: 12px 12px;
+      font-size: 16px;
+      border-radius: 10px;
+      border: 1px solid #d7dde8;
+      background: #fff;
+      color: #0f172a;
+      outline: none;
+      transition: box-shadow .15s ease, border-color .15s ease;
+    }
+    select:focus, input:focus {
+      border-color: #2563eb;
+      box-shadow: 0 0 0 4px rgba(37,99,235,.15);
+    }
+
+    .actions {
+      margin-top: 14px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      border: 0;
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-size: 16px;
+      font-weight: 800;
+      cursor: pointer;
+      background: #003366;
+      color: #fff;
+      transition: transform .06s ease, filter .15s ease;
+      flex: 1 1 180px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .btn:hover { filter: brightness(1.05); }
+    .btn:active { transform: translateY(1px); }
+    .btn.secondary {
+      background: #f1f5f9;
+      color: #0f172a;
+      border: 1px solid #d7dde8;
+      font-weight: 700;
+    }
+    .btn.yellow {
+      background: #f5b200;
+      color: #000;
+    }
+
+    .note-row { margin-top: 10px; color: #475569; font-size: 14px; }
+    .muted { color: #64748b; font-size: 13px; margin-top: 10px; }
+
+    .warn {
+      display: none;
+      margin-top: 12px;
+      padding: 12px 12px;
+      border-radius: 10px;
+      border: 1px solid rgba(245, 178, 0, .55);
+      background: rgba(245, 178, 0, .16);
+      color: #111827;
+      font-size: 14px;
+      line-height: 1.35;
+    }
+
+    .result {
+      margin-top: 14px;
+      border-radius: 12px;
+      padding: 14px;
+      border: 1px solid #e2e8f0;
+      background: #f8fafc;
+      display: none;
+    }
+    .result .kicker { color: #475569; font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: .06em; }
+    .result .big { font-size: clamp(44px, 10vw, 56px); font-weight: 900; margin: 4px 0 2px; letter-spacing: -0.03em; }
+    .result .small { font-size: 14px; color: #475569; }
+
+    /* CTA azul (igual simulador) */
+    .cta { background: #003366; color: #fff; text-align: center; padding: clamp(24px, 6vw, 56px) 16px; }
+    .cta h2 { font-size: clamp(20px, 5vw, 28px); margin: 0 0 8px; }
+    .cta p { max-width: 720px; margin: 12px auto 0; font-size: clamp(14px, 3.5vw, 16px); opacity: .95; }
+    .cta a { display: inline-block; margin-top: 18px; padding: 12px 20px; background: #f5b200; color: #000; text-decoration: none; border-radius: 10px; font-weight: 800; }
+
+    /* Quem somos */
+    .about { text-align: center; background: #fff; }
+    .about h2 { font-size: clamp(20px, 5vw, 26px); margin: 0 0 8px; }
+    .about p { max-width: 840px; margin: 8px auto 0; font-size: clamp(14px, 3.5vw, 16px); color: #334155; }
+    .about a { display: inline-block; margin-top: 16px; padding: 10px 16px; background: #003366; color: #fff; text-decoration: none; border-radius: 10px; font-weight: 800; }
+
+    /* Footer (compatível com footer.html) */
+    footer { background: #002244; color: #fff; padding: 32px 16px; }
+    .footer-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; text-align: center; }
+    .footer-bottom { text-align: center; margin-top: 18px; font-size: 13px; opacity: .9; }
+    .social-icons a { color: #fff; margin: 0 8px; font-size: 20px; text-decoration: none; }
+
+    /* WhatsApp flutuante */
+    .whatsapp-float { position: fixed; right: 16px; bottom: 16px; z-index: 1000; }
+    .whatsapp-float img { width: 58px; height: 58px; transition: transform .2s ease; }
+    .whatsapp-float img:hover { transform: scale(1.06); }
+
+    /* Mobile refinements */
+    @media (max-width: 900px){
+      .form-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+      nav { flex-direction: column; gap: 8px; }
+      nav ul { flex-direction: column; align-items: stretch; gap: 8px; width: 100%; display:none; }
+      nav ul.active { display:flex; }
+      .menu-toggle { display: inline-flex; align-self: flex-start; }
+      nav ul li ul { position: static; box-shadow: none; background: #004080; }
+      nav ul li:hover > ul { display: none; } /* no mobile: abre pelo clique do usuário (links) */
+    }
+    @media (max-width: 480px) {
+      .whatsapp-float { bottom: 12px; right: 12px; }
+      .whatsapp-float img { width: 54px; height: 54px; }
+    }
+
+    /* Acessibilidade / redução de movimento */
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; transition: none !important; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- HEADER externo -->
+  <div id="site-header"></div>
+
+  <section class="section">
+    <div class="main-card">
+      <div class="card-pad">
+        <div class="title">
+          <div>
+            <h1><i class="fa-solid fa-hourglass-half" aria-hidden="true"></i> Tempo de Serviço (anos)</h1>
+            <p class="subtitle">
+              Preencha seu <strong>posto/graduação</strong> e o <strong>soldo do contracheque</strong>.
+              O sistema estima o tempo de serviço com base no soldo integral ÷ 30 (tabela até 30/11/2025).
+            </p>
+          </div>
+          <a class="btn yellow" href="https://apipmcbdf.com.br/CONTRACHEQUE/simulador_aumento.html">
+            <i class="fa-solid fa-calculator"></i> Voltar ao simulador
+          </a>
+        </div>
+
+        <div class="form-grid">
+          <div class="field">
+            <label for="posto">Posto/Graduação</label>
+            <select id="posto" aria-label="Posto/Graduação"></select>
+          </div>
+
+          <div class="field">
+            <label for="soldoContra">Soldo no contracheque (R$)</label>
+            <input id="soldoContra" inputmode="decimal" placeholder="Ex.: 2.500,00" aria-label="Soldo no contracheque" />
+          </div>
+        </div>
+
+        <div class="actions">
+          <button id="btnCalc" class="btn"><i class="fa-solid fa-bolt"></i> Calcular</button>
+          <button id="btnLimpar" class="btn secondary"><i class="fa-solid fa-eraser"></i> Limpar</button>
+        </div>
+
+        <div class="warn" id="warn" role="alert" aria-live="polite"></div>
+
+        <div class="result" id="boxResult" aria-live="polite">
+          <div class="kicker">Tempo de serviço (anos)</div>
+          <div class="big" id="tempo">—</div>
+          <div class="small" id="nota"></div>
+        </div>
+
+        <div class="note-row">
+          <strong>Dica:</strong> depois que você descobrir o número, abra o simulador e preencha em <em>“Tempo de serviço”</em>.
+        </div>
+        <div class="muted">
+          Base de cálculo: soldo integral ÷ 30 • resultado limitado entre 1 e 40 anos.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <h2>Associe-se à APIPMCBDF</h2>
+    <p>Junte-se a centenas de associados que têm seus direitos defendidos com firmeza e comprometimento. Seja representado, tenha acesso a benefícios exclusivos e faça parte da nossa história!</p>
+    <a href="/seja-socio.html">Quero me associar</a>
+  </section>
+
+  <section class="section about">
+    <h2>Quem Somos</h2>
+    <p>A APIPMCBDF representa e apoia os pensionistas e inativos da Polícia Militar e Corpo de Bombeiros do Antigo e Atual Distrito Federal. Lutamos por direitos, assistência e valorização dos nossos associados.</p>
+    <a href="/sobre.html">Saiba mais</a>
+  </section>
+
+  <!-- FOOTER externo -->
+  <div id="site-footer"></div>
+
+  <!-- WhatsApp -->
+  <div class="whatsapp-float">
+    <a href="https://wa.me/5521984997413" target="_blank" rel="noopener">
+      <img alt="WhatsApp" src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" />
+    </a>
+  </div>
+
+<script>
+  // ===== Menu (compatível com header) =====
+  function toggleMenu(){
+    const m = document.getElementById('menu');
+    if (m) m.classList.toggle('active');
+  }
+
+  // ===== Reescrita de URLs relativas (fragmentos) =====
+  function rewriteRelativeUrls(container, attrs=['href','src','action']){
+    const isAbs = (u) => /^(?:[a-z]+:)?\/\//i.test(u);
+    const isSpecial = (u) => u.startsWith('#') || u.startsWith('mailto:') || u.startsWith('tel:');
+    const toAbs = (u) => '/' + u.replace(/^\.\//,'').replace(/^\//,'');
+    attrs.forEach(attr => {
+      container.querySelectorAll('['+attr+']').forEach(el => {
+        const v = el.getAttribute(attr); if (!v) return;
+        if (isAbs(v) || isSpecial(v) || v.startsWith('/')) return;
+        el.setAttribute(attr, toAbs(v));
+      });
+    });
+  }
+
+  async function loadFragment(targetSelector, paths){
+    const target = document.querySelector(targetSelector);
+    if (!target) return false;
+    for (const p of paths){
+      try {
+        const res = await fetch(p, { cache: 'no-store' });
+        if (!res.ok) continue;
+        const html = await res.text();
+        target.innerHTML = html;
+        rewriteRelativeUrls(target);
+        return true;
+      } catch(e){ /* tenta próximo */ }
+    }
+    console.warn('Não foi possível carregar', targetSelector, 'de', paths);
+    return false;
+  }
+
+  (async () => {
+    await loadFragment('#site-header', ['../header.html','/header.html','/SITE/header.html']);
+    await loadFragment('#site-footer', ['../footer.html','/footer.html','/SITE/footer.html']);
+  })();
+
+  // ===== Lógica do cálculo (mantida) =====
+  const SOLDOS_30 = {
+    "Coronel": 4352.85,
+    "Tenente-Coronel": 4179.87,
+    "Major": 3982.98,
+    "Capitão": 3328.06,
+    "Primeiro-Tenente": 3081.39,
+    "Segundo-Tenente": 2852.19,
+    "Aspirante a Oficial": 2456.8,
+    "Cadete (último ano)": 986.84,
+    "Cadete (demais anos)": 710.07,
+    "Subtenente": 2197.04,
+    "Primeiro-Sargento": 1916.76,
+    "Segundo-Sargento": 1644.7,
+    "Terceiro-Sargento": 1467.77,
+    "Cabo": 1110.73,
+    "Soldado - Primeira Classe": 980.99,
+    "Soldado - Segunda Classe": 710.07
+  };
+
+  function parseBRL(v){
+    if(!v) return NaN;
+    v = String(v).trim();
+    v = v.replace(/\s/g,'').replace(/^R\$\s*/,'');
+    if(v.includes(',') && v.includes('.')) v = v.replace(/\./g,'').replace(',', '.');
+    else v = v.replace(',', '.');
+    v = v.replace(/[^0-9.\-]/g,'');
+    return Number(v);
+  }
+
+  function showWarn(msg){
+    const w = document.getElementById('warn');
+    w.textContent = msg;
+    w.style.display = 'block';
+  }
+  function hideWarn(){
+    const w = document.getElementById('warn');
+    w.style.display = 'none';
+  }
+
+  function fillPostos(){
+    const sel = document.getElementById('posto');
+    if (!sel) return;
+    sel.innerHTML = '';
+    const postos = Object.keys(SOLDOS_30);
+    postos.forEach(p=>{
+      const opt = document.createElement('option');
+      opt.value = p;
+      opt.textContent = p;
+      sel.appendChild(opt);
+    });
+    sel.value = postos.includes('Soldado - Primeira Classe') ? 'Soldado - Primeira Classe' : postos[0];
+  }
+
+  function calc(){
+    hideWarn();
+
+    const posto = document.getElementById('posto').value;
+    const soldoIntegral = SOLDOS_30?.[posto];
+    const soldoContra = parseBRL(document.getElementById('soldoContra').value);
+
+    if(!Number.isFinite(soldoIntegral) || soldoIntegral <= 0){
+      showWarn('Selecione o posto/graduação.');
+      return;
+    }
+    if(!Number.isFinite(soldoContra) || soldoContra <= 0){
+      showWarn('Digite o soldo do contracheque.');
+      return;
+    }
+
+    const base = soldoIntegral / 30;
+    const tempo = Math.ceil(soldoContra / base);
+    const tempoFinal = Math.max(1, Math.min(40, tempo));
+
+    document.getElementById('boxResult').style.display = 'block';
+    document.getElementById('tempo').textContent = String(tempoFinal);
+
+    const nota = document.getElementById('nota');
+    nota.textContent = (tempo !== tempoFinal)
+      ? `Resultado: ${tempo}. Usando ${tempoFinal} (limite 1–40).`
+      : '';
+  }
+
+  document.getElementById('btnCalc').addEventListener('click', calc);
+  document.getElementById('btnLimpar').addEventListener('click', ()=>{
+    document.getElementById('soldoContra').value = '';
+    document.getElementById('boxResult').style.display = 'none';
+    hideWarn();
+  });
+  document.getElementById('soldoContra').addEventListener('keydown', (e)=>{ if(e.key==='Enter') calc(); });
+
+  fillPostos();
+</script>
+</body>
+</html>
