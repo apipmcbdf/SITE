@@ -362,7 +362,7 @@
         ['COMPLEMENTO_SOLDO','COMPLEMENTO DE SOLDO'],
         ['GFM','GFM (fixa)'],
         ['GEFM','GEFM (fixa)'],
-        ['VPE','VPE (fixa)'],
+        ['VPE','VPE - LÍQUIDA'],
         ['AUX_MORADIA','AUXÍLIO MORADIA'],
       ];
       const optPairs = OPTIONAL.filter(([id]) => state.opcionais.includes(id));
@@ -440,13 +440,36 @@
           const vD = (sD==null) ? null : (sD * __fatorProporcaoSoldo) * 0.01;
           const vJ = (sJ==null) ? null : (sJ * __fatorProporcaoSoldo) * 0.01;
           tdA.textContent = fmt(vA); tdD.textContent = fmt(vD); tdJ.textContent = fmt(vJ);
-        } else if (key==='GFM' || key==='GEFM' || key==='VPE') {
-          // GFM/GEFM/VPE são FIXOS e NÃO variam com o Tempo de Serviço
+        } else if (key==='GFM' || key==='GEFM') {
+          // GFM/GEFM são FIXOS e NÃO variam com o Tempo de Serviço
           const map = (DATA.rubricas && DATA.rubricas[key]) ? DATA.rubricas[key] : {ATUAL:{},DEZ:{},JAN:{}};
           const vA = __lookup(map.ATUAL||{}, p);
           const vD = __lookup(map.DEZ  ||{}, p);
           const vJ = __lookup(map.JAN  ||{}, p);
           tdA.textContent = fmt(vA); tdD.textContent = fmt(vD); tdJ.textContent = fmt(vJ);
+        } else if (key==='VPE') {
+          // VPE - LÍQUIDA = VPE - GFM - GEFM (fixos; não variam com o Tempo de Serviço)
+          const mapV = (DATA.rubricas && DATA.rubricas.VPE)  ? DATA.rubricas.VPE  : {ATUAL:{},DEZ:{},JAN:{}};
+          const mapG = (DATA.rubricas && DATA.rubricas.GFM)  ? DATA.rubricas.GFM  : {ATUAL:{},DEZ:{},JAN:{}};
+          const mapE = (DATA.rubricas && DATA.rubricas.GEFM) ? DATA.rubricas.GEFM : {ATUAL:{},DEZ:{},JAN:{}};
+
+          const vA = __lookup(mapV.ATUAL||{}, p);
+          const gA = __lookup(mapG.ATUAL||{}, p);
+          const eA = __lookup(mapE.ATUAL||{}, p);
+
+          const vD = __lookup(mapV.DEZ||{}, p);
+          const gD = __lookup(mapG.DEZ||{}, p);
+          const eD = __lookup(mapE.DEZ||{}, p);
+
+          const vJ = __lookup(mapV.JAN||{}, p);
+          const gJ = __lookup(mapG.JAN||{}, p);
+          const eJ = __lookup(mapE.JAN||{}, p);
+
+          const liqA = (vA==null) ? null : (Number(vA) - (Number(gA)||0) - (Number(eA)||0));
+          const liqD = (vD==null) ? null : (Number(vD) - (Number(gD)||0) - (Number(eD)||0));
+          const liqJ = (vJ==null) ? null : (Number(vJ) - (Number(gJ)||0) - (Number(eJ)||0));
+
+          tdA.textContent = fmt(liqA); tdD.textContent = fmt(liqD); tdJ.textContent = fmt(liqJ);
         } else if (key==='ADIC_TEMP_SERVICO_MILITAR') {
           // ADIC.TEMP.SERVICO-MILITAR = 31% do soldo (e acompanha o soldo proporcional ao Tempo de Serviço)
           const sA = __lookup(soldo.ATUAL||{}, p);
