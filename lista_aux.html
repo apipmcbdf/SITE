@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Consulta — Auxílio Moradia Coletivo (Listagem 2008)</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background-color: #f9f9f9; color: #111; }
+
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      overflow: hidden;
+      background-image:
+        radial-gradient(1200px circle at 10% 10%, rgba(59, 130, 246, 0.22), transparent 55%),
+        radial-gradient(900px circle at 90% 20%, rgba(34, 197, 94, 0.16), transparent 55%),
+        linear-gradient(180deg, #0b1220 0%, #0f172a 60%, #0b1220 100%);
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .hero-overlay {
+      position: relative;
+      min-height: 100vh;
+      width: 100%;
+      background: linear-gradient(0deg, rgba(0,0,0,0.68), rgba(0,0,0,0.45));
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #fff;
+      padding: 20px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #f5b200;
+      color: #111;
+      font-weight: 800;
+      padding: 10px 16px;
+      border-radius: 999px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.25);
+      font-size: 16px;
+    }
+
+    .title {
+      font-size: clamp(26px, 5vw, 42px);
+      line-height: 1.1;
+      margin-bottom: 14px;
+      font-weight: 800;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.45);
+    }
+
+    .card {
+      width: min(720px, 100%);
+      background: rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 16px;
+      box-shadow: 0 12px 26px rgba(0,0,0,0.28);
+      padding: 16px;
+      backdrop-filter: blur(6px);
+      text-align: left;
+    }
+
+    .grid { display: grid; gap: 12px; }
+
+    /* "Box" de seleção (CPF/NOME) */
+    .chooser {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 4px;
+    }
+    .chip {
+      flex: 1 1 220px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      cursor: pointer;
+      user-select: none;
+      font-weight: 800;
+      font-size: 18px;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.08);
+      color: #fff;
+      transition: transform .12s ease, background .12s ease, border-color .12s ease;
+    }
+    .chip:hover { transform: translateY(-1px); background: rgba(255,255,255,0.12); }
+    .chip.active {
+      background: rgba(245,178,0,0.20);
+      border-color: rgba(245,178,0,0.65);
+      box-shadow: 0 0 0 3px rgba(245,178,0,0.18);
+    }
+    .chip input { display: none; }
+
+    .field label {
+      display: block;
+      font-weight: 800;
+      font-size: 18px;
+      margin-bottom: 6px;
+      color: #fff;
+    }
+
+    .field input {
+      width: 100%;
+      padding: 14px 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.10);
+      color: #fff;
+      font-size: 18px;
+      outline: none;
+    }
+    .field input::placeholder { color: rgba(255,255,255,0.72); }
+    .field input:focus {
+      border-color: rgba(245,178,0,0.85);
+      box-shadow: 0 0 0 3px rgba(245,178,0,0.18);
+    }
+
+    .mini {
+      margin-top: 6px;
+      font-size: 14px;
+      color: rgba(255,255,255,0.85);
+      line-height: 1.25;
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 8px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 18px;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 18px;
+      cursor: pointer;
+      border: 0;
+      transition: transform .12s ease, opacity .12s ease;
+      flex: 1 1 220px;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn:disabled { opacity: .65; cursor: not-allowed; transform: none; }
+
+    .btn-primary { background: #f5b200; color: #111; }
+    .btn-ghost {
+      background: rgba(255,255,255,0.10);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.18);
+    }
+
+    /* Status invisível antes da busca */
+    .status {
+      display: none;
+      margin-top: 12px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.18);
+      font-size: 18px;
+      font-weight: 800;
+      text-align: center;
+      letter-spacing: .2px;
+    }
+    .status.show { display: block; }
+    .status.ok { background: rgba(34,197,94,0.15); border-color: rgba(34,197,94,0.35); }
+    .status.err { background: rgba(239,68,68,0.14); border-color: rgba(239,68,68,0.35); }
+
+    .result {
+      margin-top: 10px;
+      padding: 14px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.18);
+    }
+    .result .name {
+      font-size: 20px;
+      font-weight: 800;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+    .result .cpf { font-size: 18px; opacity: 0.95; }
+
+    .back {
+      margin-top: 14px;
+      text-align: center;
+      opacity: 0.95;
+    }
+    .back a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+      padding: 10px 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.08);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .back a:hover { background: rgba(255,255,255,0.12); }
+
+    .hidden { display: none !important; }
+
+    @media (max-width: 520px) {
+      .card { padding: 14px; }
+      .field label, .chip { font-size: 17px; }
+      .field input { font-size: 18px; }
+      .btn { font-size: 18px; }
+      .status { font-size: 17px; }
+    }
+  </style>
+</head>
+
+<body>
+  <section class="hero" aria-label="Consulta na lista">
+    <div class="hero-overlay">
+      <div class="badge" role="status" aria-live="polite">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <span>Auxílio Moradia Coletivo</span>
+      </div>
+
+      <h1 class="title">CONSULTE SEU NOME NA LISTAGEM</h1>
+
+      <div class="card" aria-label="Formulário de consulta">
+        <div class="grid">
+          <div class="mini" style="font-size:16px; line-height:1.35; margin-bottom:6px;">
+            Consulte se o <b>seu nome</b> (ou o nome da <b>pensionista/inativo</b>) consta na <b>listagem inicial do Auxílio Moradia Coletivo (2008)</b>.<br>
+            <b>Processo de: 2014</b><br>
+            <b>Ação Ordinária nº 20.675-13.2014.4.01.3400</b><br>
+            <b style="color:#f5b200;">PRESCRIÇÃO: MARÇO DE 2026</b><br><br>
+            <b>Se estiver VIVO e na listagem:</b> período do Auxílio Moradia de <b>2014 a 2025</b>.<br>
+            <b>Se estiver FALECIDO e na listagem:</b> período de <b>2014</b> até a <b>data do óbito</b>.<br>
+            <b>Óbito anterior a 2014:</b> <b>não</b> há direito a valores.<br>
+            <b>Herdeiros</b> de pensionistas/inativos que constam na listagem também têm direito aos valores.<br><br>
+</div>
+<!-- BOX DE SELEÇÃO -->
+          <div class="chooser" role="tablist" aria-label="Selecionar tipo de busca">
+            <label class="chip active" id="chipCpf" aria-selected="true">
+              <input type="radio" name="tipoBusca" value="cpf" checked />
+              <i class="fa-solid fa-id-card"></i> CPF
+            </label>
+            <label class="chip" id="chipNome" aria-selected="false">
+              <input type="radio" name="tipoBusca" value="nome" />
+              <i class="fa-solid fa-user"></i> NOME
+            </label>
+          </div>
+
+          <!-- CAMPO CPF -->
+          <div class="field" id="boxCpf">
+            <label for="cpf">CPF</label>
+            <input id="cpf" type="text" inputmode="numeric" autocomplete="off" placeholder="Digite o CPF (11 números)" />
+          </div>
+
+          <!-- CAMPO NOME -->
+          <div class="field hidden" id="boxNome">
+            <label for="nome">NOME COMPLETO</label>
+            <input id="nome" type="text" autocomplete="off" placeholder="Digite o nome completo" />
+            <div class="mini">Digite o nome completo. A busca remove acentos automaticamente.</div>
+          </div>
+
+          <div class="actions" aria-label="Ações">
+            <button id="btnBuscar" class="btn btn-primary" type="button">
+              <i class="fa-solid fa-magnifying-glass"></i> BUSCAR
+            </button>
+            <button id="btnLimpar" class="btn btn-ghost" type="button">
+              <i class="fa-solid fa-eraser"></i> LIMPAR
+            </button>
+          </div>
+
+          <!-- STATUS SÓ APARECE DEPOIS DA BUSCA -->
+          <div id="msg" class="status" aria-live="polite"></div>
+          <div id="results"></div>
+          <div id="docBox" class="hidden" style="margin-top:12px;">
+            <div class="actions" style="justify-content:flex-start;">
+              <a class="btn btn-ghost" href="https://apipmcbdf.com.br/consulta_doc_aux.html" target="_blank" rel="noopener">
+                <i class="fa-solid fa-file-circle-check"></i> Confira aqui sua documentação
+              </a>
+            </div>
+            <div class="mini" style="margin-top:8px;">
+              Não assinou nada? Entre em contato com a Associação <b>com urgência</b>.
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="back">
+        <a href="consulta.html"><i class="fa-solid fa-arrow-left"></i> Voltar</a>
+      </div>
+    </div>
+  </section>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+    import { getFirestore, doc, getDoc, collection, query, where, limit, getDocs } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDoXdgj_fRuYTluJby6QOIiEYBu268lZmQ",
+      authDomain: "documentos-apipmcbdf.firebaseapp.com",
+      projectId: "documentos-apipmcbdf",
+      storageBucket: "documentos-apipmcbdf.appspot.com",
+      messagingSenderId: "422508459389",
+      appId: "1:422508459389:web:bebd6b53839f77a3cd4814"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const COL = "ListaCPFs";
+
+    const elCpf = document.getElementById("cpf");
+    const elNome = document.getElementById("nome");
+    const elMsg = document.getElementById("msg");
+    const elResults = document.getElementById("results");
+    const btnBuscar = document.getElementById("btnBuscar");
+    const btnLimpar = document.getElementById("btnLimpar");
+
+    const chipCpf = document.getElementById("chipCpf");
+    const chipNome = document.getElementById("chipNome");
+    const boxCpf = document.getElementById("boxCpf");
+    const boxNome = document.getElementById("boxNome");
+
+    function setMsg(text, kind = "") {
+      elMsg.textContent = text;
+      elMsg.className = "status show" + (kind ? " " + kind : "");
+    }
+
+    function hideMsg() {
+      elMsg.textContent = "";
+      elMsg.className = "status";
+    }
+
+    function clearResults() {
+      elResults.innerHTML = "";
+    }
+
+    function showDoc() {
+      const el = document.getElementById("docBox");
+      if (el) el.classList.remove("hidden");
+    }
+
+    function hideDoc() {
+      const el = document.getElementById("docBox");
+      if (el) el.classList.add("hidden");
+    }
+
+    function onlyDigits(s) {
+      return (s || "").replace(/\D+/g, "");
+    }
+
+    function collapseSpaces(s) {
+      return (s || "").trim().replace(/\s+/g, " ");
+    }
+
+    function normalizeName(s) {
+      const t = collapseSpaces(s || "");
+      return t
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toUpperCase();
+    }
+
+    function maskCpf(cpfDigits) {
+      const d = (cpfDigits || "").padStart(11, "0").slice(-11);
+      return d.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "***.$2.$3-$4");
+    }
+
+    function renderResult(nome, cpfDigits) {
+      clearResults();
+      const box = document.createElement("div");
+      box.className = "result";
+      box.innerHTML = `
+        <div class="name">${(nome || "CONSTA NA LISTAGEM").toString()}</div>
+        <div class="cpf">CPF: <b>${maskCpf(cpfDigits)}</b></div>
+      `;
+      elResults.appendChild(box);
+    }
+
+    function setMode(mode) {
+      if (mode === "cpf") {
+        chipCpf.classList.add("active");
+        chipNome.classList.remove("active");
+        chipCpf.setAttribute("aria-selected", "true");
+        chipNome.setAttribute("aria-selected", "false");
+        boxCpf.classList.remove("hidden");
+        boxNome.classList.add("hidden");
+        elCpf.focus();
+      } else {
+        chipNome.classList.add("active");
+        chipCpf.classList.remove("active");
+        chipNome.setAttribute("aria-selected", "true");
+        chipCpf.setAttribute("aria-selected", "false");
+        boxNome.classList.remove("hidden");
+        boxCpf.classList.add("hidden");
+        elNome.focus();
+      }
+      hideMsg();
+      clearResults();
+      hideDoc();
+    }
+
+    chipCpf.addEventListener("click", () => setMode("cpf"));
+    chipNome.addEventListener("click", () => setMode("nome"));
+
+    async function buscarPorCPF(cpfDigits) {
+      setMsg("CONSULTANDO...", "");
+      clearResults();
+
+      const ref = doc(db, COL, cpfDigits);
+      const snap = await getDoc(ref);
+
+      if (!snap.exists()) {
+        setMsg("NÃO ENCONTRADO", "err");
+        hideDoc();
+        return;
+      }
+
+      const data = snap.data() || {};
+      showDoc();
+      showDoc();
+      setMsg("SEU NOME CONSTA NA LISTAGEM. VERIFIQUE SE SUA DOCUMENTAÇÃO ESTÁ COMPLETA.", "ok");
+      renderResult(data.nome || "", cpfDigits);
+    }
+
+    async function buscarPorNomeCompleto(nomeRaw) {
+      setMsg("CONSULTANDO...", "");
+      clearResults();
+
+      const nome = normalizeName(nomeRaw);
+
+      if (!nome || nome.split(" ").length < 2) {
+        setMsg("DIGITE O NOME COMPLETO", "err");
+      hideDoc();
+        return;
+      }
+
+      const colRef = collection(db, COL);
+      const qy = query(colRef, where("nome", "==", nome), limit(10));
+      const snaps = await getDocs(qy);
+
+      if (snaps.empty) {
+        setMsg("NÃO ENCONTRADO", "err");
+        hideDoc();
+        return;
+      }
+
+      const first = snaps.docs[0];
+      const data = first.data() || {};
+      const cpfDigits = onlyDigits(first.id);
+
+      setMsg("SEU NOME CONSTA NA LISTAGEM. VERIFIQUE SE SUA DOCUMENTAÇÃO ESTÁ COMPLETA.", "ok");
+      renderResult(data.nome || nome, cpfDigits || first.id);
+    }
+
+    function getSelectedMode() {
+      return document.querySelector('input[name="tipoBusca"]:checked')?.value || "cpf";
+    }
+
+    async function onBuscar() {
+      btnBuscar.disabled = true;
+      try {
+        const mode = getSelectedMode();
+
+        if (mode === "cpf") {
+          const cpfDigits = onlyDigits(elCpf.value);
+          if (cpfDigits.length !== 11) {
+            setMsg("CPF INVÁLIDO", "err");
+            clearResults();
+        hideDoc();
+            return;
+          }
+          await buscarPorCPF(cpfDigits);
+          return;
+        }
+
+        if (mode === "nome") {
+          const nomeRaw = elNome.value || "";
+          if (!collapseSpaces(nomeRaw)) {
+            setMsg("DIGITE O NOME COMPLETO", "err");
+            clearResults();
+        hideDoc();
+            return;
+          }
+          await buscarPorNomeCompleto(nomeRaw);
+          return;
+        }
+
+      } catch (err) {
+        console.error(err);
+        setMsg("ERRO NA CONSULTA", "err");
+        clearResults();
+        hideDoc();
+      } finally {
+        btnBuscar.disabled = false;
+      }
+    }
+
+    btnBuscar.addEventListener("click", onBuscar);
+    btnLimpar.addEventListener("click", () => {
+      elCpf.value = "";
+      elNome.value = "";
+      hideMsg();
+      clearResults();
+      hideDoc();
+      // volta para CPF por padrão
+      setMode("cpf");
+    });
+
+    // Enter para buscar
+    elCpf.addEventListener("keydown", (e) => { if (e.key === "Enter") onBuscar(); });
+    elNome.addEventListener("keydown", (e) => { if (e.key === "Enter") onBuscar(); });
+    hideDoc();
+</script>
+</body>
+</html>
