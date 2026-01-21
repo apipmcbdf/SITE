@@ -10,7 +10,7 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
-    body { font-family: 'Inter', sans-serif; background-color: #f9f9f9; color: #111; }
+    body { font-family: 'Inter', sans-serif; background-color: #0b1220; color: #111; }
 
     .hero {
       position: relative;
@@ -230,10 +230,59 @@
       .btn { font-size: 18px; }
       .status { font-size: 17px; }
     }
+  
+    /* Estilo para o header/nav utilizado em header.html */
+    header { background-color: #003366; padding: 20px; color: white; }
+    nav { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+    .logo img { height: 50px; }
+    nav ul { display: flex; list-style: none; gap: 20px; flex-wrap: wrap; }
+    nav ul li { position: relative; }
+    nav ul li a {
+      color: white; text-decoration: none; font-weight: 600;
+      padding: 8px 12px; display: block; transition: background-color 0.3s ease;
+    }
+    nav ul li a:hover { background-color: #005599; border-radius: 4px; }
+    nav ul li ul {
+      display: none; position: absolute; background-color: #004080;
+      top: 100%; left: 0; min-width: 220px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2); z-index: 10;
+    }
+    nav ul li:hover ul { display: block; animation: fadeIn 0.3s ease-in-out; }
+    nav ul li ul li a { padding: 10px; font-weight: 400; }
+
+    /* Mobile menu (header.html) */
+    .menu-toggle {
+      display: none;
+      cursor: pointer;
+      font-size: 24px;
+      color: white;
+      margin-bottom: 10px;
+    }
+    #menu { display: flex; }
+
+    @media (max-width: 768px) {
+      nav { position: relative; flex-direction: column; align-items: center; }
+      .logo { text-align: center; width: 100%; margin-bottom: 10px; }
+      .menu-toggle { display: block; }
+      #menu {
+        display: none;
+        flex-direction: column;
+        position: relative;
+        width: 100%;
+        background-color: #003366;
+        z-index: 1000;
+      }
+      #menu.active { display: flex; }
+    }
+
   </style>
 </head>
 
 <body>
+
+  <!-- HEADER carregado de header.html -->
+  <div id="header-include" aria-label="Cabeçalho do site"></div>
+
   <section class="hero" aria-label="Consulta na lista">
     <div class="hero-overlay">
       <div class="badge" role="status" aria-live="polite">
@@ -312,6 +361,9 @@
     </div>
   </section>
 
+  <!-- FOOTER carregado de footer.html -->
+  <div id="footer-include" aria-label="Rodapé do site"></div>
+
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
     import { getFirestore, doc, getDoc, collection, query, where, limit, getDocs } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
@@ -375,10 +427,12 @@
 
     function normalizeName(s) {
       const t = collapseSpaces(s || "");
-      return t
+      // Remove acentos, deixa MAIÚSCULO e remove tudo que não for letra ou espaço
+      const up = t
         .normalize("NFD")
         .replace(/[\u0300-\u036f]/g, "")
         .toUpperCase();
+      return collapseSpaces(up.replace(/[^A-Z ]+/g, ""));
     }
 
     function maskCpf(cpfDigits) {
@@ -433,6 +487,7 @@
       if (!snap.exists()) {
         setMsg("NÃO ENCONTRADO", "err");
         hideDoc();
+        hideDoc();
         return;
       }
 
@@ -452,6 +507,7 @@
       if (!nome || nome.split(" ").length < 2) {
         setMsg("DIGITE O NOME COMPLETO", "err");
       hideDoc();
+      hideDoc();
         return;
       }
 
@@ -469,6 +525,8 @@
       const data = first.data() || {};
       const cpfDigits = onlyDigits(first.id);
 
+
+      showDoc();
       setMsg("SEU NOME CONSTA NA LISTAGEM. VERIFIQUE SE SUA DOCUMENTAÇÃO ESTÁ COMPLETA.", "ok");
       renderResult(data.nome || nome, cpfDigits || first.id);
     }
@@ -530,7 +588,35 @@
     // Enter para buscar
     elCpf.addEventListener("keydown", (e) => { if (e.key === "Enter") onBuscar(); });
     elNome.addEventListener("keydown", (e) => { if (e.key === "Enter") onBuscar(); });
+    // Impede caracteres que não sejam letras/espaços no campo NOME (inclui letras com acento)
+    elNome.addEventListener("input", () => {
+      const cleaned = (elNome.value || "").replace(/[^\p{L} ]+/gu, "");
+      if (cleaned !== elNome.value) elNome.value = cleaned;
+    });
+
     hideDoc();
 </script>
+
+  <script>
+    async function include(path, targetId) {
+      const el = document.getElementById(targetId);
+      if (!el) return;
+      try {
+        const res = await fetch(path, { cache: "no-store" });
+        el.innerHTML = await res.text();
+      } catch (e) {
+        console.error(`Falha ao carregar ${path}`, e);
+      }
+    }
+    // Toggle do menu (usado pelo header.html)
+    function toggleMenu() {
+      var menu = document.getElementById("menu");
+      if (menu) menu.classList.toggle("active");
+    }
+    // Carrega os includes
+    include('header.html', 'header-include');
+    include('footer.html', 'footer-include');
+  </script>
+
 </body>
 </html>
