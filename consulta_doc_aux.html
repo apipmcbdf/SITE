@@ -72,6 +72,8 @@
       nav ul { flex-direction: column; align-items: flex-start; }
     }
 
+      .subtitle{margin-top:10px; margin-bottom:18px; text-align:center; font-size:18px; font-weight:700; color:#003366; opacity:0.9;}
+
   </style>
 </head>
 <body>
@@ -82,6 +84,7 @@
   <section style="padding: 60px 20px; background-color: #f4f6f9;">
     <div class="consulta-container">
       <h1>CONSULTA DE DOCUMENTAÇÃO</h1>
+      <div class="subtitle">Auxílio Moradia - Coletivo</div>
       <label for="cpfInput">Digite seu CPF:</label>
       <input id="cpfInput" placeholder="Digite seu CPF (com ou sem pontuação)" type="text"/>
       <button id="consultBtn">CONSULTAR</button>
@@ -190,9 +193,7 @@
       }
 
       // Campos exportados na coleção AuxMoradia
-      const origem = data['ORIGEM'] ?? '';
       const nome = data['NOME'] ?? '';
-      const cpf = data['CPF'] ?? '';
       const numProc = data['NÚMERO DE PROCESSO'] ?? '';
       const documentacao = data['DOCUMENTAÇÃO'] ?? '';
       const pendencias = data['PENDÊNCIAS'] ?? '';
@@ -237,25 +238,69 @@
         ul.appendChild(li);
       }
 
-      addItem('ORIGEM', origem);
+      // 1) Não mostrar ORIGEM nem CPF
       addItem('NOME', nome);
-      addItem('CPF', cpf || formatarCPF(document.getElementById('cpfInput').value));
-      addItem('NÚMERO DE PROCESSO', numProc);
+
+      // 2) Não mostrar "NÚMERO DE PROCESSO" se for "NÃO"
+      const np = (numProc || '').toString().trim();
+      if (np && np.toUpperCase() !== 'NÃO') {
+        addItem('NÚMERO DE PROCESSO', np);
+      }
+
       addItem('DOCUMENTAÇÃO', documentacao);
       addItem('PENDÊNCIAS', pendencias);
 
       card.appendChild(ul);
 
-      // Aviso simples para documentação incompleta
+      // Avisos (sempre após as informações)
       const docUpper = (documentacao || '').toString().toUpperCase();
       if (docUpper === 'INCOMPLETA' || docUpper === 'NCOMPLETA') {
         const avisoDiv = document.createElement('div');
         avisoDiv.className = 'warning';
-        avisoDiv.innerHTML = `📢 Atenção: sua documentação consta como <strong>INCOMPLETA</strong>. Se houver pendências listadas acima, encaminhe os documentos pendentes conforme orientação da associação.`;
+        avisoDiv.innerHTML = `📢 <strong>Atenção: documentação incompleta (urgente)</strong> — Consta que sua documentação está <strong>INCOMPLETA</strong>. Para garantir a análise e o andamento do seu caso, é <strong>indispensável</strong> completar a documentação o quanto antes. <strong>O prazo final para reivindicação de direitos (prescrição) é março de 2026</strong>, porém <strong>a entrega da documentação deve ocorrer, no máximo, até 27 de fevereiro</strong>. Após essa data, pode não haver tempo hábil para conferência e providências necessárias.`;
         card.appendChild(avisoDiv);
       }
 
-      container.appendChild(card);
+      // 3) Avisos no final (condicionais)
+      // Se o NÚMERO DE PROCESSO for "AGUARDANDO CALCULO", "COMPARTILHADO" ou um número,
+      // não mostrar os avisos de Importante/Devolução e mostrar um aviso único.
+      function normalizeProc(s){
+        return (s || '')
+          .toString()
+          .trim()
+          .normalize('NFD')
+          .replace(/\p{Diacritic}/gu, '')
+          .toUpperCase();
+      }
+
+      const npNorm = normalizeProc(numProc);
+      const isAguardando = npNorm === 'AGUARDANDO CALCULO';
+      const isCompartilhado = npNorm === 'COMPARTILHADO';
+      const isNumero = (/^[0-9.\-\/\s]+$/.test((numProc || '').toString().trim()) && /\d/.test((numProc || '').toString()));
+
+      if (isAguardando || isCompartilhado || isNumero) {
+        const avisoEscritorio = document.createElement('div');
+        avisoEscritorio.className = 'warning';
+        avisoEscritorio.innerHTML = `✅ Sua documentação já está com o escritório <strong>Silveira e Cruz</strong>. Qualquer novidade entraremos em contato. <strong>Aguarde.</strong>`;
+        card.appendChild(avisoEscritorio);
+      } else {
+        const avisoImportante = document.createElement('div');
+        avisoImportante.className = 'warning';
+        avisoImportante.innerHTML = `
+          <strong>Importante</strong><br/>
+          As pessoas que ingressaram com ação individual e tiveram decisão desfavorável não podem participar da execução promovida pela Associação. Isso ocorre porque, quando já existe decisão judicial definitiva ou outro processo sobre o mesmo assunto, não é permitido apresentar novo pedido, mesmo com o envio de documentos ou adesão a acordo.
+        `;
+        card.appendChild(avisoImportante);
+
+        const avisoDevolucao = document.createElement('div');
+        avisoDevolucao.className = 'warning';
+        avisoDevolucao.innerHTML = `
+          <strong>Devolução de documentos</strong><br/>
+          Os associados que já entregaram a documentação, mas que não poderão participar da execução, poderão entrar em contato com a Associação para solicitar a devolução dos documentos apresentados.
+        `;
+        card.appendChild(avisoDevolucao);
+      }
+container.appendChild(card);
     }
 
     window.addEventListener('DOMContentLoaded', () => {
