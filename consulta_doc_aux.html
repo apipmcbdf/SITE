@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Consulta de Documentação</title>
+  <!-- Dependências globais necessárias para header/footer -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet"/>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background-color: #f9f9f9; }
+    /* Estilo da consulta */
+    .consulta-container { max-width: 700px; margin: 60px auto; background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+    .consulta-container h1 { text-align: center; margin-bottom: 30px; font-weight: 600; font-size: 24px; color: #003366; }
+    .consulta-container label { font-weight: 500; display: block; margin-bottom: 8px; }
+    .consulta-container input[type="text"] { width: 100%; padding: 10px; font-size: 16px; text-align: center; margin-bottom: 20px; border-radius: 6px; border: 1px solid #ccc; }
+    .consulta-container button { width: 100%; padding: 12px; font-size: 16px; font-weight: bold; color: white; background-color: #4a90e2; border: none; border-radius: 6px; cursor: pointer; }
+    .consulta-container button:hover { background-color: #357ab8; }
+    .card { border: none; border-radius: 10px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); background-color: #ffffff; margin-top: 30px; padding: 20px; }
+    .data-section { margin-bottom: 30px; }
+    .data-section h3 { font-size: 18px; color: #003366; border-bottom: 2px solid #003366; padding-bottom: 5px; margin-bottom: 15px; }
+    .data-section ul { list-style: none; padding: 0; }
+    .data-section li { margin-bottom: 8px; }
+    /* --- Estilo para abas e status --- */
+    .tabs { display: flex; justify-content: center; gap: 12px; margin-top: 20px; flex-wrap: wrap; }
+    .tab-button { padding: 10px 20px; font-weight: bold; background-color: #e0e0e0; color: #003366; border: none; border-radius: 20px; cursor: pointer; transition: all 0.2s ease; }
+    .tab-button.active { background-color: #003366; color: #fff; }
+    .tab-content { display: none; padding: 20px; }
+    .tab-content.active { display: block; }
+    .tab-content ul { list-style: none; padding-left: 0; margin-top: 10px; }
+    .tab-content li { margin-bottom: 8px; font-size: 16px; line-height: 1.5; }
+    li[data-status="COMPLETA"]::before { content: "✅ "; color: green; }
+    li[data-status="INCOMPLETA"]::before { content: "⚠️ "; color: orange; }
+    li[data-status="PROTOCOLADA"]::before { content: "📑 "; color: teal; }
+    li[data-status="EM FILA"]::before { content: "⏳ "; color: #007bff; }
+    li[data-status*="LISTA"]::before { content: "🟢 "; color: green; }
+    li[data-status*="NÃO"]::before { content: "❌ "; color: red; }
+
+    /* Avisos */
+    .warning {
+      background-color: #fff8e1;
+      border-left: 6px solid #ffb300;
+      color: #333;
+      padding: 16px 20px;
+      margin: 20px 0;
+      font-size: 15px;
+      line-height: 1.6;
+      border-radius: 8px;
+    }
+/* Estilos mínimos para o header carregado (igual ao diretoria.html) */
+    header { background-color: #003366; padding: 20px; color: white; }
+    nav { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+    .logo img { height: 50px; }
+    nav ul { display: flex; list-style: none; gap: 20px; flex-wrap: wrap; }
+    nav ul li { position: relative; }
+    nav ul li a {
+      color: white; text-decoration: none; font-weight: 600;
+      padding: 8px 12px; display: block; transition: background-color 0.3s ease;
+    }
+    nav ul li a:hover { background-color: #005599; border-radius: 4px; }
+    nav ul li ul {
+      display: none; position: absolute; background-color: #004080;
+      top: 100%; left: 0; min-width: 220px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2); z-index: 10;
+    }
+    nav ul li:hover ul { display: block; animation: fadeIn 0.3s ease-in-out; }
+    nav ul li ul li a { padding: 10px; font-weight: 400; }
+    @keyframes fadeIn { from {opacity: 0; transform: translateY(-8px);} to {opacity: 1; transform: translateY(0);} }
+    @media (max-width: 768px) {
+      nav ul { flex-direction: column; align-items: flex-start; }
+    }
+
+  </style>
+</head>
+<body>
+  <!-- Header externo -->
+  <div id="header-container"></div>
+
+  <!-- CONTEÚDO PRINCIPAL -->
+  <section style="padding: 60px 20px; background-color: #f4f6f9;">
+    <div class="consulta-container">
+      <h1>CONSULTA DE DOCUMENTAÇÃO</h1>
+      <label for="cpfInput">Digite seu CPF:</label>
+      <input id="cpfInput" placeholder="Digite seu CPF (com ou sem pontuação)" type="text"/>
+      <button id="consultBtn">CONSULTAR</button>
+      <div id="resultContainer"></div>
+    </div>
+  </section>
+
+  <section style="padding: 50px 20px; background-color: #003366; color: white; text-align: center;">
+    <h2>Associe-se à APIPMCBDF</h2>
+    <p style="max-width: 700px; margin: 20px auto;">Junte-se a centenas de associados que têm seus direitos defendidos com firmeza e comprometimento. Seja representado, tenha acesso a benefícios exclusivos e faça parte da nossa história!</p>
+    <a href="seja-socio.html" style="display: inline-block; margin-top: 20px; padding: 12px 24px; background-color: #f5b200; color: black; text-decoration: none; border-radius: 5px; font-weight: bold;">Quero me associar</a>
+  </section>
+
+  <section style="padding: 40px 20px; text-align: center; background-color: #fff;">
+    <h2>Quem Somos</h2>
+    <p style="max-width: 800px; margin: auto;">A APIPMCBDF representa e apoia os pensionistas e inativos da Polícia Militar e Corpo de Bombeiros do Antigo e Atual Distrito Federal. Lutamos por direitos, assistência e valorização dos nossos associados.</p>
+    <a href="sobre.html" style="display: inline-block; margin-top: 20px; padding: 10px 20px; background-color: #003366; color: white; text-decoration: none; border-radius: 5px;">Saiba mais</a>
+  </section>
+
+  <!-- Footer externo -->
+  <div id="footer-container"></div>
+
+  <!-- Includes de header e footer -->
+  <script>
+    (function loadHeader(){
+      const el = document.getElementById('header-container');
+      if (!el) return;
+      fetch('header.html', { cache: 'no-store' })
+        .then(r => r.text()).then(html => el.innerHTML = html)
+        .catch(() => el.innerHTML = '<!-- falha ao carregar header -->');
+    })();
+
+    (function loadFooter(){
+      const el = document.getElementById('footer-container');
+      if (!el) return;
+      fetch('footer.html', { cache: 'no-store' })
+        .then(r => r.text()).then(html => el.innerHTML = html)
+        .catch(() => el.innerHTML = '<!-- falha ao carregar footer -->');
+    })();
+    function toggleMenu() {
+      var menu = document.getElementById("menu");
+      if (menu) menu.classList.toggle("active");
+    }
+  </script>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDoXdgj_fRuYTluJby6QOIiEYBu268lZmQ",
+      authDomain: "documentos-apipmcbdf.firebaseapp.com",
+      projectId: "documentos-apipmcbdf",
+      storageBucket: "documentos-apipmcbdf.appspot.com",
+      messagingSenderId: "422508459389",
+      appId: "1:422508459389:web:bebd6b53839f77a3cd4814"
+    };
+    const app = initializeApp(firebaseConfig);
+    const db  = getFirestore(app);
+
+    function formatarCPF(cpf) {
+      return cpf.replace(/\D/g, '').padStart(11, '0');
+    }
+
+    function criarLista(campos, data) {
+      const ul = document.createElement('ul');
+      for (let campo of campos) {
+        let valor = data[campo];
+        if (!valor || !valor.toString().trim()) continue;
+
+        let status = valor.toString().toUpperCase();
+
+        // Renomeia "Status VPE"/"Status AUX" para "Pendências" se documentação estiver incompleta
+        if ((campo === 'Status VPE' && (data['Documentação VPE'] || '').toUpperCase() === 'INCOMPLETA') ||
+            (campo === 'Status AUX' && (data['Documentação AUX'] || '').toUpperCase() === 'INCOMPLETA')) {
+          campo = 'Pendências';
+        }
+
+        // Renomeia "Recebe VPE" para "Lista de implantação" se estiver em uma das listas
+        if (campo === 'Recebe VPE' && ['SEGUNDA LISTA DE IMPLANTAÇÃO VPE','TERCEIRA LISTA DE IMPLANTAÇÃO VPE','QUARTA LISTA DE IMPLANTAÇÃO VPE'].includes(status)) {
+          campo = 'Lista de implantação';
+        }
+
+        const li = document.createElement('li');
+        li.setAttribute('data-status', status);
+
+        // Formatação amigável com quebra de linhas para pendências
+        if (campo === 'Pendências') {
+          const pendencias = valor.split(';').map(p => `<li>📌 ${p.trim()}</li>`).join('');
+          li.innerHTML = `<strong>Pendências:</strong><ul style='margin-top:8px; padding-left: 18px;'>${pendencias}</ul>`;
+        } else {
+          li.textContent = `${campo}: ${valor}`;
+        }
+        ul.appendChild(li);
+      }
+      return ul.childElementCount ? ul : null;
+    }
+
+    function mostrarDados(data) {
+      const container = document.getElementById('resultContainer');
+      container.innerHTML = '';
+
+      if (!data || Object.keys(data).length === 0) {
+        container.innerHTML = `<div class="card"><p style="padding:20px; text-align:center; font-weight:bold;">❌ Nenhum dado encontrado para este CPF.</p></div>`;
+        return;
+      }
+
+      // Campos exportados na coleção AuxMoradia
+      const origem = data['ORIGEM'] ?? '';
+      const nome = data['NOME'] ?? '';
+      const cpf = data['CPF'] ?? '';
+      const numProc = data['NÚMERO DE PROCESSO'] ?? '';
+      const documentacao = data['DOCUMENTAÇÃO'] ?? '';
+      const pendencias = data['PENDÊNCIAS'] ?? '';
+
+      const card = document.createElement('div');
+      card.className = 'card';
+
+      const title = document.createElement('div');
+      title.style.fontSize = '18px';
+      title.style.fontWeight = '600';
+      title.style.color = '#003366';
+      title.style.marginBottom = '12px';
+      title.textContent = 'Resultado da Consulta';
+      card.appendChild(title);
+
+      const ul = document.createElement('ul');
+      ul.style.listStyle = 'none';
+      ul.style.paddingLeft = '0';
+
+      function addItem(label, value) {
+        if (value === null || value === undefined) return;
+        const v = value.toString().trim();
+        if (!v) return;
+
+        const li = document.createElement('li');
+        li.style.marginBottom = '10px';
+
+        const status = v.toUpperCase();
+        li.setAttribute('data-status', status);
+
+        if (label === 'PENDÊNCIAS') {
+          const itens = v.split(';').map(p => p.trim()).filter(Boolean);
+          if (itens.length === 0) return;
+
+          li.innerHTML = `<strong>Pendências:</strong><ul style="margin-top:8px; padding-left: 18px;">${
+            itens.map(p => `<li>📌 ${p}</li>`).join('')
+          }</ul>`;
+        } else {
+          li.textContent = `${label}: ${v}`;
+        }
+
+        ul.appendChild(li);
+      }
+
+      addItem('ORIGEM', origem);
+      addItem('NOME', nome);
+      addItem('CPF', cpf || formatarCPF(document.getElementById('cpfInput').value));
+      addItem('NÚMERO DE PROCESSO', numProc);
+      addItem('DOCUMENTAÇÃO', documentacao);
+      addItem('PENDÊNCIAS', pendencias);
+
+      card.appendChild(ul);
+
+      // Aviso simples para documentação incompleta
+      const docUpper = (documentacao || '').toString().toUpperCase();
+      if (docUpper === 'INCOMPLETA' || docUpper === 'NCOMPLETA') {
+        const avisoDiv = document.createElement('div');
+        avisoDiv.className = 'warning';
+        avisoDiv.innerHTML = `📢 Atenção: sua documentação consta como <strong>INCOMPLETA</strong>. Se houver pendências listadas acima, encaminhe os documentos pendentes conforme orientação da associação.`;
+        card.appendChild(avisoDiv);
+      }
+
+      container.appendChild(card);
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('consultBtn').onclick = async () => {
+        const raw = document.getElementById('cpfInput').value;
+        const cpf = formatarCPF(raw);
+        if (cpf.length !== 11) { alert('CPF inválido'); return; }
+
+        try {
+          const ref = doc(db, 'AuxMoradia', cpf);
+          const snap = await getDoc(ref);
+          mostrarDados(snap.exists() ? snap.data() : {});
+        } catch (err) {
+          console.error(err);
+
+          const container = document.getElementById('resultContainer');
+          const msg = (err && err.message) ? err.message : String(err);
+
+          // Mensagem amigável para erro de permissão
+          if (msg.toLowerCase().includes('missing or insufficient permissions')) {
+            container.innerHTML = `
+              <div class="card">
+                <p style="padding:18px; text-align:center; font-weight:700;">❌ Permissão insuficiente para consultar o banco.</p>
+                <p style="padding:0 18px 18px; text-align:center; opacity:.85;">
+                  Isso acontece quando as <strong>Regras do Firestore</strong> não permitem leitura para este site.
+                  <br/>Solução: liberar leitura para usuários autenticados ou publicar o site com autenticação.
+                </p>
+              </div>`;
+            return;
+          }
+
+          container.innerHTML = `
+            <div class="card">
+              <p style="padding:18px; text-align:center; font-weight:700;">❌ Erro ao consultar.</p>
+              <p style="padding:0 18px 18px; text-align:center; opacity:.85;">${msg}</p>
+            </div>`;
+        }
+      };
+    });
+  </script>
+  <noscript>
+    <iframe src="header.html" title="Cabeçalho" style="width:100%; border:0; height:160px;"></iframe>
+    <iframe src="footer.html" title="Rodapé" style="width:100%; border:0; height:320px;"></iframe>
+  </noscript>
+
+</body>
+</html>
