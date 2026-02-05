@@ -230,6 +230,21 @@
     const app = initializeApp(firebaseConfig);
     const db  = getFirestore(app);
 
+    // Helper seguro
+    const getElementById = (id) => document.getElementById(id);
+
+    // Sanitiza o campo de nome: permite apenas letras e espaços (remove aspas, números, símbolos, etc.)
+    // Também organiza espaços e mantém o texto em MAIÚSCULO para facilitar.
+    function sanitizeNomeInput(value) {
+      return (value || '')
+        .toString()
+        .replace(/[^\p{L}\s]/gu, '')   // mantém só letras e espaços
+        .replace(/\s+/g, ' ')          // múltiplos espaços -> 1
+        .trimStart()                    // evita espaço no começo
+        .toUpperCase();
+    }
+
+
     function formatarCPF(cpf) {
       return cpf.replace(/\D/g, '').padStart(11, '0');
     }
@@ -371,7 +386,17 @@
     }
 
     window.addEventListener('DOMContentLoaded', () => {
-      document.// Consulta por NOME (campo 'nome' no Firestore, em MAIÚSCULO e sem acentos)
+
+      // Bloqueio/limpeza de caracteres no campo NOME (somente letras e espaços)
+      const nomeInputEl = document.getElementById('nomeInput');
+      if (nomeInputEl) {
+        nomeInputEl.addEventListener('input', () => {
+          nomeInputEl.value = sanitizeNomeInput(nomeInputEl.value);
+        });
+      }
+
+
+      // Consulta por NOME (campo 'nome' no Firestore, em MAIÚSCULO e sem acentos)
       getElementById('consultNomeBtn').onclick = async () => {
         const rawNome = document.getElementById('nomeInput').value;
         const nome = normalizarNome(rawNome);
