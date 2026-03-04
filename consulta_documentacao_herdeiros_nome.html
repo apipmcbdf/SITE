@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Consulta - Documentação Herdeiros</title>
+  <!-- Dependências globais necessárias para header/footer -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet"/>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background-color: #f9f9f9; }
+    /* Estilo da consulta */
+    .consulta-container { max-width: 700px; margin: 60px auto; background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+    .consulta-container h1 { text-align: center; margin-bottom: 30px; font-weight: 600; font-size: 24px; color: #003366; }
+    .consulta-container label { font-weight: 500; display: block; margin-bottom: 8px; }
+    .consulta-container input[type="text"] { width: 100%; padding: 10px; font-size: 16px; text-align: center; margin-bottom: 20px; border-radius: 6px; border: 1px solid #ccc; }
+    .consulta-container button { width: 100%; padding: 12px; font-size: 16px; font-weight: bold; color: white; background-color: #4a90e2; border: none; border-radius: 6px; cursor: pointer; }
+    .consulta-container button:hover { background-color: #357ab8; }
+    .card { border: none; border-radius: 10px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); background-color: #ffffff; margin-top: 30px; padding: 20px; }
+    .data-section { margin-bottom: 30px; }
+    .data-section h3 { font-size: 18px; color: #003366; border-bottom: 2px solid #003366; padding-bottom: 5px; margin-bottom: 15px; }
+    .data-section ul { list-style: none; padding: 0; }
+    .data-section li { margin-bottom: 8px; }
+    /* --- Estilo para abas e status --- */
+    .tabs { display: flex; justify-content: center; gap: 12px; margin-top: 20px; flex-wrap: wrap; }
+    .tab-button { padding: 10px 20px; font-weight: bold; background-color: #e0e0e0; color: #003366; border: none; border-radius: 20px; cursor: pointer; transition: all 0.2s ease; }
+    .tab-button.active { background-color: #003366; color: #fff; }
+    .tab-content { display: none; padding: 20px; }
+    .tab-content.active { display: block; }
+    .tab-content ul { list-style: none; padding-left: 0; margin-top: 10px; }
+    .tab-content li { margin-bottom: 8px; font-size: 16px; line-height: 1.5; }
+    li[data-status="COMPLETA"]::before { content: "✅ "; color: green; }
+    li[data-status="INCOMPLETA"]::before { content: "⚠️ "; color: orange; }
+    li[data-status="PROTOCOLADA"]::before { content: "📑 "; color: teal; }
+    li[data-status="EM FILA"]::before { content: "⏳ "; color: #007bff; }
+    li[data-status*="LISTA"]::before { content: "🟢 "; color: green; }
+    li[data-status*="NÃO"]::before { content: "❌ "; color: red; }
+
+    /* Avisos */
+    .warning {
+      background-color: #fff8e1;
+      border-left: 6px solid #ffb300;
+      color: #333;
+      padding: 16px 20px;
+      margin: 20px 0;
+      font-size: 15px;
+      line-height: 1.6;
+      border-radius: 8px;
+    }
+/* Estilos mínimos para o header carregado (igual ao diretoria.html) */
+    header { background-color: #003366; padding: 20px; color: white; }
+    nav { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+    .logo img { height: 50px; }
+    nav ul { display: flex; list-style: none; gap: 20px; flex-wrap: wrap; }
+    nav ul li { position: relative; }
+    nav ul li a {
+      color: white; text-decoration: none; font-weight: 600;
+      padding: 8px 12px; display: block; transition: background-color 0.3s ease;
+    }
+    nav ul li a:hover { background-color: #005599; border-radius: 4px; }
+    nav ul li ul {
+      display: none; position: absolute; background-color: #004080;
+      top: 100%; left: 0; min-width: 220px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2); z-index: 10;
+    }
+    nav ul li:hover ul { display: block; animation: fadeIn 0.3s ease-in-out; }
+    nav ul li ul li a { padding: 10px; font-weight: 400; }
+    @keyframes fadeIn { from {opacity: 0; transform: translateY(-8px);} to {opacity: 1; transform: translateY(0);} }
+    @media (max-width: 768px) {
+      nav ul { flex-direction: column; align-items: flex-start; }
+    }
+
+      .subtitle{margin-top:10px; margin-bottom:18px; text-align:center; font-size:18px; font-weight:700; color:#003366; opacity:0.9;}
+
+  
+    .info-box{
+      margin: 0 auto 22px auto;
+      padding: 18px 18px 14px;
+      background: #ffffff;
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 14px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+      text-align: left;
+    }
+    .info-box h2{
+      margin: 0 0 10px;
+      font-size: 18px;
+      color: #003366;
+      letter-spacing: .3px;
+    }
+    .info-box h3{
+      margin: 14px 0 8px;
+      font-size: 16px;
+      color: #003366;
+    }
+    .info-box p{
+      margin: 0 0 12px;
+      line-height: 1.45;
+      color: #1b2b3a;
+    }
+    .info-grid{
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+      margin: 8px 0 10px;
+    }
+    .info-item{
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: #f4f6f9;
+      border: 1px solid rgba(0,0,0,0.06);
+      color: #1b2b3a;
+    }
+    .info-label{
+      font-weight: 700;
+      color: #003366;
+    }
+    .info-list{
+      margin: 8px 0 0;
+      padding-left: 18px;
+      color: #1b2b3a;
+      line-height: 1.45;
+    }
+    .info-list li{ margin-bottom: 8px; }
+    @media (min-width: 900px){
+      .info-grid{ grid-template-columns: 1fr 1fr; }
+      .info-grid .info-item:nth-child(3){ grid-column: 1 / -1; }
+    }
+
+  
+    .hint{
+      margin: 10px 0 0;
+      font-size: 13px;
+      opacity: .85;
+      text-align:center;
+    }
+  
+    /* ===== Melhorias em "Detalhes do cadastro" ===== */
+    .success {
+      background-color: #e8f5e9;
+      border-left: 6px solid #43a047;
+      color: #1b5e20;
+      padding: 16px 20px;
+      margin: 18px 0 10px;
+      font-size: 15px;
+      line-height: 1.6;
+      border-radius: 8px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .3px;
+      vertical-align: middle;
+      border: 1px solid rgba(0,0,0,0.08);
+      background: #f3f4f6;
+      color: #111827;
+    }
+    .badge.ok { background: #e8f5e9; color: #1b5e20; border-color: rgba(67,160,71,0.25); }
+    .badge.pending { background: #fff8e1; color: #7a4b00; border-color: rgba(255,179,0,0.35); }
+    .badge.no { background: #ffebee; color: #b71c1c; border-color: rgba(183,28,28,0.25); }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: #eef2ff;
+      color: #1f2937;
+      border: 1px solid rgba(79,70,229,0.18);
+      font-size: 13px;
+    }
+
+</style>
+</head>
+<body>
+  <!-- Header externo -->
+  <div id="header-container"></div>
+
+  <!-- CONTEÚDO PRINCIPAL -->
+  <section style="padding: 60px 20px; background-color: #f4f6f9;">
+    <div class="consulta-container">
+      <h1>CONSULTA - DOCUMENTAÇÃO HERDEIROS</h1>
+      <div class="subtitle">HERDEIROS</div>
+      
+      <div class="info-box">
+        
+<h3 style="color:#b00020;">⚠️ URGENTE – Documentação do Auxílio Moradia</h3>
+        <ul class="info-list">
+          <li><strong>Prazo:</strong> providenciar a documentação <strong>até sexta‑feira, 06/03/2026</strong>.</li>
+          <li><strong>Contato urgente com a Associação:</strong>
+            <br><strong>E‑mail:</strong> <a href="mailto:documentos@apipmcbdf.com.br">documentos@apipmcbdf.com.br</a>
+            <br><strong>WhatsApp:</strong> <a href="https://wa.me/5521968556681" target="_blank" rel="noopener">+55 21 96855‑6681</a>
+          </li>
+          <li><strong>Falecidos que deixaram bens:</strong> é necessário <strong>Inventário</strong> (qualquer um dos seguintes):
+            <br>• Inventário concluído <em>ou</em>
+            <br>• <strong>Termo de Inventariante</strong> <em>ou</em>
+            <br>• <strong>Inicial do processo de inventário</strong>.
+          </li>
+          <li><strong>Falecidos que NÃO deixaram bens:</strong> <strong>todos os herdeiros</strong> precisam assinar uma
+            <strong>Declaração de Inexistência de Bens</strong>.
+          </li>
+          <li><strong>Dica:</strong> se na consulta aparecer <strong>STATUS_GERAL_HERDEIROS = PENDENTE</strong>, existe pelo menos um herdeiro com documentação pendente.</li>
+        </ul>
+      </div>
+
+<label for="nomeInput">Digite seu nome completo:</label>
+      <input id="nomeInput" placeholder="Digite o nome completo (sem abreviações)" type="text"/>
+      <button id="consultNomeBtn">CONSULTAR</button>
+      <p class="hint">Dica: informe o <strong>nome completo</strong>. A busca por nome exige correspondência exata (em MAIÚSCULAS e sem acentos, como no relatório).</p>
+      <div style="text-align:center; margin-top:12px;">
+        <a href="consulta_instituidores_cpf.html" style="font-weight:700; color:#003366; text-decoration:underline;">Voltar para pesquisa por CPF</a>
+      </div>
+      <div id="resultContainer"></div>
+    </div>
+  </section>
+
+  <section style="padding: 50px 20px; background-color: #003366; color: white; text-align: center;">
+    <h2>Associe-se à APIPMCBDF</h2>
+    <p style="max-width: 700px; margin: 20px auto;">Junte-se a centenas de associados que têm seus direitos defendidos com firmeza e comprometimento. Seja representado, tenha acesso a benefícios exclusivos e faça parte da nossa história!</p>
+    <a href="seja-socio.html" style="display: inline-block; margin-top: 20px; padding: 12px 24px; background-color: #f5b200; color: black; text-decoration: none; border-radius: 5px; font-weight: bold;">Quero me associar</a>
+  </section>
+
+  <section style="padding: 40px 20px; text-align: center; background-color: #fff;">
+    <h2>Quem Somos</h2>
+    <p style="max-width: 800px; margin: auto;">A APIPMCBDF representa e apoia os pensionistas e inativos da Polícia Militar e Corpo de Bombeiros do Antigo e Atual Distrito Federal. Lutamos por direitos, assistência e valorização dos nossos associados.</p>
+    <a href="sobre.html" style="display: inline-block; margin-top: 20px; padding: 10px 20px; background-color: #003366; color: white; text-decoration: none; border-radius: 5px;">Saiba mais</a>
+  </section>
+
+  <!-- Footer externo -->
+  <div id="footer-container"></div>
+
+  <!-- Includes de header e footer -->
+  <script>
+    (function loadFooter(){
+      if (location.protocol === 'file:') { return; }
+const el = document.getElementById('footer-container');
+      if (!el) return;
+      fetch('footer.html', { cache: 'no-store' })
+        .then(r => r.text()).then(html => el.innerHTML = html)
+        .catch(() => el.innerHTML = '<!-- falha ao carregar footer -->');
+    })();
+    function toggleMenu() {
+      var menu = document.getElementById("menu");
+      if (menu) menu.classList.toggle("active");
+    }
+  </script>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getFirestore, doc, getDoc, collection, query, where, getDocs, limit } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDoXdgj_fRuYTluJby6QOIiEYBu268lZmQ",
+      authDomain: "documentos-apipmcbdf.firebaseapp.com",
+      projectId: "documentos-apipmcbdf",
+      storageBucket: "documentos-apipmcbdf.appspot.com",
+      messagingSenderId: "422508459389",
+      appId: "1:422508459389:web:bebd6b53839f77a3cd4814"
+    };
+    const app = initializeApp(firebaseConfig);
+    const db  = getFirestore(app);
+
+// ====== NOVO: consulta em InstituidoresUnificado por NOME (exato) com fallback INSTITUIDOR ======
+const COLLECTION = "InstituidoresUnificado";
+
+function normalizeTextPTBR(str) {
+  if (!str) return "";
+  return str
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "") // remove acentos
+    .replace(/\s+/g, " ")
+    .trim()
+    .toUpperCase();
+}
+
+function sanitizeNomeInput(str) {
+  if (!str) return "";
+  return str.replace(/[^A-Za-zÀ-ÖØ-öø-ÿ\s]/g, "");
+}
+
+// Helper seguro
+const getElementById = (id) => document.getElementById(id);
+
+function mostrarDados(data) {
+  const container = getElementById('resultContainer');
+  container.innerHTML = '';
+
+  const existsFlag = data && (data.exists === true || data['exists'] === true);
+
+  if (!data || Object.keys(data).length === 0 || !existsFlag) {
+    container.innerHTML = `
+      <div class="card">
+        <p style="padding:20px; text-align:center; font-weight:700;">❌ Nome não encontrado na base de instituidores.</p>
+        <p style="padding:0 20px 20px; text-align:center; opacity:.85;">
+          Verifique se digitou o nome completo (MAIÚSCULAS e sem acentos). Se persistir, entre em contato com a Associação.
+        </p>
+      </div>`;
+    return;
+  }
+
+  const cpf = data.CPF || data.cpf || '';
+  const nome = data.INSTITUIDOR || data.NOME || data.nome || '';
+  const statusGeral = data.STATUS_GERAL_HERDEIROS || data.status_geral_herdeiros || '';
+
+  const card = document.createElement('div');
+  card.className = 'card';
+
+  const title = document.createElement('div');
+  title.style.fontSize = '18px';
+  title.style.fontWeight = '600';
+  title.style.color = '#003366';
+  title.style.marginBottom = '12px';
+  title.textContent = 'Resultado da Consulta';
+  card.appendChild(title);
+
+  const resumoTopo = document.createElement('div');
+  resumoTopo.className = 'data-section';
+  resumoTopo.innerHTML = `
+    <h3>Resumo</h3>
+    <ul style="list-style:none; padding-left:0;">
+      ${nome ? `<li><strong>INSTITUIDOR:</strong> ${String(nome).trim()}</li>` : ''}
+      ${cpf ? `<li><strong>CPF:</strong> ${String(cpf).trim()}</li>` : ''}
+      ${statusGeral ? `<li><strong>STATUS_GERAL_HERDEIROS:</strong> ${String(statusGeral).trim()}</li>` : ''}
+    </ul>
+  `;
+  card.appendChild(resumoTopo);
+
+  const msg = document.createElement('div');
+  msg.className = 'warning';
+  msg.innerHTML = `✅ Registro encontrado na <strong>base de instituidores</strong>.`;
+  card.appendChild(msg);
+
+  const ignore = new Set(['exists','updatedAt','CPF','cpf']);
+  const keys = Object.keys(data).filter(k => !ignore.has(k)).sort((a,b)=>a.localeCompare(b,'pt-BR'));
+
+        // ===== "Detalhes do cadastro" (user friendly) =====
+      const sec = document.createElement('div');
+      sec.className = 'data-section';
+      sec.innerHTML = '<h3>Detalhes do cadastro</h3>';
+
+      const escapeHtml = (str) => String(str)
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;');
+
+      const labels = {
+        INSTITUIDOR: 'Instituidor',
+        DEIXOU_BENS: 'Deixou bens',
+        DOC_DECLARACAO_INEX_BENS: 'Declaração de inexistência de bens',
+        DOC_FICHA_FINANCEIRA: 'Ficha financeira',
+        DOC_INVENTARIO_OU_INVENTARIANTE: 'Inventário / inventariante',
+        DOC_OBITO: 'Certidão de óbito',
+        NOMES_HERDEIROS_LISTADOS: 'Herdeiros listados',
+        STATUS_DOCS_INSTITUIDOR: 'Status docs (instituidor)',
+        STATUS_GERAL_HERDEIROS: 'Status geral (herdeiros)'
+      };
+
+      const badge = (text, cls) => `<span class="badge ${cls}">${escapeHtml(text)}</span>`;
+
+      const yesNoBadge = (key, value) => {
+        const up = String(value).trim().toUpperCase();
+
+        // Para campos de documento (DOC_*), "NÃO" significa pendência de envio.
+        if (key && String(key).startsWith('DOC_')) {
+          if (up === 'SIM' || up === 'S' || up === 'TRUE' || up === '1') return badge('SIM', 'ok');
+          if (up === 'NAO' || up === 'NÃO' || up === 'N' || up === 'FALSE' || up === '0') return badge('PENDENTE', 'pending');
+          if (up === '-' || up === '—') return '<em>—</em>';
+          return badge(String(value).trim(), '');
+        }
+
+        // Para demais campos (ex.: DEIXOU_BENS), mantém SIM/NÃO
+        if (up === 'SIM' || up === 'S' || up === 'TRUE' || up === '1') return badge('SIM', 'ok');
+        if (up === 'NAO' || up === 'NÃO' || up === 'N' || up === 'FALSE' || up === '0') return badge('NÃO', 'no');
+        if (up === '-' || up === '—') return '<em>—</em>';
+        return badge(String(value).trim(), '');
+      };
+const statusBadge = (value) => {
+        const up = String(value).trim().toUpperCase();
+        if (up === 'COMPLETO') return badge('COMPLETO', 'ok');
+        if (up === 'PENDENTE') return badge('PENDENTE', 'pending');
+        return badge(String(value).trim(), '');
+      };
+
+      const formatValue = (key, value) => {
+        if (value === null || value === undefined) return '';
+        const s = String(value).trim();
+        if (!s) return '';
+
+        if (key === 'NOMES_HERDEIROS_LISTADOS') {
+          const names = s
+            .split(/[\n;|,]+/g)
+            .map(x => x.trim())
+            .filter(Boolean);
+
+          if (!names.length) return '<em>—</em>';
+          return `<div class="chips">${names.map(n => `<span class="chip">${escapeHtml(n)}</span>`).join('')}</div>`;
+        }
+
+        if (key === 'STATUS_DOCS_INSTITUIDOR' || key === 'STATUS_GERAL_HERDEIROS') {
+          return statusBadge(s);
+        }
+
+        // Campos SIM/NÃO (ou equivalente)
+        if (key === 'DEIXOU_BENS' || key.startsWith('DOC_')) {
+          return yesNoBadge(key, s);
+        }
+
+        return escapeHtml(s);
+      };
+
+      const displayOrder = [
+        'INSTITUIDOR',
+        'DEIXOU_BENS',
+        'DOC_DECLARACAO_INEX_BENS',
+        'DOC_FICHA_FINANCEIRA',
+        'DOC_INVENTARIO_OU_INVENTARIANTE',
+        'DOC_OBITO',
+        'NOMES_HERDEIROS_LISTADOS',
+        'STATUS_DOCS_INSTITUIDOR',
+        'STATUS_GERAL_HERDEIROS'
+      ];
+
+      // Status do processo (depende dos 2 status essenciais)
+      const stInst = String(data.STATUS_DOCS_INSTITUIDOR ?? '').trim().toUpperCase();
+      const stHer  = String(data.STATUS_GERAL_HERDEIROS ?? '').trim().toUpperCase();
+      const processoCompleto = (stInst === 'COMPLETO' && stHer === 'COMPLETO');
+
+      const resumo = document.createElement('div');
+      resumo.className = processoCompleto ? 'success' : 'warning';
+      resumo.innerHTML = processoCompleto
+        ? '✅ Documentação <strong>completa</strong>.'
+        : '⚠️ Documentação <strong>pendente</strong>. Providencie com urgência.';
+      sec.appendChild(resumo);
+
+      const ul = document.createElement('ul');
+      ul.style.listStyle = 'none';
+      ul.style.paddingLeft = '0';
+
+      for (const k of displayOrder) {
+        if (!(k in data)) continue;
+
+        const rendered = formatValue(k, data[k]);
+        if (!rendered) continue;
+
+        const li = document.createElement('li');
+        li.style.marginBottom = '10px';
+        li.innerHTML = `<strong>${labels[k] || k}:</strong> ${rendered}`;
+        ul.appendChild(li);
+      }
+
+      if (ul.childElementCount) sec.appendChild(ul);
+      card.appendChild(sec);
+container.appendChild(card);
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  // Aviso ao testar com file:// (CORS em header/footer). Firebase funciona.
+  if (location.protocol === 'file:') {
+    const warn = document.createElement('div');
+    warn.className = 'warning';
+    warn.style.maxWidth = '700px';
+    warn.style.margin = '18px auto -30px';
+    warn.innerHTML = '⚠️ Você está abrindo via <strong>file://</strong>. Header/footer externos não carregam por CORS. Para testar igual ao site, use um servidor local (ex.: Live Server).';
+    document.body.prepend(warn);
+  }
+
+  const nomeInputEl = getElementById('nomeInput');
+  if (nomeInputEl) {
+    nomeInputEl.addEventListener('input', () => {
+      nomeInputEl.value = sanitizeNomeInput(nomeInputEl.value);
+    });
+  }
+
+  const btn = getElementById('consultNomeBtn');
+  if (!btn) return;
+
+  btn.onclick = async () => {
+    const rawNome = (getElementById('nomeInput')?.value || '');
+    const nome = normalizeTextPTBR(rawNome);
+
+    if (!nome || nome.length < 5) {
+      alert('Digite o nome completo.');
+      return;
+    }
+
+    const container = getElementById('resultContainer');
+    container.innerHTML = '<div class="card"><p style="padding:18px; text-align:center; font-weight:700;">🔎 Consultando...</p></div>';
+
+    try {
+      const colRef = collection(db, COLLECTION);
+
+      // 1) tenta por NOME
+      let q = query(colRef, where('NOME', '==', nome), limit(10));
+      let snaps = await getDocs(q);
+
+      // 2) fallback por INSTITUIDOR
+      if (snaps.empty) {
+        q = query(colRef, where('INSTITUIDOR', '==', nome), limit(10));
+        snaps = await getDocs(q);
+      }
+
+      if (snaps.empty) {
+        mostrarDados({});
+        return;
+      }
+
+      if (snaps.size > 1) {
+        container.innerHTML = '';
+        const card = document.createElement('div');
+        card.className = 'card';
+
+        const p = document.createElement('p');
+        p.style.marginBottom = '12px';
+        p.style.fontWeight = '700';
+        p.textContent = `Foram encontrados ${snaps.size} registros. Selecione o CPF:`;
+        card.appendChild(p);
+
+        const ul = document.createElement('ul');
+        ul.style.listStyle = 'none';
+        ul.style.paddingLeft = '0';
+        ul.style.display = 'grid';
+        ul.style.gridTemplateColumns = 'repeat(auto-fit, minmax(220px, 1fr))';
+        ul.style.gap = '10px';
+
+        snaps.docs.forEach(d => {
+          const data = d.data() || {};
+          const cpf = (data.CPF || d.id || '').toString();
+          const cpfMasked = cpf.length === 11 ? cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4') : cpf;
+
+          const li = document.createElement('li');
+          const b = document.createElement('button');
+          b.type = 'button';
+          b.textContent = cpfMasked;
+          b.style.padding = '10px 12px';
+          b.style.borderRadius = '10px';
+          b.style.border = '1px solid rgba(0,0,0,0.12)';
+          b.style.background = '#fff';
+          b.style.cursor = 'pointer';
+          b.style.fontWeight = '700';
+          b.onclick = () => mostrarDados(data);
+
+          li.appendChild(b);
+          ul.appendChild(li);
+        });
+
+        card.appendChild(ul);
+        container.appendChild(card);
+        return;
+      }
+
+      const only = snaps.docs[0].data() || {};
+      mostrarDados(only);
+
+    } catch (err) {
+      console.error(err);
+      getElementById('resultContainer').innerHTML = `
+        <div class="card">
+          <p style="padding:18px; text-align:center; font-weight:700;">❌ Erro ao consultar.</p>
+          <p style="padding:0 18px 18px; text-align:center; opacity:.85;">${(err && err.message) ? err.message : String(err)}</p>
+        </div>`;
+    }
+  };
+});
+</script>
+  </body>
+</html>
