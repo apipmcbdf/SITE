@@ -10,7 +10,7 @@
 //
 // CONTROLE (ativar/desativar):
 // 1) Padrão do site (edite aqui):
-const URGENT_POPUP_DEFAULT_ENABLED = true; // true = ligado / false = desligado
+const URGENT_POPUP_DEFAULT_ENABLED = false; // true = ligado / false = desligado
 //
 // 2) Desativação por navegador (sem mexer no arquivo, via console):
 //    window.disableUrgentPopup()   -> desliga
