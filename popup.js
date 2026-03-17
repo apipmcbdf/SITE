@@ -4,7 +4,7 @@
 
 (() => {
   if (window.__urgentPopupInit) return;
-  window.__urgentPopupInit = true;
+  window.__urgentPopupInit = false;
 
   // popup.js - Modal "URGENTE" (funciona com header carregado por fetch/innerHTML)
 //
