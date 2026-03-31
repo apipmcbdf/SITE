@@ -339,7 +339,8 @@
       situacao_documentacao_vpe: false,
       situacao_documentacao_auxilio_moradia: false,
       herdeiros_auxilio_moradia: false,
-      listagem_auxilio_moradia_coletivo: false
+      listagem_auxilio_moradia_coletivo: false,
+      primeira_nrvpe: true
     };
 
     /*
@@ -383,6 +384,15 @@
         href: 'consulta_documentacao_herdeiros_cpf.html',
         icone: 'fa-people-group',
         primary: false
+      },
+      {
+        chave: 'primeira_nrvpe',
+        categoria: 'listagens',
+        titulo: 'Primeira Listagem de Implantação - VPE',
+        descricao: 'Consulte se o nome consta na primeira listagem de implantação da VPE.',
+        href: 'primeira_lista_vpe.html',
+        icone: 'fa-list-check',
+        primary: true
       },
       {
         chave: 'listagem_auxilio_moradia_coletivo',
