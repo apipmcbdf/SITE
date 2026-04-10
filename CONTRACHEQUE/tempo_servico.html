@@ -214,7 +214,7 @@
             <h1><i class="fa-solid fa-hourglass-half" aria-hidden="true"></i> Tempo de Serviço (anos)</h1>
             <p class="subtitle">
               Preencha seu <strong>posto/graduação</strong> e o <strong>soldo do contracheque</strong>.
-              O sistema estima o tempo de serviço com base no soldo integral ÷ 30 (tabela até 30/11/2025).
+              O sistema estima o tempo de serviço com base no soldo integral de 30 anos ÷ 30 (tabela de janeiro de 2026).
             </p>
           </div>
           <a class="btn yellow" href="https://apipmcbdf.com.br/CONTRACHEQUE/simulador_aumento.html">
@@ -251,7 +251,7 @@
           <strong>Dica:</strong> depois que você descobrir o número, abra o simulador e preencha em <em>“Tempo de serviço”</em>.
         </div>
         <div class="muted">
-          Base de cálculo: soldo integral ÷ 30 • resultado limitado entre 1 e 40 anos.
+          Base de cálculo: soldo integral de 30 anos ÷ 30 • resultado limitado entre 1 e 40 anos.
         </div>
       </div>
     </div>
@@ -324,22 +324,22 @@
 
   // ===== Lógica do cálculo (mantida) =====
   const SOLDOS_30 = {
-    "Coronel": 4352.85,
-    "Tenente-Coronel": 4179.87,
-    "Major": 3982.98,
-    "Capitão": 3328.06,
-    "Primeiro-Tenente": 3081.39,
-    "Segundo-Tenente": 2852.19,
+    "Coronel": 5411.57,
+    "Tenente-Coronel": 5196.52,
+    "Major": 4951.74,
+    "Capitão": 4137.53,
+    "Primeiro-Tenente": 3830.86,
+    "Segundo-Tenente": 3545.91,
     "Aspirante a Oficial": 2456.8,
     "Cadete (último ano)": 986.84,
     "Cadete (demais anos)": 710.07,
-    "Subtenente": 2197.04,
-    "Primeiro-Sargento": 1916.76,
-    "Segundo-Sargento": 1644.7,
-    "Terceiro-Sargento": 1467.77,
-    "Cabo": 1110.73,
-    "Soldado - Primeira Classe": 980.99,
-    "Soldado - Segunda Classe": 710.07
+    "Subtenente": 2731.42,
+    "Primeiro-Sargento": 2382.96,
+    "Segundo-Sargento": 2044.73,
+    "Terceiro-Sargento": 1854.36,
+    "Cabo": 1653.11,
+    "Soldado - Primeira Classe": 1518.69,
+    "Soldado - Segunda Classe": 1387.08
   };
 
   function parseBRL(v){
