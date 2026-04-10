@@ -74,7 +74,7 @@
           <div class="card shadow-sm">
             <div class="card-body">
               <h5 class="card-title mb-2">Benefícios</h5>
-              <p class="muted mb-3">Informe o seu tempo de serviço (em anos). Se não souber, calcule pelo contracheque recente: divida o <strong>soldo integral</strong> por 30; pegue o valor do <strong>soldo que aparece no contracheque</strong> e divida por esse número; arredonde o resultado para cima. Depois, preencha o tempo abaixo.</p>
+              <p class="muted mb-3">Informe o seu tempo de serviço (em anos). Se não souber, você pode calcular pelo contracheque recente: divida o <strong>soldo integral de 30 anos</strong> por 30; depois pegue o valor do <strong>soldo que aparece no contracheque</strong>, divida por esse número e arredonde o resultado para cima. <br><strong>Soldo integral de 30 anos para o posto selecionado:</strong> <span id="soldoIntegralHint">—</span>.</p>
               <div class="form-group">
                 <label class="d-block">Auxílio-moradia</label>
                 <div class="custom-control custom-radio">
@@ -117,7 +117,7 @@
           <div class="card shadow-sm">
             <div class="card-body">
               <h5 class="card-title mb-2">Tempo de Serviço</h5>
-              <p class="muted mb-3">Informe o seu tempo de serviço (em anos). Se não souber, calcule pelo contracheque recente: divida o <strong>soldo integral</strong> por 30; pegue o <strong>soldo que aparece no contracheque</strong> e divida por esse número. Arredonde para cima e preencha o tempo abaixo.</p>
+              <p class="muted mb-3">Informe o seu tempo de serviço (em anos). Se não souber, você pode calcular pelo contracheque recente: divida o <strong>soldo integral de 30 anos</strong> por 30; depois pegue o <strong>soldo que aparece no contracheque</strong>, divida por esse número e arredonde para cima. <br><strong>Soldo integral de 30 anos para o posto selecionado:</strong> <span id="soldoIntegralHintStep3">—</span>.</p>
               <a href="https://apipmcbdf.com.br/CONTRACHEQUE/tempo_servico.html" target="_blank" rel="noopener" class="btn btn-info btn-block mb-3" style="font-weight:700;">Não sabe seu tempo de serviço? Calcule aqui</a>
               <div class="form-group">
                 <label for="tempoInput">Tempo de serviço (1 a 40)</label>
@@ -165,9 +165,9 @@
                   <thead>
                     <tr>
                       <th>Rubrica</th>
-                      <th>Atual</th>
+                      <th>ATÉ DEZEMBRO DE 2025</th>
                       <th>PAGAMENTO DE JANEIRO DE 2026</th>
-                      <th>PAGAMENTO DE FEVEREIRO DE 2026</th>
+                      <th>ATUAL</th>
                     </tr>
                   </thead>
                   <tbody id="tbodyResult"></tbody>
@@ -211,6 +211,7 @@
       const btnS3 = document.getElementById('toStep4'); if (btnS3) btnS3.disabled = false;
       document.getElementById('tbodyResult').innerHTML = '';
       document.getElementById('resumo').innerHTML = '';
+      updateSoldoIntegralHint();
       showStep('step0');
     }
     function validTempo(n) {
@@ -252,6 +253,18 @@
     }
     function clamp0(n){ if(n==null||isNaN(n)) return null; return n<0 ? 0 : n; }
     function fmt(v) { return (v==null||isNaN(v)) ? '' : Number(v).toLocaleString('pt-BR', {minimumFractionDigits:2, maximumFractionDigits:2}); }
+    function updateSoldoIntegralHint(){
+      const posto = state.posto || selectPG.value;
+      const soldoJan = __lookup((DATA.rubricas?.SOLDO?.JAN)||{}, posto);
+      const texto = (soldoJan==null)
+        ? '—'
+        : 'R$ ' + fmt(soldoJan);
+      const ids = ['soldoIntegralHint', 'soldoIntegralHintStep3'];
+      ids.forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = texto;
+      });
+    }
 
     // Preencher Posto/Graduação na ordem da planilha (dedupe variantes)
     const selectPG = document.getElementById('postoSel');
@@ -314,8 +327,9 @@
     selectPG.addEventListener('change', (e)=>{
       state.posto = e.target.value || '';
       document.getElementById('toStep2').disabled = !state.posto;
+      updateSoldoIntegralHint();
     });
-    document.getElementById('toStep2').addEventListener('click', ()=> showStep('step2'));
+    document.getElementById('toStep2').addEventListener('click', ()=> { updateSoldoIntegralHint(); showStep('step2'); });
 
     // Step 2 controls
     document.getElementsByName('aux').forEach(r => r.addEventListener('change', (e)=> state.aux = e.target.value));
@@ -471,16 +485,14 @@
 
           tdA.textContent = fmt(liqA); tdD.textContent = fmt(liqD); tdJ.textContent = fmt(liqJ);
         } else if (key==='ADIC_TEMP_SERVICO_MILITAR') {
-          // ADIC.TEMP.SERVICO-MILITAR = 31% do soldo (e acompanha o soldo proporcional ao Tempo de Serviço)
+          // ADIC.TEMP.SERVICO-MILITAR = 1% do soldo integral por ano de serviço
           const sA = __lookup(soldo.ATUAL||{}, p);
           const sD = __lookup(soldo.DEZ  ||{}, p);
           const sJ = __lookup(soldo.JAN  ||{}, p);
-          const baseA = (sA==null) ? null : (Number(sA) * __fatorProporcaoSoldo);
-          const baseD = (sD==null) ? null : (Number(sD) * __fatorProporcaoSoldo);
-          const baseJ = (sJ==null) ? null : (Number(sJ) * __fatorProporcaoSoldo);
-          const vA = (baseA==null) ? null : baseA * 0.31;
-          const vD = (baseD==null) ? null : baseD * 0.31;
-          const vJ = (baseJ==null) ? null : baseJ * 0.31;
+          const anos = Math.max(1, Math.min(40, Number(state.tempo) || 0));
+          const vA = (sA==null) ? null : Number(sA) * (anos / 100);
+          const vD = (sD==null) ? null : Number(sD) * (anos / 100);
+          const vJ = (sJ==null) ? null : Number(sJ) * (anos / 100);
           tdA.textContent = fmt(vA); tdD.textContent = fmt(vD); tdJ.textContent = fmt(vJ);
         } else {
           const map = (DATA.rubricas && DATA.rubricas[key]) ? DATA.rubricas[key] : {ATUAL:{},DEZ:{},JAN:{}};
@@ -519,6 +531,7 @@
     }
 
     // Inicializar
+    updateSoldoIntegralHint();
     resetAll();
   })();
   </script>
