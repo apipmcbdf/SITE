@@ -3,175 +3,751 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Consulta - Primeira Listagem de Implantação</title>
+  <title>Consulta - Primeira Listagem de Implantação da VPE</title>
+  <meta name="robots" content="noindex, nofollow" />
+
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body { font-family: 'Inter', sans-serif; background-color: #f9f9f9; }
-
-    .consulta-container {
-      max-width: 780px;
-      margin: 60px auto;
-      background: white;
-      padding: 40px;
-      border-radius: 12px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    :root {
+      --azul: #003366;
+      --azul-claro: #005599;
+      --azul-suave: #e6f0ff;
+      --dourado: #f5b200;
+      --fundo: #f4f7fb;
+      --branco: #ffffff;
+      --texto: #1f2937;
+      --texto-suave: #5b6472;
+      --borda: #dbe5f2;
+      --sucesso: #166534;
+      --sucesso-bg: #ecfdf3;
+      --erro: #991b1b;
+      --erro-bg: #fff1f2;
+      --alerta-bg: #fff8e2;
+      --sombra: 0 10px 28px rgba(0, 51, 102, 0.10);
     }
 
-    .consulta-container h1 {
-      text-align: center;
-      margin-bottom: 10px;
-      font-weight: 700;
-      font-size: 24px;
-      color: #003366;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
 
-    .subtitle {
-      margin-top: 10px;
-      margin-bottom: 18px;
-      text-align: center;
-      font-size: 18px;
-      font-weight: 700;
-      color: #003366;
-      opacity: 0.95;
+    html {
+      scroll-behavior: smooth;
     }
 
-    .info-box {
-      margin: 0 auto 22px auto;
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--fundo);
+      color: var(--texto);
+      line-height: 1.5;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    /* Compatibilidade com o header carregado por header.html */
+    header {
+      background-color: var(--azul);
       padding: 20px;
-      background: #ffffff;
-      border: 1px solid rgba(0,0,0,0.08);
-      border-radius: 14px;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.06);
-      text-align: left;
-    }
-
-    .info-box p {
-      margin: 0 0 14px;
-      line-height: 1.6;
-      color: #1b2b3a;
-      font-size: 15px;
-    }
-
-    .info-box p:last-child { margin-bottom: 0; }
-
-    .consulta-container label {
-      font-weight: 600;
-      display: block;
-      margin-bottom: 8px;
-      color: #003366;
-    }
-
-    .consulta-container input[type="text"] {
-      width: 100%;
-      padding: 10px;
-      font-size: 16px;
-      text-align: center;
-      margin-bottom: 20px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-    }
-
-    .consulta-container button {
-      width: 100%;
-      padding: 12px;
-      font-size: 16px;
-      font-weight: bold;
       color: white;
-      background-color: #4a90e2;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
     }
 
-    .consulta-container button:hover { background-color: #357ab8; }
-
-    .card {
-      border: none;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      background-color: #ffffff;
-      margin-top: 30px;
-      padding: 20px;
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
     }
 
-    .warning {
-      background-color: #fff8e1;
-      border-left: 6px solid #ffb300;
-      color: #333;
-      padding: 16px 20px;
-      margin: 20px 0 0;
-      font-size: 15px;
-      line-height: 1.7;
-      border-radius: 8px;
+    .logo img {
+      height: 50px;
     }
 
-    .warning p { margin: 0 0 12px; }
-    .warning p:last-child { margin-bottom: 0; }
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
 
-    header { background-color: #003366; padding: 20px; color: white; }
-    nav { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
-    .logo img { height: 50px; }
-    nav ul { display: flex; list-style: none; gap: 20px; flex-wrap: wrap; }
-    nav ul li { position: relative; }
+    nav ul li {
+      position: relative;
+    }
+
     nav ul li a {
-      color: white; text-decoration: none; font-weight: 600;
-      padding: 8px 12px; display: block; transition: background-color 0.3s ease;
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 8px 12px;
+      display: block;
+      transition: background-color 0.3s ease;
     }
-    nav ul li a:hover { background-color: #005599; border-radius: 4px; }
+
+    nav ul li a:hover {
+      background-color: var(--azul-claro);
+      border-radius: 4px;
+    }
+
     nav ul li ul {
-      display: none; position: absolute; background-color: #004080;
-      top: 100%; left: 0; min-width: 220px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2); z-index: 10;
+      display: none;
+      position: absolute;
+      background-color: #004080;
+      top: 100%;
+      left: 0;
+      min-width: 220px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      z-index: 10;
     }
-    nav ul li:hover ul { display: block; animation: fadeIn 0.3s ease-in-out; }
-    nav ul li ul li a { padding: 10px; font-weight: 400; }
-    @keyframes fadeIn { from {opacity: 0; transform: translateY(-8px);} to {opacity: 1; transform: translateY(0);} }
+
+    nav ul li:hover ul {
+      display: block;
+      animation: fadeIn 0.25s ease-in-out;
+    }
+
+    nav ul li ul li a {
+      padding: 10px;
+      font-weight: 400;
+    }
+
+    .menu-toggle {
+      display: none;
+      cursor: pointer;
+      font-size: 24px;
+      color: white;
+      margin-bottom: 10px;
+    }
+
+    #menu {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .page-hero {
+      background:
+        linear-gradient(rgba(0, 51, 102, 0.84), rgba(0, 51, 102, 0.84)),
+        url("https://www.freetour.com/images/cities/rio-de-janeiro-brazil.jpg");
+      background-size: cover;
+      background-position: center;
+      color: var(--branco);
+      text-align: center;
+      padding: 64px 20px 64px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background-color: var(--dourado);
+      color: #111;
+      font-weight: 800;
+      padding: 8px 15px;
+      border-radius: 999px;
+      margin: 0 auto 18px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.22);
+      width: fit-content;
+    }
+
+    .page-hero h1 {
+      font-size: clamp(28px, 5vw, 44px);
+      line-height: 1.12;
+      font-weight: 800;
+      margin-bottom: 14px;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.35);
+    }
+
+    .page-hero p {
+      font-size: clamp(15px, 2.4vw, 18px);
+      max-width: 780px;
+      margin: 0 auto;
+      opacity: 0.96;
+    }
+
+    .main-content {
+      max-width: 1080px;
+      margin: 36px auto 0;
+      padding: 0 20px 56px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .consulta-card {
+      background-color: var(--branco);
+      border: 1px solid var(--borda);
+      border-radius: 20px;
+      box-shadow: var(--sombra);
+      padding: 32px;
+      animation: fadeIn 0.55s ease-in-out;
+    }
+
+    .consulta-header {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      text-align: center;
+      max-width: 760px;
+      margin: 0 auto 26px;
+    }
+
+    .consulta-header h2 {
+      color: var(--azul);
+      font-size: clamp(22px, 3vw, 30px);
+      line-height: 1.2;
+      font-weight: 800;
+    }
+
+    .consulta-header p {
+      color: var(--texto-suave);
+      font-size: 16px;
+    }
+
+    .form-box {
+      max-width: 620px;
+      margin: 0 auto;
+      background: #f8fbff;
+      border: 1px solid var(--borda);
+      border-radius: 18px;
+      padding: 24px;
+    }
+
+    .form-label {
+      display: block;
+      font-weight: 700;
+      color: var(--azul);
+      margin-bottom: 9px;
+    }
+
+    .input-group {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 14px 15px;
+      font-size: 17px;
+      border-radius: 12px;
+      border: 1px solid #c8d6e6;
+      background-color: var(--branco);
+      color: var(--texto);
+      outline: none;
+      transition: border-color 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .input-group input:focus {
+      border-color: var(--azul-claro);
+      box-shadow: 0 0 0 4px rgba(0, 85, 153, 0.12);
+    }
+
+    .input-group button {
+      padding: 14px 22px;
+      border: none;
+      border-radius: 12px;
+      background-color: var(--azul);
+      color: var(--branco);
+      font-size: 16px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: background-color 0.18s ease, transform 0.18s ease;
+      white-space: nowrap;
+    }
+
+    .input-group button:hover,
+    .input-group button:focus-visible {
+      background-color: var(--azul-claro);
+      transform: translateY(-1px);
+      outline: none;
+    }
+
+    .input-help {
+      margin-top: 10px;
+      color: var(--texto-suave);
+      font-size: 13px;
+      text-align: center;
+    }
+
+    #resultContainer {
+      max-width: 780px;
+      margin: 26px auto 0;
+    }
+
+    .resultado-card {
+      background-color: var(--branco);
+      border: 1px solid var(--borda);
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: 0 8px 22px rgba(0, 51, 102, 0.08);
+      animation: fadeIn 0.35s ease-in-out;
+    }
+
+    .resultado-card.sucesso {
+      border-color: rgba(22, 101, 52, 0.28);
+      background: linear-gradient(180deg, var(--sucesso-bg), #ffffff 70%);
+    }
+
+    .resultado-card.erro {
+      border-color: rgba(153, 27, 27, 0.18);
+      background: linear-gradient(180deg, var(--erro-bg), #ffffff 72%);
+    }
+
+    .resultado-topo {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      margin-bottom: 18px;
+    }
+
+    .resultado-icone {
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 21px;
+    }
+
+    .resultado-card.sucesso .resultado-icone {
+      background-color: #dcfce7;
+      color: var(--sucesso);
+    }
+
+    .resultado-card.erro .resultado-icone {
+      background-color: #fee2e2;
+      color: var(--erro);
+    }
+
+    .resultado-topo h3 {
+      color: var(--azul);
+      font-size: 21px;
+      margin-bottom: 4px;
+    }
+
+    .resultado-topo p {
+      color: var(--texto-suave);
+    }
+
+    .nome-box {
+      background-color: #f8fbff;
+      border: 1px solid var(--borda);
+      border-radius: 14px;
+      padding: 14px 16px;
+      margin-bottom: 18px;
+    }
+
+    .nome-box span {
+      display: block;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--texto-suave);
+      margin-bottom: 4px;
+      font-weight: 800;
+    }
+
+    .nome-box strong {
+      color: var(--azul);
+      font-size: 18px;
+    }
+
+    .passos {
+      display: grid;
+      gap: 12px;
+    }
+
+    .passo {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      background-color: var(--branco);
+      border: 1px solid var(--borda);
+      border-radius: 14px;
+      padding: 14px;
+    }
+
+    .passo i {
+      color: var(--azul);
+      margin-top: 2px;
+    }
+
+    .passo strong {
+      color: var(--azul);
+    }
+
+    .info-section {
+      margin-top: 28px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .info-card {
+      background-color: var(--branco);
+      border: 1px solid var(--borda);
+      border-radius: 18px;
+      padding: 22px;
+      box-shadow: 0 7px 20px rgba(0, 51, 102, 0.07);
+    }
+
+    .info-card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .info-card-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--azul-suave);
+      color: var(--azul);
+      flex-shrink: 0;
+    }
+
+    .info-card h3 {
+      color: var(--azul);
+      font-size: 18px;
+      line-height: 1.25;
+    }
+
+    .info-card p {
+      color: var(--texto-suave);
+      font-size: 15px;
+    }
+
+    .details-box {
+      margin-top: 18px;
+      background-color: var(--branco);
+      border: 1px solid var(--borda);
+      border-radius: 18px;
+      box-shadow: 0 7px 20px rgba(0, 51, 102, 0.07);
+      overflow: hidden;
+    }
+
+    .details-box summary {
+      cursor: pointer;
+      list-style: none;
+      padding: 20px 22px;
+      font-weight: 800;
+      color: var(--azul);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .details-box summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .details-box summary::after {
+      content: "\f107";
+      font-family: "Font Awesome 6 Free";
+      font-weight: 900;
+      transition: transform 0.18s ease;
+    }
+
+    .details-box[open] summary::after {
+      transform: rotate(180deg);
+    }
+
+    .details-content {
+      padding: 0 22px 22px;
+      color: var(--texto-suave);
+      font-size: 15px;
+    }
+
+    .details-content p {
+      margin-bottom: 12px;
+    }
+
+    .details-content p:last-child {
+      margin-bottom: 0;
+    }
+
+    .outras-listagens {
+      margin-top: 18px;
+      margin-bottom: 10px;
+      background-color: var(--alerta-bg);
+      border: 1px solid rgba(245, 178, 0, 0.45);
+      border-radius: 18px;
+      padding: 22px;
+      box-shadow: 0 7px 20px rgba(0, 51, 102, 0.07);
+    }
+
+    .outras-listagens h3 {
+      color: var(--azul);
+      margin-bottom: 8px;
+      font-size: 19px;
+    }
+
+    .outras-listagens p {
+      color: var(--texto-suave);
+      margin-bottom: 16px;
+    }
+
+    .quick-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .quick-links a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      background-color: var(--branco);
+      color: var(--azul);
+      border: 1px solid rgba(0, 51, 102, 0.18);
+      padding: 11px 14px;
+      border-radius: 12px;
+      font-weight: 800;
+      transition: background-color 0.18s ease, transform 0.18s ease;
+    }
+
+    .quick-links a:hover,
+    .quick-links a:focus-visible {
+      background-color: var(--azul-suave);
+      transform: translateY(-1px);
+      outline: none;
+    }
+
+
+    @media (max-width: 900px) {
+      .info-section {
+        grid-template-columns: 1fr;
+      }
+    }
+
     @media (max-width: 768px) {
-      nav ul { flex-direction: column; align-items: flex-start; }
-      .consulta-container { margin: 30px 15px; padding: 24px; }
+      nav {
+        position: relative;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .logo {
+        text-align: center;
+        width: 100%;
+        margin-bottom: 10px;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+
+      #menu {
+        display: none;
+        flex-direction: column;
+        position: relative;
+        width: 100%;
+        background-color: var(--azul);
+        z-index: 1000;
+      }
+
+      #menu.active {
+        display: flex;
+      }
+
+      .page-hero {
+        padding: 44px 18px 50px;
+      }
+
+      .main-content {
+        margin-top: 24px;
+        padding-left: 14px;
+        padding-right: 14px;
+      }
+
+      .consulta-card {
+        padding: 22px;
+      }
+
+      .form-box {
+        padding: 18px;
+      }
+
+      .input-group {
+        grid-template-columns: 1fr;
+      }
+
+      .input-group button {
+        width: 100%;
+      }
+
+      .resultado-topo {
+        flex-direction: column;
+      }
     }
   </style>
 </head>
+
 <body>
+  <!-- Header include -->
   <div id="header-container"></div>
 
-  <section style="padding: 60px 20px; background-color: #f4f6f9;">
-    <div class="consulta-container">
-      <h1>CONSULTA - PRIMEIRA LISTAGEM DE IMPLANTAÇÃO</h1>
-      <div class="subtitle">VPE - VANTAGEM PECUNIÁRIA ESPECIAL</div>
-
-      <div class="info-box">
-        <h2>VPE - VANTAGEM PECUNIÁRIA ESPECIAL</h2>
-        <p><strong>Consulte se o seu CPF consta na primeira listagem de implantação da VPE, protocolada nos autos do Mandado de Segurança nº 2008.34.00.033348-2.</strong></p>
-        <p>Se o seu CPF constar na listagem e <strong>a VPE ainda não tiver sido implantada em seu contracheque</strong>, envie <strong>o contracheque atual</strong> para a Associação, para que seja informado no processo que a União ainda não cumpriu a implantação.</p>
-        <p>Se o seu CPF constar na listagem e <strong>a VPE já tiver sido implantada</strong>, será necessário providenciar e enviar eletronicamente à Associação <strong>a ficha financeira referente ao seu período</strong>, para que a documentação seja encaminhada ao escritório <strong>Silveira Cruz</strong>.</p>
-        <p>Nos casos de <strong>pensão dividida</strong>, <strong>todos os beneficiários que recebem a mesma pensão</strong> devem encaminhar a documentação em conjunto. Isso é necessário porque os atrasados devidos desde 2008 até a data da implantação só podem ser requeridos com a documentação completa de <strong>todos os pensionistas vinculados ao mesmo instituidor</strong>.</p>
-        <p>Além disso, <strong>se houver pensionista que recebeu pensão em qualquer período a partir de 2008 e que já tenha falecido</strong>, <strong>os herdeiros também deverão ser habilitados</strong>, juntamente com as pensionistas vivas, para que seja possível requerer corretamente os valores devidos.</p>
-        <p><strong>Os associados que integram outras listagens de implantação, como a segunda e a terceira, devem aguardar. Assim que houver liberação, a Associação disponibilizará a consulta dessas listagens neste mesmo canal.</strong></p>
+  <main>
+    <section class="page-hero" aria-label="Consulta da primeira listagem de implantação da VPE">
+<div class="badge">
+        <i class="fa-solid fa-list-check" aria-hidden="true"></i>
+        <span>VPE</span>
       </div>
 
-<label for="cpfInput">Digite seu CPF:</label>
-      <input id="cpfInput" placeholder="Digite seu CPF (com ou sem pontuação)" type="text"/>
-      <button id="consultBtn">CONSULTAR</button>
-      <div id="resultContainer"></div>
-    </div>
-  </section>
+      <h1>Consulta da Primeira Listagem de Implantação da VPE</h1>
+      <p>
+        Informe seu CPF para verificar se consta na primeira listagem de implantação da Vantagem Pecuniária Especial.
+      </p>
+    </section>
 
-  <section style="padding: 50px 20px; background-color: #003366; color: white; text-align: center;">
-    <h2>Associe-se à APIPMCBDF</h2>
-    <p style="max-width: 700px; margin: 20px auto;">Junte-se a centenas de associados que têm seus direitos defendidos com firmeza e comprometimento. Seja representado, tenha acesso a benefícios exclusivos e faça parte da nossa história!</p>
-    <a href="seja-socio.html" style="display: inline-block; margin-top: 20px; padding: 12px 24px; background-color: #f5b200; color: black; text-decoration: none; border-radius: 5px; font-weight: bold;">Quero me associar</a>
-  </section>
+    <section class="main-content">
+      <div class="consulta-card">
+        <div class="consulta-header">
+          <h2>Consultar CPF</h2>
+          <p>
+            A consulta é feita pelo CPF. Você pode digitar com ou sem pontos e traço.
+          </p>
+        </div>
 
-  <section style="padding: 40px 20px; text-align: center; background-color: #fff;">
-    <h2>Quem Somos</h2>
-    <p style="max-width: 800px; margin: auto;">A APIPMCBDF representa e apoia os pensionistas e inativos da Polícia Militar e Corpo de Bombeiros do Antigo e Atual Distrito Federal. Lutamos por direitos, assistência e valorização dos nossos associados.</p>
-    <a href="sobre.html" style="display: inline-block; margin-top: 20px; padding: 10px 20px; background-color: #003366; color: white; text-decoration: none; border-radius: 5px;">Saiba mais</a>
-  </section>
+        <div class="form-box">
+          <label class="form-label" for="cpfInput">Digite seu CPF:</label>
 
+          <div class="input-group">
+            <input
+              id="cpfInput"
+              placeholder="000.000.000-00"
+              type="text"
+              inputmode="numeric"
+              autocomplete="off"
+              maxlength="14"
+            />
+            <button id="consultBtn" type="button">
+              <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+              Consultar
+            </button>
+          </div>
+
+          <div class="input-help">
+            Use apenas o CPF do beneficiário ou pensionista que deseja consultar.
+          </div>
+        </div>
+
+        <div id="resultContainer" aria-live="polite"></div>
+      </div>
+
+      <div class="info-section" aria-label="Orientações importantes">
+        <article class="info-card">
+          <div class="info-card-header">
+            <div class="info-card-icon">
+              <i class="fa-solid fa-file-invoice" aria-hidden="true"></i>
+            </div>
+            <h3>VPE não implantada</h3>
+          </div>
+          <p>
+            Se seu CPF constar na listagem e a VPE ainda não aparecer no contracheque, envie o <strong>contracheque atual</strong> para a Associação.
+          </p>
+        </article>
+
+        <article class="info-card">
+          <div class="info-card-header">
+            <div class="info-card-icon">
+              <i class="fa-solid fa-chart-line" aria-hidden="true"></i>
+            </div>
+            <h3>VPE já implantada</h3>
+          </div>
+          <p>
+            Se a VPE já tiver sido implantada, providencie a <strong>ficha financeira referente ao seu período</strong> para encaminhamento ao escritório responsável.
+          </p>
+        </article>
+
+        <article class="info-card">
+          <div class="info-card-header">
+            <div class="info-card-icon">
+              <i class="fa-solid fa-people-group" aria-hidden="true"></i>
+            </div>
+            <h3>Pensão dividida</h3>
+          </div>
+          <p>
+            Quando houver mais de um beneficiário vinculado à mesma pensão, todos devem encaminhar a documentação em conjunto.
+          </p>
+        </article>
+
+        <article class="info-card">
+          <div class="info-card-header">
+            <div class="info-card-icon">
+              <i class="fa-solid fa-scale-balanced" aria-hidden="true"></i>
+            </div>
+            <h3>Herdeiros</h3>
+          </div>
+          <p>
+            Se houve pensionista falecido que recebeu pensão a partir de 2008, os herdeiros também deverão ser habilitados.
+          </p>
+        </article>
+      </div>
+
+      <details class="details-box">
+        <summary>Ver detalhes sobre a listagem e o processo</summary>
+        <div class="details-content">
+          <p>
+            Esta consulta verifica se o CPF consta na primeira listagem de implantação da VPE, protocolada nos autos do Mandado de Segurança nº <strong>2008.34.00.033348-2</strong>.
+          </p>
+          <p>
+            Nos casos em que a VPE ainda não tiver sido implantada, a Associação poderá utilizar o contracheque atual para informar no processo que a União ainda não cumpriu a implantação.
+          </p>
+          <p>
+            Nos casos em que a VPE já tiver sido implantada, a ficha financeira será necessária para análise do período e encaminhamento ao escritório <strong>Silveira Cruz</strong>.
+          </p>
+          <p>
+            Para pensões divididas, os atrasados devidos desde 2008 até a data da implantação dependem da documentação completa dos pensionistas vinculados ao mesmo instituidor.
+          </p>
+        </div>
+      </details>
+
+      <div class="outras-listagens">
+        <h3>Outras listagens da VPE</h3>
+        <p>
+          Caso não encontre seu nome nesta consulta, verifique também as demais listagens de implantação disponíveis.
+        </p>
+
+        <div class="quick-links">
+          <a href="segunda_lista_vpe.html">
+            <i class="fa-solid fa-list-ol" aria-hidden="true"></i>
+            Segunda Listagem
+          </a>
+          <a href="terceira_lista_vpe.html">
+            <i class="fa-solid fa-list-ol" aria-hidden="true"></i>
+            Terceira Listagem
+          </a>
+        </div>
+      </div>
+</section>
+  </main>
+
+  <!-- Footer include -->
   <div id="footer-container"></div>
 
   <script>
@@ -179,22 +755,49 @@
       const el = document.getElementById('header-container');
       if (!el) return;
       fetch('header.html', { cache: 'no-store' })
-        .then(r => r.text()).then(html => el.innerHTML = html)
-        .catch(() => el.innerHTML = '<!-- falha ao carregar header -->');
+        .then(r => r.text())
+        .then(html => { el.innerHTML = html; })
+        .catch(() => { el.innerHTML = '<!-- falha ao carregar header -->'; });
     })();
 
     (function loadFooter(){
       const el = document.getElementById('footer-container');
       if (!el) return;
       fetch('footer.html', { cache: 'no-store' })
-        .then(r => r.text()).then(html => el.innerHTML = html)
-        .catch(() => el.innerHTML = '<!-- falha ao carregar footer -->');
+        .then(r => r.text())
+        .then(html => { el.innerHTML = html; })
+        .catch(() => { el.innerHTML = '<!-- falha ao carregar footer -->'; });
     })();
 
     function toggleMenu() {
       var menu = document.getElementById("menu");
       if (menu) menu.classList.toggle("active");
     }
+
+    function mascaraCPF(valor) {
+      const numeros = valor.replace(/\D/g, '').slice(0, 11);
+
+      return numeros
+        .replace(/(\d{3})(\d)/, '$1.$2')
+        .replace(/(\d{3})(\d)/, '$1.$2')
+        .replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const cpfInput = document.getElementById('cpfInput');
+      if (cpfInput) {
+        cpfInput.addEventListener('input', () => {
+          cpfInput.value = mascaraCPF(cpfInput.value);
+        });
+
+        cpfInput.addEventListener('keydown', (event) => {
+          if (event.key === 'Enter') {
+            event.preventDefault();
+            document.getElementById('consultBtn').click();
+          }
+        });
+      }
+    });
   </script>
 
   <script type="module">
@@ -213,8 +816,100 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    function formatarCPF(cpf) {
-      return cpf.replace(/\D/g, '').padStart(11, '0');
+    function limparCPF(cpf) {
+      return cpf.replace(/\D/g, '');
+    }
+
+    function formatarCPFConsulta(cpf) {
+      const numeros = limparCPF(cpf);
+
+      if (numeros.length === 0) return '';
+      if (numeros.length < 11) return numeros.padStart(11, '0');
+
+      return numeros;
+    }
+
+    function mostrarCarregando() {
+      const container = document.getElementById('resultContainer');
+      container.innerHTML = `
+        <div class="resultado-card">
+          <div class="resultado-topo">
+            <div class="resultado-icone" style="background:#e6f0ff;color:#003366;">
+              <i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i>
+            </div>
+            <div>
+              <h3>Consultando...</h3>
+              <p>Aguarde enquanto verificamos a listagem.</p>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function mostrarNaoEncontrado() {
+      const container = document.getElementById('resultContainer');
+      container.innerHTML = `
+        <div class="resultado-card erro">
+          <div class="resultado-topo">
+            <div class="resultado-icone">
+              <i class="fa-solid fa-circle-xmark" aria-hidden="true"></i>
+            </div>
+            <div>
+              <h3>CPF não encontrado nesta listagem</h3>
+              <p>Seu CPF não consta na primeira listagem de implantação da VPE.</p>
+            </div>
+          </div>
+
+          <div class="passos">
+            <div class="passo">
+              <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+              <div>
+                Verifique se o CPF foi digitado corretamente. Caso a dúvida continue, entre em contato com a Associação.
+              </div>
+            </div>
+            <div class="passo">
+              <i class="fa-solid fa-list-ol" aria-hidden="true"></i>
+              <div>
+                Você também pode consultar a segunda e a terceira listagem nos links disponíveis abaixo.
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function mostrarErroPermissao() {
+      const container = document.getElementById('resultContainer');
+      container.innerHTML = `
+        <div class="resultado-card erro">
+          <div class="resultado-topo">
+            <div class="resultado-icone">
+              <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
+            </div>
+            <div>
+              <h3>Permissão insuficiente para consultar</h3>
+              <p>As regras do Firestore não permitiram a leitura dos dados para este site.</p>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function mostrarErroConsulta(msg) {
+      const container = document.getElementById('resultContainer');
+      container.innerHTML = `
+        <div class="resultado-card erro">
+          <div class="resultado-topo">
+            <div class="resultado-icone">
+              <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
+            </div>
+            <div>
+              <h3>Erro ao consultar</h3>
+              <p>${msg}</p>
+            </div>
+          </div>
+        </div>
+      `;
     }
 
     function mostrarDados(data) {
@@ -224,62 +919,88 @@
       const existsFlag = data && (data.exists === true || data['exists'] === true);
 
       if (!data || Object.keys(data).length === 0 || !existsFlag) {
-        container.innerHTML = `
-          <div class="card">
-            <p style="padding:20px; text-align:center; font-weight:bold;">❌ Seu CPF não consta na primeira listagem de implantação.</p>
-            <p style="padding:0 20px 20px; text-align:center; opacity:.85;">
-              Se você acredita que isso é um erro, entre em contato com a Associação.
-            </p>
-          </div>`;
+        mostrarNaoEncontrado();
         return;
       }
 
       const nome = data.nome ?? data['nome'] ?? data.NOME ?? data['NOME'] ?? '';
 
-      const card = document.createElement('div');
-      card.className = 'card';
+      container.innerHTML = `
+        <div class="resultado-card sucesso">
+          <div class="resultado-topo">
+            <div class="resultado-icone">
+              <i class="fa-solid fa-circle-check" aria-hidden="true"></i>
+            </div>
+            <div>
+              <h3>CPF encontrado na primeira listagem</h3>
+              <p>O nome abaixo consta na primeira listagem de implantação da VPE.</p>
+            </div>
+          </div>
 
-      const title = document.createElement('div');
-      title.style.fontSize = '18px';
-      title.style.fontWeight = '600';
-      title.style.color = '#003366';
-      title.style.marginBottom = '12px';
-      title.textContent = 'Resultado da Consulta';
-      card.appendChild(title);
+          <div class="nome-box">
+            <span>Nome encontrado</span>
+            <strong>${nome ? nome.toString().trim() : 'Nome não informado'}</strong>
+          </div>
 
-      const ul = document.createElement('ul');
-      ul.style.listStyle = 'none';
-      ul.style.paddingLeft = '0';
+          <div class="passos">
+            <div class="passo">
+              <i class="fa-solid fa-file-invoice" aria-hidden="true"></i>
+              <div>
+                <strong>Se a VPE ainda não foi implantada:</strong>
+                envie o contracheque atual para a Associação.
+              </div>
+            </div>
 
-      const liNome = document.createElement('li');
-      liNome.style.marginBottom = '10px';
-      liNome.textContent = `NOME: ${nome ? nome.toString().trim() : ''}`;
-      ul.appendChild(liNome);
+            <div class="passo">
+              <i class="fa-solid fa-chart-line" aria-hidden="true"></i>
+              <div>
+                <strong>Se a VPE já foi implantada:</strong>
+                providencie a ficha financeira referente ao seu período.
+              </div>
+            </div>
 
-      card.appendChild(ul);
+            <div class="passo">
+              <i class="fa-solid fa-people-group" aria-hidden="true"></i>
+              <div>
+                <strong>Em caso de pensão dividida:</strong>
+                todos os beneficiários da mesma pensão devem encaminhar a documentação em conjunto.
+              </div>
+            </div>
 
-      const msg = document.createElement('div');
-      msg.className = 'warning';
-      msg.innerHTML = `
-        <p>✅ Seu nome aparece na <strong>primeira listagem de implantação da VPE</strong>, protocolada nos autos do Mandado de Segurança nº <strong>2008.34.00.033348-2</strong>.</p>
-        <p>Se a <strong>VPE ainda não tiver sido implantada em seu contracheque</strong>, envie o <strong>contracheque atual</strong> para a Associação, para que seja informado no processo que a União ainda não cumpriu a implantação.</p>
-        <p>Se a <strong>VPE já tiver sido implantada</strong>, providencie e envie eletronicamente à Associação a <strong>ficha financeira referente ao seu período</strong>, para encaminhamento ao escritório <strong>Silveira Cruz</strong>.</p>
-        <p>Nos casos de <strong>pensão dividida</strong>, todos os beneficiários que recebem a mesma pensão devem enviar a documentação em conjunto.</p>
-        <p>Se houver pensionista que recebeu a pensão em qualquer período a partir de 2008 e que já tenha falecido, <strong>os herdeiros também deverão ser habilitados</strong>, juntamente com as pensionistas vivas.</p>`;
-      card.appendChild(msg);
-
-      container.appendChild(card);
+            <div class="passo">
+              <i class="fa-solid fa-scale-balanced" aria-hidden="true"></i>
+              <div>
+                <strong>Em caso de pensionista falecido:</strong>
+                os herdeiros também deverão ser habilitados.
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
     }
 
     window.addEventListener('DOMContentLoaded', () => {
-      document.getElementById('consultBtn').onclick = async () => {
-        const raw = document.getElementById('cpfInput').value;
-        const cpf = formatarCPF(raw);
+      const botao = document.getElementById('consultBtn');
+      const input = document.getElementById('cpfInput');
 
-        if (cpf.length !== 11) {
-          alert('CPF inválido');
+      if (!botao || !input) return;
+
+      botao.onclick = async () => {
+        const cpfDigitado = limparCPF(input.value);
+
+        if (!cpfDigitado || cpfDigitado.length > 11) {
+          alert('Digite um CPF válido.');
           return;
         }
+
+        const cpf = formatarCPFConsulta(input.value);
+
+        if (cpf.length !== 11) {
+          alert('CPF inválido.');
+          return;
+        }
+
+        mostrarCarregando();
 
         try {
           const ref = doc(db, 'PrimeiraNRVPE', cpf);
@@ -288,25 +1009,14 @@
         } catch (err) {
           console.error(err);
 
-          const container = document.getElementById('resultContainer');
           const msg = (err && err.message) ? err.message : String(err);
 
           if (msg.toLowerCase().includes('missing or insufficient permissions')) {
-            container.innerHTML = `
-              <div class="card">
-                <p style="padding:18px; text-align:center; font-weight:700;">❌ Permissão insuficiente para consultar o banco.</p>
-                <p style="padding:0 18px 18px; text-align:center; opacity:.85;">
-                  Isso acontece quando as <strong>Regras do Firestore</strong> não permitem leitura para este site.
-                </p>
-              </div>`;
+            mostrarErroPermissao();
             return;
           }
 
-          container.innerHTML = `
-            <div class="card">
-              <p style="padding:18px; text-align:center; font-weight:700;">❌ Erro ao consultar.</p>
-              <p style="padding:0 18px 18px; text-align:center; opacity:.85;">${msg}</p>
-            </div>`;
+          mostrarErroConsulta(msg);
         }
       };
     });
