@@ -327,6 +327,54 @@
       margin-top: 2px;
     }
 
+
+    .outras-listagens {
+      margin-top: 22px;
+      background-color: var(--alerta-bg);
+      border: 1px solid rgba(245, 178, 0, 0.45);
+      border-radius: 18px;
+      padding: 22px;
+      box-shadow: 0 7px 20px rgba(0, 51, 102, 0.07);
+    }
+
+    .outras-listagens h3 {
+      color: var(--azul);
+      margin-bottom: 8px;
+      font-size: 19px;
+    }
+
+    .outras-listagens p {
+      color: var(--texto-suave);
+      margin-bottom: 16px;
+    }
+
+    .quick-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .quick-links a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      background-color: var(--branco);
+      color: var(--azul);
+      border: 1px solid rgba(0, 51, 102, 0.18);
+      padding: 11px 14px;
+      border-radius: 12px;
+      font-weight: 800;
+      transition: background-color 0.18s ease, transform 0.18s ease;
+    }
+
+    .quick-links a:hover,
+    .quick-links a:focus-visible {
+      background-color: var(--azul-suave);
+      transform: translateY(-1px);
+      outline: none;
+    }
+
     @media (max-width: 768px) {
       nav { position: relative; flex-direction: column; align-items: center; }
       .logo { text-align: center; width: 100%; margin-bottom: 10px; }
@@ -401,6 +449,25 @@
 
         <div id="resultContainer" aria-live="polite"></div>
       </div>
+
+      <div class="outras-listagens">
+        <h3>Outras listagens da VPE</h3>
+        <p>
+          Caso não encontre seu nome nesta consulta, verifique também as demais listagens de implantação disponíveis.
+        </p>
+
+        <div class="quick-links">
+          <a href="primeira_lista_vpe.html">
+            <i class="fa-solid fa-list-ol" aria-hidden="true"></i>
+            Primeira Listagem
+          </a>
+          <a href="terceira_lista_vpe.html">
+            <i class="fa-solid fa-list-ol" aria-hidden="true"></i>
+            Terceira Listagem
+          </a>
+        </div>
+      </div>
+
     </section>
   </main>
 
