@@ -3,40 +3,111 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>Consultas — APIPMCBDF</title>
   <meta name="robots" content="noindex, nofollow" />
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+    :root {
+      --azul: #003366;
+      --azul-claro: #005599;
+      --azul-escuro: #001f3f;
+      --azul-suave: #e6f0ff;
+      --dourado: #f5b200;
+      --fundo: #f4f7fb;
+      --branco: #ffffff;
+      --texto: #1f2937;
+      --texto-suave: #5b6472;
+      --borda: #dbe5f2;
+      --sombra: 0 10px 28px rgba(0, 51, 102, 0.10);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       font-family: 'Inter', sans-serif;
-      background-color: #f4f7fb;
-      color: #111;
+      background-color: var(--fundo);
+      color: var(--texto);
+      line-height: 1.5;
     }
 
-    header { background-color: #003366; padding: 20px; color: white; }
-    nav { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
-    .logo img { height: 50px; }
-    nav ul { display: flex; list-style: none; gap: 20px; flex-wrap: wrap; }
-    nav ul li { position: relative; }
+    a {
+      color: inherit;
+    }
+
+    /* Compatibilidade com o header carregado por header.html */
+    header {
+      background-color: var(--azul);
+      padding: 20px;
+      color: white;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .logo img {
+      height: 50px;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    nav ul li {
+      position: relative;
+    }
+
     nav ul li a {
-      color: white; text-decoration: none; font-weight: 600;
-      padding: 8px 12px; display: block; transition: background-color 0.3s ease;
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 8px 12px;
+      display: block;
+      transition: background-color 0.3s ease;
     }
-    nav ul li a:hover { background-color: #005599; border-radius: 4px; }
-    nav ul li ul {
-      display: none; position: absolute; background-color: #004080;
-      top: 100%; left: 0; min-width: 220px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2); z-index: 10;
-    }
-    nav ul li:hover ul { display: block; animation: fadeIn 0.3s ease-in-out; }
-    nav ul li ul li a { padding: 10px; font-weight: 400; }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-10px); }
-      to { opacity: 1; transform: translateY(0); }
+    nav ul li a:hover {
+      background-color: var(--azul-claro);
+      border-radius: 4px;
+    }
+
+    nav ul li ul {
+      display: none;
+      position: absolute;
+      background-color: #004080;
+      top: 100%;
+      left: 0;
+      min-width: 220px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      z-index: 10;
+    }
+
+    nav ul li:hover ul {
+      display: block;
+      animation: fadeIn 0.25s ease-in-out;
+    }
+
+    nav ul li ul li a {
+      padding: 10px;
+      font-weight: 400;
     }
 
     .menu-toggle {
@@ -46,112 +117,128 @@
       color: white;
       margin-bottom: 10px;
     }
-    #menu { display: flex; }
 
-    .hero {
-      position: relative;
-      overflow: hidden;
-      background-image:
-        radial-gradient(1200px circle at 10% 10%, rgba(59, 130, 246, 0.22), transparent 55%),
-        radial-gradient(900px circle at 90% 20%, rgba(34, 197, 94, 0.16), transparent 55%),
-        linear-gradient(180deg, #0b1220 0%, #0f172a 60%, #0b1220 100%);
-      background-repeat: no-repeat;
+    #menu {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-8px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .page-hero {
+      background:
+        linear-gradient(rgba(0, 51, 102, 0.84), rgba(0, 51, 102, 0.84)),
+        url("https://www.freetour.com/images/cities/rio-de-janeiro-brazil.jpg");
       background-size: cover;
       background-position: center;
-      color: #fff;
-    }
-
-    .hero-overlay {
-      min-height: calc(100vh - 100px);
-      width: 100%;
-      padding: 48px 24px 64px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .content-wrap {
-      width: 100%;
-      max-width: 1180px;
-      margin: 0 auto;
-    }
-
-    .top-intro {
+      color: var(--branco);
       text-align: center;
-      margin-bottom: 40px;
-      animation: fadeIn 0.8s ease-in-out;
+      padding: 72px 20px 76px;
+    }
+
+    .page-hero-inner {
+      max-width: 980px;
+      margin: 0 auto;
     }
 
     .badge {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: #f5b200; color: #111; font-weight: 800;
-      padding: 8px 14px; border-radius: 999px; margin-bottom: 18px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.25);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background-color: var(--dourado);
+      color: #111;
+      font-weight: 800;
+      padding: 9px 18px;
+      border-radius: 999px;
+      margin-bottom: 22px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.22);
     }
 
-    .title {
+    .page-hero h1 {
       font-size: clamp(30px, 5vw, 46px);
-      line-height: 1.1;
-      margin-bottom: 12px;
+      line-height: 1.12;
       font-weight: 800;
+      margin-bottom: 14px;
       text-shadow: 0 2px 10px rgba(0,0,0,0.35);
     }
 
-    .subtitle {
-      font-size: clamp(15px, 2.5vw, 18px);
+    .page-hero p {
+      font-size: clamp(15px, 2.4vw, 18px);
       max-width: 850px;
       margin: 0 auto;
       opacity: 0.96;
-      line-height: 1.6;
+    }
+
+    .main-content {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 42px 20px 56px;
+      position: relative;
+      z-index: 1;
     }
 
     .consultas-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 24px;
+      gap: 26px;
       align-items: start;
     }
 
+    .consultas-grid.single-card {
+      grid-template-columns: minmax(0, 760px);
+      justify-content: center;
+    }
+
     .section-card {
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.12);
-      backdrop-filter: blur(8px);
-      border-radius: 22px;
+      width: 100%;
+      background-color: var(--branco);
+      border: 1px solid var(--borda);
+      border-radius: 18px;
       padding: 28px;
-      box-shadow: 0 18px 45px rgba(0,0,0,0.24);
-      animation: fadeIn 0.8s ease-in-out;
+      box-shadow: var(--sombra);
+      animation: fadeIn 0.55s ease-in-out;
     }
 
     .section-header {
       display: flex;
       align-items: flex-start;
       gap: 14px;
-      margin-bottom: 20px;
+      margin-bottom: 22px;
     }
 
     .section-icon {
-      width: 52px;
-      height: 52px;
+      width: 54px;
+      height: 54px;
       border-radius: 16px;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: rgba(245, 178, 0, 0.18);
-      color: #f5b200;
-      font-size: 22px;
+      background-color: var(--azul-suave);
+      color: var(--azul);
+      font-size: 23px;
       flex-shrink: 0;
     }
 
     .section-header h2 {
-      font-size: 24px;
-      line-height: 1.2;
+      font-size: 22px;
+      line-height: 1.25;
       margin-bottom: 6px;
-      color: #fff;
+      color: var(--azul);
+      font-weight: 800;
     }
 
     .section-header p {
-      color: rgba(255,255,255,0.84);
-      line-height: 1.5;
+      color: var(--texto-suave);
       font-size: 15px;
     }
 
@@ -166,23 +253,36 @@
       justify-content: space-between;
       gap: 16px;
       text-decoration: none;
-      color: #fff;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.12);
+      color: var(--azul);
+      background-color: #f8fbff;
+      border: 1px solid var(--borda);
       border-radius: 16px;
-      padding: 16px 18px;
-      transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+      padding: 17px 18px;
+      transition:
+        transform 0.18s ease,
+        border-color 0.18s ease,
+        background-color 0.18s ease,
+        box-shadow 0.18s ease;
     }
 
-    .consulta-link:hover {
+    .consulta-link:hover,
+    .consulta-link:focus-visible {
       transform: translateY(-2px);
-      border-color: rgba(245, 178, 0, 0.65);
-      background: rgba(255,255,255,0.12);
+      border-color: var(--azul-claro);
+      background-color: var(--azul-suave);
+      box-shadow: 0 8px 18px rgba(0, 51, 102, 0.12);
+      outline: none;
     }
 
     .consulta-link.primary {
-      background: rgba(245, 178, 0, 0.16);
-      border-color: rgba(245, 178, 0, 0.42);
+      background-color: #fff8e2;
+      border-color: rgba(245, 178, 0, 0.62);
+    }
+
+    .consulta-link.primary:hover,
+    .consulta-link.primary:focus-visible {
+      background-color: #fff2c2;
+      border-color: var(--dourado);
     }
 
     .consulta-main {
@@ -194,8 +294,14 @@
 
     .consulta-main i {
       font-size: 20px;
-      color: #f5b200;
+      color: var(--azul);
       flex-shrink: 0;
+      width: 24px;
+      text-align: center;
+    }
+
+    .consulta-link.primary .consulta-main i {
+      color: #9a6b00;
     }
 
     .consulta-text strong {
@@ -207,125 +313,191 @@
 
     .consulta-text span {
       display: block;
-      color: rgba(255,255,255,0.78);
+      color: var(--texto-suave);
       font-size: 14px;
       line-height: 1.45;
     }
 
     .consulta-arrow {
-      color: rgba(255,255,255,0.8);
+      color: var(--azul-claro);
       font-size: 16px;
       flex-shrink: 0;
+      transition: transform 0.18s ease;
+    }
+
+    .consulta-link:hover .consulta-arrow,
+    .consulta-link:focus-visible .consulta-arrow {
+      transform: translateX(3px);
+    }
+
+    .notice-card {
+      max-width: 760px;
+      margin: 26px auto 0;
+      background-color: var(--azul);
+      color: var(--branco);
+      border-radius: 18px;
+      padding: 22px 24px;
+      box-shadow: var(--sombra);
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+
+    .notice-card i {
+      color: var(--dourado);
+      font-size: 22px;
+      margin-top: 2px;
+    }
+
+    .notice-card strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .notice-card p {
+      color: rgba(255,255,255,0.88);
+      font-size: 14px;
     }
 
     .is-hidden {
       display: none !important;
     }
 
-    .code-hint {
-      margin-top: 22px;
-      padding: 14px 16px;
-      border-radius: 14px;
-      background: rgba(255,255,255,0.06);
-      border: 1px dashed rgba(255,255,255,0.18);
-      color: rgba(255,255,255,0.86);
-      font-size: 13px;
-      line-height: 1.55;
-    }
-
-    .code-hint strong {
-      color: #fff;
-    }
-
     @media (max-width: 900px) {
-      .consultas-grid {
+      .consultas-grid,
+      .consultas-grid.single-card {
         grid-template-columns: 1fr;
       }
     }
 
     @media (max-width: 768px) {
-      nav { position: relative; flex-direction: column; align-items: center; }
-      .logo { text-align: center; width: 100%; margin-bottom: 10px; }
-      .menu-toggle { display: block; }
+      nav {
+        position: relative;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .logo {
+        text-align: center;
+        width: 100%;
+        margin-bottom: 10px;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+
       #menu {
         display: none;
         flex-direction: column;
         position: relative;
         width: 100%;
-        background-color: #003366;
+        background-color: var(--azul);
         z-index: 1000;
       }
-      #menu.active { display: flex; }
 
-      .hero-overlay {
-        min-height: auto;
-        padding: 36px 18px 48px;
+      #menu.active {
+        display: flex;
+      }
+
+      .page-hero {
+        padding: 52px 18px 58px;
       }
 
       .section-card {
         padding: 22px;
       }
 
+      .section-header {
+        flex-direction: column;
+      }
+
       .consulta-link {
         align-items: flex-start;
+      }
+
+      .notice-card {
+        flex-direction: column;
       }
     }
   </style>
 </head>
+
 <body>
 
-  <div id="header-include" aria-label="Cabeçalho do site"></div>
+  <!-- Header include -->
+  <div id="header-container" aria-label="Cabeçalho do site"></div>
 
-  <main class="hero">
-    <section class="hero-overlay" aria-label="Página de consultas">
-      <div class="content-wrap">
-        <div class="top-intro">
-          <div class="badge" role="status" aria-live="polite">
-            <i class="fa-solid fa-magnifying-glass"></i>
-            <span>Consultas</span>
-          </div>
-          <h1 class="title">SELECIONE O TIPO DE CONSULTA</h1>
-          <p class="subtitle">
-            Escolha a área desejada para consultar situação documental ou verificar nome em listagens.
-          </p>
+  <main>
+    <section class="page-hero" aria-label="Página de consultas">
+      <div class="page-hero-inner">
+        <div class="badge" role="status" aria-live="polite">
+          <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+          <span>Consultas</span>
         </div>
 
-        <div class="consultas-grid">
-          <section class="section-card is-hidden" aria-labelledby="titulo-documentacao" id="bloco-documentacao">
-            <div class="section-header">
-              <div class="section-icon">
-                <i class="fa-solid fa-file-circle-check"></i>
-              </div>
-              <div>
-                <h2 id="titulo-documentacao">CONSULTA DE SITUAÇÃO DE DOCUMENTAÇÃO</h2>
-                <p>
-                  Área destinada à verificação de pendências, andamento e situação documental nas consultas disponíveis.
-                </p>
-              </div>
-            </div>
-            <div class="links-list" id="lista-documentacao"></div>
-          </section>
+        <h1>Selecione o tipo de consulta</h1>
 
-          <section class="section-card is-hidden" aria-labelledby="titulo-listagens" id="bloco-listagens">
-            <div class="section-header">
-              <div class="section-icon">
-                <i class="fa-solid fa-list-check"></i>
-              </div>
-              <div>
-                <h2 id="titulo-listagens">CONSULTA NOME EM LISTAGENS</h2>
-                <p>
-                  Área para conferência de presença do nome em listagens disponibilizadas pela Associação.
-                </p>
-              </div>
+        <p>
+          Consulte situação documental ou verifique se o nome consta nas listagens disponibilizadas pela APIPMCBDF.
+        </p>
+      </div>
+    </section>
+
+    <section class="main-content" aria-label="Opções de consulta">
+      <div class="consultas-grid">
+
+        <section class="section-card is-hidden" aria-labelledby="titulo-documentacao" id="bloco-documentacao">
+          <div class="section-header">
+            <div class="section-icon" aria-hidden="true">
+              <i class="fa-solid fa-file-circle-check"></i>
             </div>
-            <div class="links-list" id="lista-listagens"></div>
-          </section>
+
+            <div>
+              <h2 id="titulo-documentacao">Consulta de Situação de Documentação</h2>
+              <p>
+                Verifique pendências, andamento e situação documental nas consultas disponíveis.
+              </p>
+            </div>
+          </div>
+
+          <div class="links-list" id="lista-documentacao"></div>
+        </section>
+
+        <section class="section-card is-hidden" aria-labelledby="titulo-listagens" id="bloco-listagens">
+          <div class="section-header">
+            <div class="section-icon" aria-hidden="true">
+              <i class="fa-solid fa-list-check"></i>
+            </div>
+
+            <div>
+              <h2 id="titulo-listagens">Consulta Nome em Listagens</h2>
+              <p>
+                Confira a presença do nome nas listagens oficiais disponibilizadas pela Associação.
+              </p>
+            </div>
+          </div>
+
+          <div class="links-list" id="lista-listagens"></div>
+        </section>
+
+      </div>
+
+      <div class="notice-card">
+        <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+
+        <div>
+          <strong>Orientação</strong>
+          <p>
+            Caso não encontre seu nome ou tenha dúvida sobre alguma informação, entre em contato com a Associação para conferência dos dados.
+          </p>
         </div>
       </div>
     </section>
   </main>
 
-  <div id="footer-include" aria-label="Rodapé do site"></div>
+  <!-- Footer include -->
+  <div id="footer-container" aria-label="Rodapé do site"></div>
 
   <script>
     /*
@@ -339,23 +511,20 @@
       situacao_documentacao_vpe: false,
       situacao_documentacao_auxilio_moradia: false,
       herdeiros_auxilio_moradia: false,
-      listagem_auxilio_moradia_coletivo: false,
-      primeira_nrvpe: true
+
+      primeira_lista_vpe: true,
+      segunda_lista_vpe: true,
+      terceira_lista_vpe: true,
+
+      listagem_auxilio_moradia_coletivo: false
     };
 
     /*
       ============================================================
       CADASTRO DAS OPÇÕES DE CONSULTA
       ============================================================
-      PARA ADICIONAR UMA NOVA OPÇÃO:
-
-      1) Copie um bloco abaixo
-      2) Troque a "chave" (tem que existir no CONFIG_CONSULTAS)
-      3) Troque a "categoria" para:
-         - "documentacao"
-         - "listagens"
-      4) Troque o "titulo", "descricao", "href" e "icone"
-      5) Se quiser destaque amarelo, use primary: true
+      Para mostrar ou esconder uma opção, altere true/false acima
+      no CONFIG_CONSULTAS.
     */
     const CONSULTAS = [
       {
@@ -379,19 +548,37 @@
       {
         chave: 'herdeiros_auxilio_moradia',
         categoria: 'documentacao',
-        titulo: 'Herdeiros - Auxílio Moradia (Coletivo)',
+        titulo: 'Herdeiros - Auxílio Moradia Coletivo',
         descricao: 'Consulta específica para situação documental e acompanhamento de herdeiros.',
         href: 'consulta_documentacao_herdeiros_cpf.html',
         icone: 'fa-people-group',
         primary: false
       },
       {
-        chave: 'primeira_nrvpe',
+        chave: 'primeira_lista_vpe',
         categoria: 'listagens',
         titulo: 'Primeira Listagem de Implantação - VPE',
         descricao: 'Consulte se o nome consta na primeira listagem de implantação da VPE.',
         href: 'primeira_lista_vpe.html',
-        icone: 'fa-list-check',
+        icone: 'fa-list-ol',
+        primary: true
+      },
+      {
+        chave: 'segunda_lista_vpe',
+        categoria: 'listagens',
+        titulo: 'Segunda Listagem de Implantação - VPE',
+        descricao: 'Consulte se o nome consta na segunda listagem de implantação da VPE.',
+        href: 'segunda_lista_vpe.html',
+        icone: 'fa-list-ol',
+        primary: true
+      },
+      {
+        chave: 'terceira_lista_vpe',
+        categoria: 'listagens',
+        titulo: 'Terceira Listagem de Implantação - VPE',
+        descricao: 'Consulte se o nome consta na terceira listagem de implantação da VPE.',
+        href: 'terceira_lista_vpe.html',
+        icone: 'fa-list-ol',
         primary: true
       },
       {
@@ -401,31 +588,25 @@
         descricao: 'Consulte se o nome consta na listagem do Auxílio Moradia Coletivo.',
         href: 'lista_aux.html',
         icone: 'fa-list-check',
-        primary: true
-      }
-
-      /*
-      EXEMPLO PARA ADICIONAR MAIS UMA OPÇÃO:
-      ,{
-        chave: 'nova_consulta_exemplo',
-        categoria: 'documentacao',
-        titulo: 'Nova Consulta',
-        descricao: 'Descrição da nova consulta.',
-        href: 'nova_consulta.html',
-        icone: 'fa-file-lines',
         primary: false
       }
-      */
     ];
 
     async function include(path, targetId) {
       const el = document.getElementById(targetId);
       if (!el) return;
+
       try {
         const res = await fetch(path, { cache: 'no-store' });
+
+        if (!res.ok) {
+          throw new Error(`Erro HTTP ${res.status}`);
+        }
+
         el.innerHTML = await res.text();
       } catch (e) {
         console.error(`Falha ao carregar ${path}`, e);
+        el.innerHTML = `<!-- falha ao carregar ${path} -->`;
       }
     }
 
@@ -439,16 +620,19 @@
       a.className = `consulta-link${item.primary ? ' primary' : ''}`;
       a.href = item.href;
       a.setAttribute('data-feature', item.chave);
+      a.setAttribute('aria-label', item.titulo);
 
       a.innerHTML = `
         <div class="consulta-main">
-          <i class="fa-solid ${item.icone}"></i>
+          <i class="fa-solid ${item.icone}" aria-hidden="true"></i>
+
           <div class="consulta-text">
             <strong>${item.titulo}</strong>
             <span>${item.descricao}</span>
           </div>
         </div>
-        <i class="fa-solid fa-arrow-right consulta-arrow"></i>
+
+        <i class="fa-solid fa-arrow-right consulta-arrow" aria-hidden="true"></i>
       `;
 
       return a;
@@ -459,8 +643,9 @@
       const listaListagens = document.getElementById('lista-listagens');
       const blocoDocumentacao = document.getElementById('bloco-documentacao');
       const blocoListagens = document.getElementById('bloco-listagens');
+      const grid = document.querySelector('.consultas-grid');
 
-      if (!listaDocumentacao || !listaListagens || !blocoDocumentacao || !blocoListagens) return;
+      if (!listaDocumentacao || !listaListagens || !blocoDocumentacao || !blocoListagens || !grid) return;
 
       listaDocumentacao.innerHTML = '';
       listaListagens.innerHTML = '';
@@ -473,18 +658,27 @@
 
         if (item.categoria === 'documentacao') {
           listaDocumentacao.appendChild(card);
-        } else if (item.categoria === 'listagens') {
+        }
+
+        if (item.categoria === 'listagens') {
           listaListagens.appendChild(card);
         }
       });
 
-      blocoDocumentacao.classList.toggle('is-hidden', listaDocumentacao.children.length === 0);
-      blocoListagens.classList.toggle('is-hidden', listaListagens.children.length === 0);
+      const documentacaoVisivel = listaDocumentacao.children.length > 0;
+      const listagensVisivel = listaListagens.children.length > 0;
+
+      blocoDocumentacao.classList.toggle('is-hidden', !documentacaoVisivel);
+      blocoListagens.classList.toggle('is-hidden', !listagensVisivel);
+
+      const totalBlocosVisiveis = Number(documentacaoVisivel) + Number(listagensVisivel);
+      grid.classList.toggle('single-card', totalBlocosVisiveis === 1);
     }
 
-    include('header.html', 'header-include');
-    include('footer.html', 'footer-include');
+    include('header.html', 'header-container');
+    include('footer.html', 'footer-container');
     renderizarConsultas();
   </script>
+
 </body>
 </html>
