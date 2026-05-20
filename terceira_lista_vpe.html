@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Consulta - Terceira Listagem de Implantação da VPE</title>
+  <meta name="robots" content="noindex, nofollow" />
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --azul: #003366;
+      --azul-claro: #005599;
+      --azul-suave: #e6f0ff;
+      --dourado: #f5b200;
+      --fundo: #f4f7fb;
+      --branco: #ffffff;
+      --texto: #1f2937;
+      --texto-suave: #5b6472;
+      --borda: #dbe5f2;
+      --erro: #991b1b;
+      --erro-bg: #fff1f2;
+      --alerta-bg: #fff8e2;
+      --sombra: 0 10px 28px rgba(0, 51, 102, 0.10);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--fundo);
+      color: var(--texto);
+      line-height: 1.5;
+    }
+
+    header { background-color: var(--azul); padding: 20px; color: white; }
+    nav { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+    .logo img { height: 50px; }
+    nav ul { display: flex; list-style: none; gap: 20px; flex-wrap: wrap; }
+    nav ul li { position: relative; }
+    nav ul li a {
+      color: white; text-decoration: none; font-weight: 600;
+      padding: 8px 12px; display: block; transition: background-color 0.3s ease;
+    }
+    nav ul li a:hover { background-color: var(--azul-claro); border-radius: 4px; }
+    nav ul li ul {
+      display: none; position: absolute; background-color: #004080;
+      top: 100%; left: 0; min-width: 220px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2); z-index: 10;
+    }
+    nav ul li:hover ul { display: block; animation: fadeIn 0.25s ease-in-out; }
+    nav ul li ul li a { padding: 10px; font-weight: 400; }
+    .menu-toggle { display: none; cursor: pointer; font-size: 24px; color: white; margin-bottom: 10px; }
+    #menu { display: flex; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .page-hero {
+      min-height: 330px;
+      background:
+        linear-gradient(rgba(0, 51, 102, 0.84), rgba(0, 51, 102, 0.84)),
+        url("https://www.freetour.com/images/cities/rio-de-janeiro-brazil.jpg");
+      background-size: cover;
+      background-position: center;
+      color: var(--branco);
+      text-align: center;
+      padding: 64px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background-color: var(--dourado);
+      color: #111;
+      font-weight: 800;
+      padding: 8px 15px;
+      border-radius: 999px;
+      margin: 0 auto 18px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.22);
+      width: fit-content;
+    }
+
+    .page-hero h1 {
+      font-size: clamp(28px, 5vw, 44px);
+      line-height: 1.12;
+      font-weight: 800;
+      margin-bottom: 14px;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.35);
+    }
+
+    .page-hero p {
+      font-size: clamp(15px, 2.4vw, 18px);
+      max-width: 780px;
+      margin: 0 auto;
+      opacity: 0.96;
+    }
+
+    .main-content {
+      max-width: 860px;
+      margin: 36px auto 0;
+      padding: 0 20px 56px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .consulta-card {
+      background-color: var(--branco);
+      border: 1px solid var(--borda);
+      border-radius: 20px;
+      box-shadow: var(--sombra);
+      padding: 32px;
+      animation: fadeIn 0.55s ease-in-out;
+    }
+
+    .consulta-header {
+      display: grid;
+      gap: 12px;
+      text-align: center;
+      max-width: 720px;
+      margin: 0 auto 26px;
+    }
+
+    .consulta-header h2 {
+      color: var(--azul);
+      font-size: clamp(22px, 3vw, 30px);
+      line-height: 1.2;
+      font-weight: 800;
+    }
+
+    .consulta-header p {
+      color: var(--texto-suave);
+      font-size: 16px;
+    }
+
+    .form-box {
+      max-width: 620px;
+      margin: 0 auto;
+      background: #f8fbff;
+      border: 1px solid var(--borda);
+      border-radius: 18px;
+      padding: 24px;
+    }
+
+    .form-label {
+      display: block;
+      font-weight: 700;
+      color: var(--azul);
+      margin-bottom: 9px;
+    }
+
+    .input-group {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 14px 15px;
+      font-size: 17px;
+      border-radius: 12px;
+      border: 1px solid #c8d6e6;
+      background-color: var(--branco);
+      color: var(--texto);
+      outline: none;
+      transition: border-color 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .input-group input:focus {
+      border-color: var(--azul-claro);
+      box-shadow: 0 0 0 4px rgba(0, 85, 153, 0.12);
+    }
+
+    .input-group button {
+      padding: 14px 22px;
+      border: none;
+      border-radius: 12px;
+      background-color: var(--azul);
+      color: var(--branco);
+      font-size: 16px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: background-color 0.18s ease, transform 0.18s ease;
+      white-space: nowrap;
+    }
+
+    .input-group button:hover,
+    .input-group button:focus-visible {
+      background-color: var(--azul-claro);
+      transform: translateY(-1px);
+      outline: none;
+    }
+
+    .input-help {
+      margin-top: 10px;
+      color: var(--texto-suave);
+      font-size: 13px;
+      text-align: center;
+    }
+
+    #resultContainer {
+      max-width: 760px;
+      margin: 26px auto 0;
+    }
+
+    .resultado-card {
+      background-color: var(--branco);
+      border: 1px solid var(--borda);
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: 0 8px 22px rgba(0, 51, 102, 0.08);
+      animation: fadeIn 0.35s ease-in-out;
+    }
+
+    .resultado-card.erro {
+      border-color: rgba(153, 27, 27, 0.18);
+      background: linear-gradient(180deg, var(--erro-bg), #ffffff 72%);
+    }
+
+    .resultado-card.alerta {
+      border-color: rgba(245, 178, 0, 0.48);
+      background: linear-gradient(180deg, var(--alerta-bg), #ffffff 72%);
+    }
+
+    .resultado-topo {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      margin-bottom: 18px;
+    }
+
+    .resultado-icone {
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 21px;
+    }
+
+    .resultado-card.erro .resultado-icone {
+      background-color: #fee2e2;
+      color: var(--erro);
+    }
+
+    .resultado-card.alerta .resultado-icone {
+      background-color: #fff2c2;
+      color: #9a6b00;
+    }
+
+    .resultado-topo h3 {
+      color: var(--azul);
+      font-size: 21px;
+      margin-bottom: 4px;
+    }
+
+    .resultado-topo p {
+      color: var(--texto-suave);
+    }
+
+    .nome-box {
+      background-color: #f8fbff;
+      border: 1px solid var(--borda);
+      border-radius: 14px;
+      padding: 14px 16px;
+      margin-bottom: 18px;
+    }
+
+    .nome-box span {
+      display: block;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--texto-suave);
+      margin-bottom: 4px;
+      font-weight: 800;
+    }
+
+    .nome-box strong {
+      color: var(--azul);
+      font-size: 18px;
+    }
+
+    .mensagem-aguardo {
+      background-color: var(--branco);
+      border: 1px solid var(--borda);
+      border-radius: 14px;
+      padding: 16px;
+      color: var(--texto);
+      font-size: 15px;
+    }
+
+    .mensagem-aguardo p + p { margin-top: 10px; }
+    .mensagem-aguardo strong { color: var(--azul); }
+
+    .passos {
+      display: grid;
+      gap: 12px;
+    }
+
+    .passo {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      background-color: var(--branco);
+      border: 1px solid var(--borda);
+      border-radius: 14px;
+      padding: 14px;
+    }
+
+    .passo i {
+      color: var(--azul);
+      margin-top: 2px;
+    }
+
+
+    .outras-listagens {
+      margin-top: 22px;
+      background-color: var(--alerta-bg);
+      border: 1px solid rgba(245, 178, 0, 0.45);
+      border-radius: 18px;
+      padding: 22px;
+      box-shadow: 0 7px 20px rgba(0, 51, 102, 0.07);
+    }
+
+    .outras-listagens h3 {
+      color: var(--azul);
+      margin-bottom: 8px;
+      font-size: 19px;
+    }
+
+    .outras-listagens p {
+      color: var(--texto-suave);
+      margin-bottom: 16px;
+    }
+
+    .quick-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .quick-links a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      background-color: var(--branco);
+      color: var(--azul);
+      border: 1px solid rgba(0, 51, 102, 0.18);
+      padding: 11px 14px;
+      border-radius: 12px;
+      font-weight: 800;
+      transition: background-color 0.18s ease, transform 0.18s ease;
+    }
+
+    .quick-links a:hover,
+    .quick-links a:focus-visible {
+      background-color: var(--azul-suave);
+      transform: translateY(-1px);
+      outline: none;
+    }
+
+    @media (max-width: 768px) {
+      nav { position: relative; flex-direction: column; align-items: center; }
+      .logo { text-align: center; width: 100%; margin-bottom: 10px; }
+      .menu-toggle { display: block; }
+      #menu {
+        display: none;
+        flex-direction: column;
+        position: relative;
+        width: 100%;
+        background-color: var(--azul);
+        z-index: 1000;
+      }
+      #menu.active { display: flex; }
+      .page-hero { padding: 44px 18px 50px; min-height: 280px; }
+      .main-content { margin-top: 24px; padding-left: 14px; padding-right: 14px; }
+      .consulta-card { padding: 22px; }
+      .form-box { padding: 18px; }
+      .input-group { grid-template-columns: 1fr; }
+      .input-group button { width: 100%; }
+      .resultado-topo { flex-direction: column; }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="header-container"></div>
+
+  <main>
+    <section class="page-hero" aria-label="Consulta da terceira listagem de implantação da VPE">
+      <div class="badge">
+        <i class="fa-solid fa-list-check" aria-hidden="true"></i>
+        <span>VPE</span>
+      </div>
+
+      <h1>Consulta da Terceira Listagem de Implantação da VPE</h1>
+      <p>
+        Informe seu CPF para verificar se consta na terceira listagem de implantação da Vantagem Pecuniária Especial.
+      </p>
+    </section>
+
+    <section class="main-content">
+      <div class="consulta-card">
+        <div class="consulta-header">
+          <h2>Consultar CPF</h2>
+          <p>
+            A consulta é feita pelo CPF. Você pode digitar com ou sem pontos e traço.
+          </p>
+        </div>
+
+        <div class="form-box">
+          <label class="form-label" for="cpfInput">Digite seu CPF:</label>
+
+          <div class="input-group">
+            <input
+              id="cpfInput"
+              placeholder="000.000.000-00"
+              type="text"
+              inputmode="numeric"
+              autocomplete="off"
+              maxlength="14"
+            />
+            <button id="consultBtn" type="button">
+              <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+              Consultar
+            </button>
+          </div>
+
+          <div class="input-help">
+            Use apenas o CPF do beneficiário ou pensionista que deseja consultar.
+          </div>
+        </div>
+
+        <div id="resultContainer" aria-live="polite"></div>
+      </div>
+
+      <div class="outras-listagens">
+        <h3>Outras listagens da VPE</h3>
+        <p>
+          Caso não encontre seu nome nesta consulta, verifique também as demais listagens de implantação disponíveis.
+        </p>
+
+        <div class="quick-links">
+          <a href="primeira_lista_vpe.html">
+            <i class="fa-solid fa-list-ol" aria-hidden="true"></i>
+            Primeira Listagem
+          </a>
+          <a href="segunda_lista_vpe.html">
+            <i class="fa-solid fa-list-ol" aria-hidden="true"></i>
+            Segunda Listagem
+          </a>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <div id="footer-container"></div>
+
+  <script>
+    (function loadHeader(){
+      const el = document.getElementById('header-container');
+      if (!el) return;
+      fetch('header.html', { cache: 'no-store' })
+        .then(r => r.text())
+        .then(html => { el.innerHTML = html; })
+        .catch(() => { el.innerHTML = '<!-- falha ao carregar header -->'; });
+    })();
+
+    (function loadFooter(){
+      const el = document.getElementById('footer-container');
+      if (!el) return;
+      fetch('footer.html', { cache: 'no-store' })
+        .then(r => r.text())
+        .then(html => { el.innerHTML = html; })
+        .catch(() => { el.innerHTML = '<!-- falha ao carregar footer -->'; });
+    })();
+
+    function toggleMenu() {
+      var menu = document.getElementById("menu");
+      if (menu) menu.classList.toggle("active");
+    }
+
+    function mascaraCPF(valor) {
+      const numeros = valor.replace(/\D/g, '').slice(0, 11);
+
+      return numeros
+        .replace(/(\d{3})(\d)/, '$1.$2')
+        .replace(/(\d{3})(\d)/, '$1.$2')
+        .replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const cpfInput = document.getElementById('cpfInput');
+      if (cpfInput) {
+        cpfInput.addEventListener('input', () => {
+          cpfInput.value = mascaraCPF(cpfInput.value);
+        });
+
+        cpfInput.addEventListener('keydown', (event) => {
+          if (event.key === 'Enter') {
+            event.preventDefault();
+            document.getElementById('consultBtn').click();
+          }
+        });
+      }
+    });
+  </script>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDoXdgj_fRuYTluJby6QOIiEYBu268lZmQ",
+      authDomain: "documentos-apipmcbdf.firebaseapp.com",
+      projectId: "documentos-apipmcbdf",
+      storageBucket: "documentos-apipmcbdf.appspot.com",
+      messagingSenderId: "422508459389",
+      appId: "1:422508459389:web:bebd6b53839f77a3cd4814"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    function limparCPF(cpf) {
+      return cpf.replace(/\D/g, '');
+    }
+
+    function formatarCPFConsulta(cpf) {
+      const numeros = limparCPF(cpf);
+      if (numeros.length === 0) return '';
+      if (numeros.length < 11) return numeros.padStart(11, '0');
+      return numeros;
+    }
+
+    function mostrarCarregando() {
+      const container = document.getElementById('resultContainer');
+      container.innerHTML = `
+        <div class="resultado-card">
+          <div class="resultado-topo">
+            <div class="resultado-icone" style="background:#e6f0ff;color:#003366;">
+              <i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i>
+            </div>
+            <div>
+              <h3>Consultando...</h3>
+              <p>Aguarde enquanto verificamos a terceira listagem.</p>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function mostrarNaoEncontrado() {
+      const container = document.getElementById('resultContainer');
+      container.innerHTML = `
+        <div class="resultado-card erro">
+          <div class="resultado-topo">
+            <div class="resultado-icone">
+              <i class="fa-solid fa-circle-xmark" aria-hidden="true"></i>
+            </div>
+            <div>
+              <h3>CPF não encontrado nesta listagem</h3>
+              <p>Seu CPF não consta na terceira listagem de implantação da VPE.</p>
+            </div>
+          </div>
+
+          <div class="passos">
+            <div class="passo">
+              <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+              <div>
+                Verifique se o CPF foi digitado corretamente. Caso a dúvida continue, entre em contato com a Associação.
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function mostrarErroPermissao() {
+      const container = document.getElementById('resultContainer');
+      container.innerHTML = `
+        <div class="resultado-card erro">
+          <div class="resultado-topo">
+            <div class="resultado-icone">
+              <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
+            </div>
+            <div>
+              <h3>Permissão insuficiente para consultar</h3>
+              <p>As regras do Firestore não permitiram a leitura dos dados para este site.</p>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function mostrarErroConsulta(msg) {
+      const container = document.getElementById('resultContainer');
+      container.innerHTML = `
+        <div class="resultado-card erro">
+          <div class="resultado-topo">
+            <div class="resultado-icone">
+              <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
+            </div>
+            <div>
+              <h3>Erro ao consultar</h3>
+              <p>${msg}</p>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function mostrarDados(data) {
+      const container = document.getElementById('resultContainer');
+      container.innerHTML = '';
+
+      const existsFlag = data && (data.exists === true || data['exists'] === true);
+
+      if (!data || Object.keys(data).length === 0 || !existsFlag) {
+        mostrarNaoEncontrado();
+        return;
+      }
+
+      const nome = data.nome ?? data['nome'] ?? data.NOME ?? data['NOME'] ?? '';
+
+      container.innerHTML = `
+        <div class="resultado-card alerta">
+          <div class="resultado-topo">
+            <div class="resultado-icone">
+              <i class="fa-solid fa-clock" aria-hidden="true"></i>
+            </div>
+            <div>
+              <h3>CPF encontrado na terceira listagem</h3>
+              <p>O nome abaixo consta na terceira listagem de implantação da VPE.</p>
+            </div>
+          </div>
+
+          <div class="nome-box">
+            <span>Nome encontrado</span>
+            <strong>${nome ? nome.toString().trim() : 'Nome não informado'}</strong>
+          </div>
+
+          <div class="mensagem-aguardo">
+            <p>
+              <strong>Estamos aguardando a implantação.</strong>
+              Assim que o processo tiver alguma movimentação relevante, iremos informar todos os associados pelos canais oficiais da Associação.
+            </p>
+            <p>No mais, pedimos que aguarde novas atualizações.</p>
+          </div>
+        </div>
+      `;
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const botao = document.getElementById('consultBtn');
+      const input = document.getElementById('cpfInput');
+
+      if (!botao || !input) return;
+
+      botao.onclick = async () => {
+        const cpfDigitado = limparCPF(input.value);
+
+        if (!cpfDigitado || cpfDigitado.length > 11) {
+          alert('Digite um CPF válido.');
+          return;
+        }
+
+        const cpf = formatarCPFConsulta(input.value);
+
+        if (cpf.length !== 11) {
+          alert('CPF inválido.');
+          return;
+        }
+
+        mostrarCarregando();
+
+        try {
+          const ref = doc(db, 'TerceiraNRVPE', cpf);
+          const snap = await getDoc(ref);
+          mostrarDados(snap.exists() ? snap.data() : {});
+        } catch (err) {
+          console.error(err);
+
+          const msg = (err && err.message) ? err.message : String(err);
+
+          if (msg.toLowerCase().includes('missing or insufficient permissions')) {
+            mostrarErroPermissao();
+            return;
+          }
+
+          mostrarErroConsulta(msg);
+        }
+      };
+    });
+  </script>
+
+  <noscript>
+    <iframe src="header.html" title="Cabeçalho" style="width:100%; border:0; height:160px;"></iframe>
+    <iframe src="footer.html" title="Rodapé" style="width:100%; border:0; height:320px;"></iframe>
+  </noscript>
+</body>
+</html>
