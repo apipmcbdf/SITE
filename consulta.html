@@ -439,7 +439,7 @@
         <h1>Selecione o tipo de consulta</h1>
 
         <p>
-          Consulte situação documental ou verifique se o nome consta nas listagens disponibilizadas pela APIPMCBDF.
+          Consulte a situação da VPE ou verifique se o nome consta nas listagens disponibilizadas pela APIPMCBDF.
         </p>
       </div>
     </section>
@@ -454,9 +454,9 @@
             </div>
 
             <div>
-              <h2 id="titulo-documentacao">Consulta de Situação de Documentação</h2>
+              <h2 id="titulo-documentacao">Consulta VPE</h2>
               <p>
-                Verifique pendências, andamento e situação documental nas consultas disponíveis.
+                Consulte a situação da documentação, protocolo e informações relacionadas à VPE.
               </p>
             </div>
           </div>
@@ -508,7 +508,7 @@
       false = esconde o botão
     */
     const CONFIG_CONSULTAS = {
-      situacao_documentacao_vpe: false,
+      situacao_documentacao_vpe: true,
       situacao_documentacao_auxilio_moradia: false,
       herdeiros_auxilio_moradia: false,
 
@@ -530,10 +530,10 @@
       {
         chave: 'situacao_documentacao_vpe',
         categoria: 'documentacao',
-        titulo: 'Situação Documentação VPE',
-        descricao: 'Consulte a situação documental relacionada à VPE.',
-        href: 'consulta_doc_vpe.html',
-        icone: 'fa-folder-open',
+        titulo: 'Consultar VPE',
+        descricao: 'Consulte a documentação, protocolo e informações relacionadas à VPE.',
+        href: 'consulta_vpe.html',
+        icone: 'fa-file-circle-check',
         primary: false
       },
       {
