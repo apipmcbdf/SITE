@@ -448,6 +448,34 @@
       margin-bottom: 5px;
     }
 
+    .orientacao-lista {
+      margin-top: 10px;
+      padding-left: 20px;
+      color: var(--texto);
+    }
+
+    .orientacao-lista li {
+      margin-bottom: 10px;
+    }
+
+    .orientacao-lista a,
+    .pendencias-lista a,
+    .passo a {
+      color: var(--azul);
+      font-weight: 800;
+      text-decoration: underline;
+      overflow-wrap: anywhere;
+    }
+
+    .observacao-box {
+      margin-top: 12px;
+      background-color: #f8fbff;
+      border: 1px solid var(--borda);
+      border-radius: 12px;
+      padding: 12px;
+      color: var(--texto);
+    }
+
     @media (max-width: 900px) {
       .status-grid {
         grid-template-columns: 1fr;
@@ -712,19 +740,55 @@
       `;
     }
 
-    function montarListaPendencias(faltando) {
+    function montarListaPendencias(faltando, usarLinksDocumentos = false) {
       if (!faltando || !String(faltando).trim()) return '';
+
+      const linksDocumentosPendentes = {
+        'DECLARACAO DE INEXISTENCIA DE ACAO VPE': 'https://drive.google.com/file/d/1g4UGhUVHKmJIxomjgrouPpTw-IOniEYx/view?usp=drive_link',
+        'CONTRATO VPE': 'https://drive.google.com/file/d/1XSM8aUBeg8icX-8WkVcHNzNVTc0a7Div/view?usp=drive_link',
+        'PROCURACAO VPE': 'https://drive.google.com/file/d/1cVOQF6liNkEWvWCzfK5r4hJgyXVakKvV/view?usp=drive_link'
+      };
 
       const itens = String(faltando)
         .split('|')
         .map(p => p.trim())
         .filter(Boolean)
-        .map(p => `<li>${escapeHtml(p)}</li>`)
+        .map(p => {
+          const textoSeguro = escapeHtml(p);
+
+          if (!usarLinksDocumentos) {
+            return `<li>${textoSeguro}</li>`;
+          }
+
+          const chave = normalizarTexto(p);
+          const link = linksDocumentosPendentes[chave];
+
+          if (!link) {
+            return `<li>${textoSeguro}</li>`;
+          }
+
+          return `
+            <li>
+              <a href="${link}" target="_blank" rel="noopener noreferrer">${textoSeguro}</a>
+            </li>
+          `;
+        })
         .join('');
 
       if (!itens) return '';
 
       return `<ul class="pendencias-lista">${itens}</ul>`;
+    }
+
+    function temPendencia(faltando, pendencia) {
+      if (!faltando || !String(faltando).trim()) return false;
+
+      const alvo = normalizarTexto(pendencia);
+
+      return String(faltando)
+        .split('|')
+        .map(p => normalizarTexto(p))
+        .some(p => p.includes(alvo));
     }
 
     function mostrarCarregando() {
@@ -827,6 +891,10 @@
       const periodoAnterior = valor(data, 'PERIODO_ANTERIOR');
       const termoRenuncia = valor(data, 'Termo_Renuncia', 'TERMO_RENUNCIA');
       const atualizadoEm = formatarDataAtualizacao(data.updatedAt);
+      const origem = valor(data, 'ORIGEM', 'origem', 'Origem');
+      const origemNorm = normalizarTexto(origem);
+      const isCompartilhados = origemNorm === 'COMPARTILHADOS';
+      const isNaoCompartilhados = origemNorm === 'NAO COMPARTILHADOS';
 
       const completudeNorm = normalizarTexto(completude);
       const classe = completudeNorm === 'INCOMPLETA' ? 'alerta' : 'sucesso';
@@ -840,18 +908,49 @@
 
       const protocoloNorm = normalizarTexto(protocolado);
       const consultaLPNorm = normalizarTexto(consultaLP);
+      const consultaLPNaoEncontrada = consultaLPNorm === 'NAO ENCONTRADO' || consultaLPNorm === 'NÃO ENCONTRADO';
+      const consultaLPNao = consultaLPNorm === 'NAO' || consultaLPNorm === 'NÃO';
+      const termoRenunciaNorm = normalizarTexto(termoRenuncia);
+      const termoRenunciaSim = termoRenunciaNorm === 'SIM';
+      const anoInicioMatch = String(anoInicio ?? '').match(/\b(19|20)\d{2}\b/);
+      const anoInicioNumero = anoInicioMatch ? Number(anoInicioMatch[0]) : NaN;
+      const deveMostrarConsultaLP = !isCompartilhados && !(isNaoCompartilhados && consultaLPNao);
+      const deveMostrarTermoRenuncia = !isCompartilhados && (isNaoCompartilhados ? anoInicioNumero > 2008 : true);
+
       const statusItens = [
         itemStatus('CPF', cpf),
-        itemStatus('SIAPE do instituidor', siape),
-        itemStatus('Início do benefício', dtInicio),
+        !isNaoCompartilhados ? itemStatus('SIAPE do instituidor', siape) : '',
+        !isNaoCompartilhados ? itemStatus('Início do benefício', dtInicio) : '',
         itemStatus('Ano início do benefício', anoInicio),
         itemStatus('Documentação', completude),
-        itemStatus('Protocolo SC', protocolado),
-        itemStatus('Consulta LP', consultaLP),
+        !isNaoCompartilhados ? itemStatus(isCompartilhados ? 'Número do processo' : 'Protocolo SC', protocolado) : '',
+        deveMostrarConsultaLP ? itemStatus('Consulta LP', consultaLP) : '',
         itemStatus('Período anterior', periodoAnterior),
-        itemStatus('Termo de renúncia', termoRenuncia),
-        itemStatus('Última atualização', atualizadoEm)
+        deveMostrarTermoRenuncia ? itemStatus('Termo de renúncia', termoRenuncia) : '',
+        !isCompartilhados ? itemStatus('Última atualização', atualizadoEm) : ''
       ].filter(Boolean).join('');
+
+      const avisoPeriodoAnteriorNaoCompartilhadosHtml = isNaoCompartilhados && anoInicioNumero > 2008 && !termoRenunciaSim
+        ? `
+          <div class="passo">
+            <i class="fa-solid fa-file-signature" aria-hidden="true"></i>
+            <div>
+              <strong>Atenção ao período anterior:</strong>
+              <p>A Associação informa que a execução da VPE abrange o período de outubro de 2008 até o efetivo recebimento da gratificação.</p>
+              <p>Conforme orientação do escritório Silveira Cruz, o recomendável é que, no processo de cobrança dos valores atrasados da VPE, seja solicitado o período integral.</p>
+              <p>Por isso, nos casos em que a pensionista atual começou a receber a pensão a partir de 2009, o ideal é que o(s) herdeiro(s) do servidor ou pensionista que recebia anteriormente também entreguem toda a documentação necessária.</p>
+              <p>Dessa forma, o escritório poderá pedir, no mesmo processo:</p>
+              <ul class="orientacao-lista">
+                <li>o período anterior, a ser dividido entre os herdeiros de quem recebia a pensão anteriormente;</li>
+                <li>o período individual da pensionista atual, que cabe apenas a ela.</li>
+              </ul>
+              <p>Assim, a entrega da documentação dos herdeiros permite que o pedido seja feito da forma mais completa possível, evitando que parte do período devido fique fora da execução.</p>
+              <p>Caso a pensionista não tenha interesse em executar o período anterior e deseje prosseguir apenas com o período que cabe individualmente a ela, sem depender da documentação dos demais herdeiros, isso também é possível.</p>
+              <p>Nesse caso, será necessário assinar o <strong>Termo de Renúncia do Período Anterior</strong>, fornecido pela Associação. <a href="https://drive.google.com/file/d/1sKFN-fDYp91b-V2Gz1vlAayDIWWL85Br/view?usp=drive_link" target="_blank" rel="noopener noreferrer">Clique aqui para baixar o termo</a>.</p>
+            </div>
+          </div>
+        `
+        : '';
 
       const pendenciasHtml = completudeNorm === 'INCOMPLETA' && faltando
         ? `
@@ -859,25 +958,62 @@
             <i class="fa-solid fa-file-circle-exclamation" aria-hidden="true"></i>
             <div>
               <strong>Documentos pendentes:</strong>
-              ${montarListaPendencias(faltando)}
+              ${montarListaPendencias(faltando, isNaoCompartilhados)}
             </div>
           </div>
         `
         : '';
 
-      const protocoloHtml = protocolado && protocoloNorm !== 'NAO' && protocoloNorm !== 'NÃO'
+      const fichaFinanceiraNaoCompartilhadosHtml = isNaoCompartilhados && completudeNorm === 'INCOMPLETA' && temPendencia(faltando, 'FICHA FINANCEIRA')
         ? `
           <div class="passo">
-            <i class="fa-solid fa-scale-balanced" aria-hidden="true"></i>
+            <i class="fa-solid fa-file-invoice-dollar" aria-hidden="true"></i>
             <div>
-              <strong>Processo protocolado:</strong>
-              consta protocolo vinculado a este CPF. Aguarde novas movimentações e comunicados da Associação.
+              <strong>Como acessar a Ficha Financeira Anual pelo SouGov.br</strong>
+              <ol class="orientacao-lista">
+                <li>Acesse o aplicativo <strong>SouGov.br</strong> no celular ou entre pelo computador no <strong>SouGov.br Web</strong>.</li>
+                <li>Faça login com sua conta <strong>gov.br</strong>.</li>
+                <li>Antes de consultar, verifique se o vínculo está correto.</li>
+                <li>Caso tenha mais de um vínculo, clique na seta ao lado de <strong>“Órgão – Uorg – Matrícula”</strong> e selecione o vínculo desejado.</li>
+                <li>Na tela inicial, procure a opção <strong>“Autoatendimento”</strong>.</li>
+                <li>Dentro de Autoatendimento, clique em <strong>“Ficha Financeira Anual”</strong>.</li>
+                <li>Selecione o ano que deseja consultar.</li>
+                <li>Após selecionar o ano, a ficha financeira será exibida com o demonstrativo detalhado dos rendimentos e descontos lançados na folha de pagamento/contracheque.</li>
+                <li>Para salvar, enviar ou compartilhar o documento, clique nos <strong>três pontinhos</strong>.</li>
+                <li>Escolha a opção desejada, como compartilhar, baixar ou enviar para o e-mail.</li>
+                <li>Caso precise enviar para a Associação, salve ou compartilhe o arquivo em <strong>PDF</strong>.</li>
+              </ol>
+              <div class="observacao-box">
+                <strong>Observação:</strong> a consulta pode ser feita tanto pelo aplicativo SouGov.br quanto pela versão web.
+              </div>
             </div>
           </div>
         `
         : '';
 
-      const consultaLPHtml = consultaLP && consultaLPNorm !== 'NAO ENCONTRADO' && consultaLPNorm !== 'NÃO ENCONTRADO'
+      const protocoloHtml = !isNaoCompartilhados && protocolado && protocoloNorm !== 'NAO' && protocoloNorm !== 'NÃO'
+        ? (isCompartilhados
+          ? `
+            <div class="passo">
+              <i class="fa-solid fa-scale-balanced" aria-hidden="true"></i>
+              <div>
+                <strong>Processo localizado:</strong>
+                consta número de processo vinculado a este CPF. Utilize o número informado acima para consultar o andamento no TRF1.
+              </div>
+            </div>
+          `
+          : `
+            <div class="passo">
+              <i class="fa-solid fa-scale-balanced" aria-hidden="true"></i>
+              <div>
+                <strong>Processo protocolado:</strong>
+                consta protocolo vinculado a este CPF. Aguarde novas movimentações e comunicados da Associação.
+              </div>
+            </div>
+          `)
+        : '';
+
+      const consultaLPHtml = !isCompartilhados && consultaLP && !consultaLPNaoEncontrada && !(isNaoCompartilhados && consultaLPNao)
         ? `
           <div class="passo">
             <i class="fa-solid fa-magnifying-glass-chart" aria-hidden="true"></i>
@@ -889,25 +1025,77 @@
         `
         : '';
 
-      const orientacaoHtml = completudeNorm === 'INCOMPLETA'
+      const orientacaoCompartilhadosHtml = `
+        <div class="passo">
+          <i class="fa-solid fa-list-check" aria-hidden="true"></i>
+          <div>
+            <strong>Orientação: como consultar o andamento do processo no TRF1</strong>
+            <ol class="orientacao-lista">
+              <li>Tenha em mãos o número completo do processo, no formato <strong>0000000-00.0000.4.01.0000</strong>.</li>
+              <li>Acesse o site oficial de Consulta Processual do TRF1: <a href="https://www.trf1.jus.br/trf1/processual/consulta-processual" target="_blank" rel="noopener noreferrer">https://www.trf1.jus.br/trf1/processual/consulta-processual</a>.</li>
+              <li>Clique em <strong>“PJe - Consulta (usuários em geral)”</strong>.</li>
+              <li>Depois clique em <strong>“1º Grau — Varas e Juizados”</strong>.</li>
+              <li>Na página que abrir, informe o número completo do processo no campo de consulta.</li>
+              <li>Clique em <strong>“Pesquisar”</strong> ou <strong>“Consultar”</strong>.</li>
+              <li>O sistema poderá mostrar informações como vara responsável, partes do processo, data de distribuição, movimentações, decisões ou documentos públicos disponíveis.</li>
+              <li>Caso o processo não apareça, tente também a consulta geral do TRF1: <a href="https://processual.trf1.jus.br/" target="_blank" rel="noopener noreferrer">https://processual.trf1.jus.br/</a>.</li>
+            </ol>
+            <div class="observacao-box">
+              <strong>Observação importante:</strong> sempre consulte pelo site oficial do TRF1. Outros sites podem aparecer no Google, mas o andamento oficial deve ser conferido diretamente no sistema do Tribunal. Se o processo não for localizado, ele pode estar em outro grau, em outro sistema, com alguma restrição de acesso ou em segredo de justiça.
+            </div>
+          </div>
+        </div>
+      `;
+
+      const orientacaoHtml = isCompartilhados
+        ? orientacaoCompartilhadosHtml
+        : (completudeNorm === 'INCOMPLETA'
+          ? `
+            <div class="passo">
+              <i class="fa-solid fa-envelope-open-text" aria-hidden="true"></i>
+              <div>
+                <strong>Orientação:</strong>
+                a documentação pendente deve ser enviada em <strong>PDF legível</strong> para o e-mail
+                <a href="mailto:documentos@apipmcbdf.com.br">documentos@apipmcbdf.com.br</a>.
+                Esse e-mail é utilizado apenas para recebimento dos documentos pendentes e não é respondido.
+                Em caso de dúvidas, entre em contato pelo telefone da Associação ou pelo e-mail
+                <a href="mailto:atendimento@apipmcbdf.com.br">atendimento@apipmcbdf.com.br</a>.
+              </div>
+            </div>
+          `
+          : `
+            <div class="passo">
+              <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+              <div>
+                <strong>Orientação:</strong>
+                acompanhe os comunicados oficiais da Associação sobre o andamento da VPE.
+              </div>
+            </div>
+          `);
+
+      const documentacaoCompletaNaoCompartilhadosHtml = isNaoCompartilhados && completudeNorm === 'COMPLETA'
         ? `
           <div class="passo">
-            <i class="fa-solid fa-envelope-open-text" aria-hidden="true"></i>
+            <i class="fa-solid fa-file-circle-check" aria-hidden="true"></i>
             <div>
-              <strong>Orientação:</strong>
-              encaminhe os documentos pendentes em PDF legível, conforme orientação da Associação.
+              <strong>Documentação completa:</strong>
+              sua documentação está completa e será encaminhada ao escritório Silveira Cruz para as providências cabíveis.
             </div>
           </div>
         `
-        : `
+        : '';
+
+      const litispendenciaNaoCompartilhadosHtml = isNaoCompartilhados && consultaLP && consultaLPNaoEncontrada
+        ? `
           <div class="passo">
-            <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+            <i class="fa-solid fa-scale-balanced" aria-hidden="true"></i>
             <div>
-              <strong>Orientação:</strong>
-              acompanhe os comunicados oficiais da Associação sobre o andamento da VPE.
+              <strong>Pendente verificação de litispendência:</strong>
+              o setor jurídico ainda verificará se já existe processo anterior pedindo a VPE. Se houver ação anterior com o mesmo pedido, não será possível solicitar novamente o mesmo objeto. Se não houver processo anterior, o caso seguirá para o escritório Silveira Cruz após a conclusão da documentação.
             </div>
           </div>
-        `;
+        `
+        : '';
 
       container.innerHTML = `
         <div class="resultado-card ${classe}">
@@ -929,10 +1117,14 @@
           ${statusItens ? `<div class="status-grid">${statusItens}</div>` : ''}
 
           <div class="passos">
+            ${avisoPeriodoAnteriorNaoCompartilhadosHtml}
             ${pendenciasHtml}
+            ${fichaFinanceiraNaoCompartilhadosHtml}
             ${protocoloHtml}
             ${consultaLPHtml}
             ${orientacaoHtml}
+            ${documentacaoCompletaNaoCompartilhadosHtml}
+            ${litispendenciaNaoCompartilhadosHtml}
           </div>
         </div>
       `;
