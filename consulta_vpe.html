@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Consulta de Documentação VPE</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Consultas VPE — APIPMCBDF</title>
   <meta name="robots" content="noindex, nofollow" />
 
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 
   <style>
     :root {
       --azul: #003366;
       --azul-claro: #005599;
+      --azul-escuro: #001f3f;
       --azul-suave: #e6f0ff;
       --dourado: #f5b200;
       --fundo: #f4f7fb;
@@ -20,12 +22,6 @@
       --texto: #1f2937;
       --texto-suave: #5b6472;
       --borda: #dbe5f2;
-      --sucesso: #166534;
-      --sucesso-bg: #ecfdf3;
-      --erro: #991b1b;
-      --erro-bg: #fff1f2;
-      --alerta: #92400e;
-      --alerta-bg: #fff8e2;
       --sombra: 0 10px 28px rgba(0, 51, 102, 0.10);
     }
 
@@ -131,6 +127,7 @@
         opacity: 0;
         transform: translateY(-8px);
       }
+
       to {
         opacity: 1;
         transform: translateY(0);
@@ -145,11 +142,12 @@
       background-position: center;
       color: var(--branco);
       text-align: center;
-      padding: 64px 20px 64px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+      padding: 72px 20px 76px;
+    }
+
+    .page-hero-inner {
+      max-width: 980px;
+      margin: 0 auto;
     }
 
     .badge {
@@ -160,15 +158,14 @@
       background-color: var(--dourado);
       color: #111;
       font-weight: 800;
-      padding: 8px 15px;
+      padding: 9px 18px;
       border-radius: 999px;
-      margin: 0 auto 18px;
+      margin-bottom: 22px;
       box-shadow: 0 4px 14px rgba(0,0,0,0.22);
-      width: fit-content;
     }
 
     .page-hero h1 {
-      font-size: clamp(28px, 5vw, 44px);
+      font-size: clamp(30px, 5vw, 46px);
       line-height: 1.12;
       font-weight: 800;
       margin-bottom: 14px;
@@ -177,307 +174,198 @@
 
     .page-hero p {
       font-size: clamp(15px, 2.4vw, 18px);
-      max-width: 780px;
+      max-width: 850px;
       margin: 0 auto;
       opacity: 0.96;
     }
 
     .main-content {
-      max-width: 1080px;
-      margin: 36px auto 0;
-      padding: 0 20px 56px;
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 42px 20px 56px;
       position: relative;
-      z-index: 2;
+      z-index: 1;
     }
 
-    .consulta-card {
+    .consultas-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 26px;
+      align-items: start;
+    }
+
+    .consultas-grid.single-card {
+      grid-template-columns: minmax(0, 760px);
+      justify-content: center;
+    }
+
+    .section-card {
+      width: 100%;
       background-color: var(--branco);
       border: 1px solid var(--borda);
-      border-radius: 20px;
+      border-radius: 18px;
+      padding: 28px;
       box-shadow: var(--sombra);
-      padding: 32px;
       animation: fadeIn 0.55s ease-in-out;
     }
 
-    .consulta-header {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 12px;
-      text-align: center;
-      max-width: 760px;
-      margin: 0 auto 26px;
-    }
-
-    .consulta-header h2 {
-      color: var(--azul);
-      font-size: clamp(22px, 3vw, 30px);
-      line-height: 1.2;
-      font-weight: 800;
-    }
-
-    .consulta-header p {
-      color: var(--texto-suave);
-      font-size: 16px;
-    }
-
-    .form-box {
-      max-width: 620px;
-      margin: 0 auto;
-      background: #f8fbff;
-      border: 1px solid var(--borda);
-      border-radius: 18px;
-      padding: 24px;
-    }
-
-    .form-label {
-      display: block;
-      font-weight: 700;
-      color: var(--azul);
-      margin-bottom: 9px;
-    }
-
-    .input-group {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 12px;
-    }
-
-    .input-group input {
-      width: 100%;
-      padding: 14px 15px;
-      font-size: 17px;
-      border-radius: 12px;
-      border: 1px solid #c8d6e6;
-      background-color: var(--branco);
-      color: var(--texto);
-      outline: none;
-      transition: border-color 0.18s ease, box-shadow 0.18s ease;
-    }
-
-    .input-group input:focus {
-      border-color: var(--azul-claro);
-      box-shadow: 0 0 0 4px rgba(0, 85, 153, 0.12);
-    }
-
-    .input-group button {
-      padding: 14px 22px;
-      border: none;
-      border-radius: 12px;
-      background-color: var(--azul);
-      color: var(--branco);
-      font-size: 16px;
-      font-weight: 800;
-      cursor: pointer;
-      transition: background-color 0.18s ease, transform 0.18s ease;
-      white-space: nowrap;
-    }
-
-    .input-group button:hover,
-    .input-group button:focus-visible {
-      background-color: var(--azul-claro);
-      transform: translateY(-1px);
-      outline: none;
-    }
-
-    .input-help {
-      margin-top: 10px;
-      color: var(--texto-suave);
-      font-size: 13px;
-      text-align: center;
-    }
-
-    #resultContainer {
-      max-width: 820px;
-      margin: 26px auto 0;
-      position: relative;
-      z-index: 1;
-      clear: both;
-    }
-
-    .resultado-card {
-      background-color: var(--branco);
-      border: 1px solid var(--borda);
-      border-radius: 18px;
-      padding: 24px;
-      box-shadow: 0 8px 22px rgba(0, 51, 102, 0.08);
-      animation: fadeIn 0.35s ease-in-out;
-    }
-
-    .resultado-card.sucesso {
-      border-color: rgba(22, 101, 52, 0.28);
-      background: linear-gradient(180deg, var(--sucesso-bg), #ffffff 70%);
-    }
-
-    .resultado-card.alerta {
-      border-color: rgba(245, 178, 0, 0.40);
-      background: linear-gradient(180deg, var(--alerta-bg), #ffffff 72%);
-    }
-
-    .resultado-card.erro {
-      border-color: rgba(153, 27, 27, 0.18);
-      background: linear-gradient(180deg, var(--erro-bg), #ffffff 72%);
-    }
-
-    .resultado-topo {
+    .section-header {
       display: flex;
-      gap: 14px;
       align-items: flex-start;
-      margin-bottom: 18px;
+      gap: 14px;
+      margin-bottom: 22px;
     }
 
-    .resultado-icone {
-      width: 46px;
-      height: 46px;
-      border-radius: 14px;
+    .section-icon {
+      width: 54px;
+      height: 54px;
+      border-radius: 16px;
       display: flex;
       align-items: center;
       justify-content: center;
-      flex-shrink: 0;
-      font-size: 21px;
-    }
-
-    .resultado-card.sucesso .resultado-icone {
-      background-color: #dcfce7;
-      color: var(--sucesso);
-    }
-
-    .resultado-card.alerta .resultado-icone {
-      background-color: #fef3c7;
-      color: var(--alerta);
-    }
-
-    .resultado-card.erro .resultado-icone {
-      background-color: #fee2e2;
-      color: var(--erro);
-    }
-
-    .resultado-topo h3 {
+      background-color: var(--azul-suave);
       color: var(--azul);
-      font-size: 21px;
-      margin-bottom: 4px;
+      font-size: 23px;
+      flex-shrink: 0;
     }
 
-    .resultado-topo p {
+    .section-header h2 {
+      font-size: 22px;
+      line-height: 1.25;
+      margin-bottom: 6px;
+      color: var(--azul);
+      font-weight: 800;
+    }
+
+    .section-header p {
       color: var(--texto-suave);
+      font-size: 15px;
     }
 
-    .nome-box {
+    .links-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .consulta-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      text-decoration: none;
+      color: var(--azul);
       background-color: #f8fbff;
       border: 1px solid var(--borda);
-      border-radius: 14px;
-      padding: 14px 16px;
-      margin-bottom: 18px;
+      border-radius: 16px;
+      padding: 17px 18px;
+      transition:
+        transform 0.18s ease,
+        border-color 0.18s ease,
+        background-color 0.18s ease,
+        box-shadow 0.18s ease;
     }
 
-    .nome-box span {
-      display: block;
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--texto-suave);
-      margin-bottom: 4px;
-      font-weight: 800;
+    .consulta-link:hover,
+    .consulta-link:focus-visible {
+      transform: translateY(-2px);
+      border-color: var(--azul-claro);
+      background-color: var(--azul-suave);
+      box-shadow: 0 8px 18px rgba(0, 51, 102, 0.12);
+      outline: none;
     }
 
-    .nome-box strong {
-      color: var(--azul);
-      font-size: 18px;
+    .consulta-link.primary {
+      background-color: #fff8e2;
+      border-color: rgba(245, 178, 0, 0.62);
     }
 
-    .status-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px;
-      margin-bottom: 18px;
+    .consulta-link.primary:hover,
+    .consulta-link.primary:focus-visible {
+      background-color: #fff2c2;
+      border-color: var(--dourado);
     }
 
-    .status-item {
-      background-color: var(--branco);
-      border: 1px solid var(--borda);
-      border-radius: 14px;
-      padding: 14px;
-    }
-
-    .status-item span {
-      display: block;
-      color: var(--texto-suave);
-      font-size: 12px;
-      font-weight: 800;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      margin-bottom: 5px;
-    }
-
-    .status-item strong {
-      color: var(--texto);
-      font-size: 15px;
-      overflow-wrap: anywhere;
-    }
-
-    .passos {
-      display: grid;
-      gap: 12px;
-    }
-
-    .passo {
+    .consulta-main {
       display: flex;
-      gap: 12px;
-      align-items: flex-start;
-      background-color: var(--branco);
-      border: 1px solid var(--borda);
-      border-radius: 14px;
-      padding: 14px;
+      align-items: center;
+      gap: 14px;
+      min-width: 0;
     }
 
-    .passo i {
+    .consulta-main i {
+      font-size: 20px;
       color: var(--azul);
+      flex-shrink: 0;
+      width: 24px;
+      text-align: center;
+    }
+
+    .consulta-link.primary .consulta-main i {
+      color: #9a6b00;
+    }
+
+    .consulta-text strong {
+      display: block;
+      font-size: 16px;
+      line-height: 1.35;
+      margin-bottom: 4px;
+    }
+
+    .consulta-text span {
+      display: block;
+      color: var(--texto-suave);
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .consulta-arrow {
+      color: var(--azul-claro);
+      font-size: 16px;
+      flex-shrink: 0;
+      transition: transform 0.18s ease;
+    }
+
+    .consulta-link:hover .consulta-arrow,
+    .consulta-link:focus-visible .consulta-arrow {
+      transform: translateX(3px);
+    }
+
+    .notice-card {
+      max-width: 760px;
+      margin: 26px auto 0;
+      background-color: var(--azul);
+      color: var(--branco);
+      border-radius: 18px;
+      padding: 22px 24px;
+      box-shadow: var(--sombra);
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+
+    .notice-card i {
+      color: var(--dourado);
+      font-size: 22px;
       margin-top: 2px;
     }
 
-    .passo strong {
-      color: var(--azul);
+    .notice-card strong {
+      display: block;
+      margin-bottom: 4px;
     }
 
-    .pendencias-lista {
-      margin-top: 8px;
-      padding-left: 18px;
-      color: var(--texto);
+    .notice-card p {
+      color: rgba(255,255,255,0.88);
+      font-size: 14px;
     }
 
-    .pendencias-lista li {
-      margin-bottom: 5px;
-    }
-
-    .orientacao-lista {
-      margin-top: 10px;
-      padding-left: 20px;
-      color: var(--texto);
-    }
-
-    .orientacao-lista li {
-      margin-bottom: 10px;
-    }
-
-    .orientacao-lista a,
-    .pendencias-lista a,
-    .passo a {
-      color: var(--azul);
-      font-weight: 800;
-      text-decoration: underline;
-      overflow-wrap: anywhere;
-    }
-
-    .observacao-box {
-      margin-top: 12px;
-      background-color: #f8fbff;
-      border: 1px solid var(--borda);
-      border-radius: 12px;
-      padding: 12px;
-      color: var(--texto);
+    .is-hidden {
+      display: none !important;
     }
 
     @media (max-width: 900px) {
-      .status-grid {
+      .consultas-grid,
+      .consultas-grid.single-card {
         grid-template-columns: 1fr;
       }
     }
@@ -513,32 +401,22 @@
       }
 
       .page-hero {
-        padding: 44px 18px 50px;
+        padding: 52px 18px 58px;
       }
 
-      .main-content {
-        margin-top: 24px;
-        padding-left: 14px;
-        padding-right: 14px;
-      }
-
-      .consulta-card {
+      .section-card {
         padding: 22px;
       }
 
-      .form-box {
-        padding: 18px;
+      .section-header {
+        flex-direction: column;
       }
 
-      .input-group {
-        grid-template-columns: 1fr;
+      .consulta-link {
+        align-items: flex-start;
       }
 
-      .input-group button {
-        width: 100%;
-      }
-
-      .resultado-topo {
+      .notice-card {
         flex-direction: column;
       }
     }
@@ -546,636 +424,271 @@
 </head>
 
 <body>
+
   <!-- Header include -->
-  <div id="header-container"></div>
+  <div id="header-container" aria-label="Cabeçalho do site"></div>
 
   <main>
-    <section class="page-hero" aria-label="Consulta de documentação da VPE">
-      <div class="badge">
-        <i class="fa-solid fa-folder-open" aria-hidden="true"></i>
-        <span>CONSULTA VPE</span>
-      </div>
+    <section class="page-hero" aria-label="Página de consultas">
+      <div class="page-hero-inner">
+        <div class="badge" role="status" aria-live="polite">
+          <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+          <span>Consultas</span>
+        </div>
 
-      <h1>Consulta de Documentação da VPE</h1>
-      <p>
-        Consulte a situação da documentação, protocolo e informações relacionadas à VPE com base nos dados mais recentes disponibilizados pela Associação.
-      </p>
+        <h1>Consultas da VPE</h1>
+
+        <p>
+          Escolha a opção conforme a situação do caso: VPE já implantada, herdeiros ou listagens de implantação.
+        </p>
+      </div>
     </section>
 
-    <section class="main-content">
-      <div class="consulta-card">
-        <div class="consulta-header">
-          <h2>Informe o CPF</h2>
+    <section class="main-content" aria-label="Opções de consulta">
+      <div class="consultas-grid">
+
+        <section class="section-card is-hidden" aria-labelledby="titulo-documentacao" id="bloco-documentacao">
+          <div class="section-header">
+            <div class="section-icon" aria-hidden="true">
+              <i class="fa-solid fa-file-circle-check"></i>
+            </div>
+
+            <div>
+              <h2 id="titulo-documentacao">VPE já implantada</h2>
+              <p>
+                Documentação, protocolo, processo e pendências de quem já possui VPE implantada.
+              </p>
+            </div>
+          </div>
+
+          <div class="links-list" id="lista-documentacao"></div>
+        </section>
+
+        <section class="section-card is-hidden" aria-labelledby="titulo-listagens" id="bloco-listagens">
+          <div class="section-header">
+            <div class="section-icon" aria-hidden="true">
+              <i class="fa-solid fa-list-check"></i>
+            </div>
+
+            <div>
+              <h2 id="titulo-listagens">Listagens de implantação</h2>
+              <p>
+                Consulta para quem ainda aguarda a implantação da VPE.
+              </p>
+            </div>
+          </div>
+
+          <div class="links-list" id="lista-listagens"></div>
+        </section>
+
+      </div>
+
+      <div class="notice-card">
+        <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+
+        <div>
+          <strong>Antes de consultar</strong>
           <p>
-            A consulta é feita pelo CPF. Você pode digitar com ou sem pontos e traço.
+            Na consulta de herdeiros, informe o CPF da pessoa falecida. Nas demais consultas, informe o CPF ou nome solicitado na própria página. Em caso de divergência, procure a Associação para conferência cadastral.
           </p>
         </div>
-
-        <div class="form-box">
-          <label class="form-label" for="cpfInput">Digite seu CPF:</label>
-
-          <div class="input-group">
-            <input
-              id="cpfInput"
-              placeholder="000.000.000-00"
-              type="text"
-              inputmode="numeric"
-              autocomplete="off"
-              maxlength="14"
-            />
-            <button id="consultBtn" type="button">
-              <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
-              Consultar
-            </button>
-          </div>
-
-          <div class="input-help">
-            Use apenas o CPF do beneficiário ou pensionista que deseja consultar.
-          </div>
-        </div>
-
-        <div id="resultContainer" aria-live="polite"></div>
       </div>
-</section>
+    </section>
   </main>
 
   <!-- Footer include -->
-  <div id="footer-container"></div>
+  <div id="footer-container" aria-label="Rodapé do site"></div>
 
   <script>
-    (function loadHeader(){
-      const el = document.getElementById('header-container');
-      if (!el) return;
-      fetch('header.html', { cache: 'no-store' })
-        .then(r => r.text())
-        .then(html => { el.innerHTML = html; })
-        .catch(() => { el.innerHTML = '<!-- falha ao carregar header -->'; });
-    })();
+    /*
+      ============================================================
+      ATIVAR / DESATIVAR CONSULTAS
+      ============================================================
+      true  = mostra o botão
+      false = esconde o botão
+    */
+    const CONFIG_CONSULTAS = {
+      situacao_documentacao_vpe: true,
+      situacao_documentacao_vpe_herdeiros: true,
+      situacao_documentacao_auxilio_moradia: false,
+      herdeiros_auxilio_moradia: false,
 
-    (function loadFooter(){
-      const el = document.getElementById('footer-container');
-      if (!el) return;
-      fetch('footer.html', { cache: 'no-store' })
-        .then(r => r.text())
-        .then(html => { el.innerHTML = html; })
-        .catch(() => { el.innerHTML = '<!-- falha ao carregar footer -->'; });
-    })();
+      primeira_lista_vpe: true,
+      segunda_lista_vpe: true,
+      terceira_lista_vpe: true,
 
-    function toggleMenu() {
-      var menu = document.getElementById("menu");
-      if (menu) menu.classList.toggle("active");
-    }
-
-    function mascaraCPF(valor) {
-      const numeros = valor.replace(/\D/g, '').slice(0, 11);
-
-      return numeros
-        .replace(/(\d{3})(\d)/, '$1.$2')
-        .replace(/(\d{3})(\d)/, '$1.$2')
-        .replace(/(\d{3})(\d{1,2})$/, '$1-$2');
-    }
-
-    window.addEventListener('DOMContentLoaded', () => {
-      const cpfInput = document.getElementById('cpfInput');
-      if (cpfInput) {
-        cpfInput.addEventListener('input', () => {
-          cpfInput.value = mascaraCPF(cpfInput.value);
-        });
-
-        cpfInput.addEventListener('keydown', (event) => {
-          if (event.key === 'Enter') {
-            event.preventDefault();
-            document.getElementById('consultBtn').click();
-          }
-        });
-      }
-    });
-  </script>
-
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyDoXdgj_fRuYTluJby6QOIiEYBu268lZmQ",
-      authDomain: "documentos-apipmcbdf.firebaseapp.com",
-      projectId: "documentos-apipmcbdf",
-      storageBucket: "documentos-apipmcbdf.appspot.com",
-      messagingSenderId: "422508459389",
-      appId: "1:422508459389:web:bebd6b53839f77a3cd4814"
+      listagem_auxilio_moradia_coletivo: false
     };
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-
-    function limparCPF(cpf) {
-      return cpf.replace(/\D/g, '');
-    }
-
-    function formatarCPFConsulta(cpf) {
-      const numeros = limparCPF(cpf);
-
-      if (numeros.length === 0) return '';
-      if (numeros.length < 11) return numeros.padStart(11, '0');
-
-      return numeros;
-    }
-
-    function escapeHtml(value) {
-      return String(value ?? '')
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#039;');
-    }
-
-    function valor(data, ...campos) {
-      for (const campo of campos) {
-        if (data && data[campo] !== undefined && data[campo] !== null && String(data[campo]).trim() !== '') {
-          return String(data[campo]).trim();
-        }
+    /*
+      ============================================================
+      CADASTRO DAS OPÇÕES DE CONSULTA
+      ============================================================
+      Para mostrar ou esconder uma opção, altere true/false acima
+      no CONFIG_CONSULTAS.
+    */
+    const CONSULTAS = [
+      {
+        chave: 'situacao_documentacao_vpe',
+        categoria: 'documentacao',
+        titulo: 'Beneficiário ou pensionista',
+        descricao: 'Documentação e andamento do titular. Consulta pelo CPF próprio.',
+        href: 'consulta_vpe.html',
+        icone: 'fa-file-circle-check',
+        primary: false
+      },
+      {
+        chave: 'situacao_documentacao_vpe_herdeiros',
+        categoria: 'documentacao',
+        titulo: 'Herdeiros',
+        descricao: 'Valores de pessoa falecida. Consulta pelo CPF do falecido.',
+        href: 'consulta_vpe_herdeiros.html',
+        icone: 'fa-people-roof',
+        primary: false
+      },
+      {
+        chave: 'situacao_documentacao_auxilio_moradia',
+        categoria: 'documentacao',
+        titulo: 'Situação Documentação Auxílio Moradia Coletivo',
+        descricao: 'Verifique pendências e andamento da documentação do Auxílio Moradia Coletivo.',
+        href: 'consulta_doc_aux.html',
+        icone: 'fa-house-circle-check',
+        primary: false
+      },
+      {
+        chave: 'herdeiros_auxilio_moradia',
+        categoria: 'documentacao',
+        titulo: 'Herdeiros - Auxílio Moradia Coletivo',
+        descricao: 'Consulta específica para situação documental e acompanhamento de herdeiros.',
+        href: 'consulta_documentacao_herdeiros_cpf.html',
+        icone: 'fa-people-group',
+        primary: false
+      },
+      {
+        chave: 'primeira_lista_vpe',
+        categoria: 'listagens',
+        titulo: '1ª Listagem',
+        descricao: 'Verifique se o nome consta na primeira relação de implantação.',
+        href: 'primeira_lista_vpe.html',
+        icone: 'fa-list-ol',
+        primary: true
+      },
+      {
+        chave: 'segunda_lista_vpe',
+        categoria: 'listagens',
+        titulo: '2ª Listagem',
+        descricao: 'Verifique se o nome consta na segunda relação de implantação.',
+        href: 'segunda_lista_vpe.html',
+        icone: 'fa-list-ol',
+        primary: true
+      },
+      {
+        chave: 'terceira_lista_vpe',
+        categoria: 'listagens',
+        titulo: '3ª Listagem',
+        descricao: 'Verifique se o nome consta na terceira relação de implantação.',
+        href: 'terceira_lista_vpe.html',
+        icone: 'fa-list-ol',
+        primary: true
+      },
+      {
+        chave: 'listagem_auxilio_moradia_coletivo',
+        categoria: 'listagens',
+        titulo: 'Listagem Auxílio Moradia Coletivo',
+        descricao: 'Consulte se o nome consta na listagem do Auxílio Moradia Coletivo.',
+        href: 'lista_aux.html',
+        icone: 'fa-list-check',
+        primary: false
       }
-      return '';
-    }
+    ];
 
-    function normalizarTexto(texto) {
-      return String(texto ?? '')
-        .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '')
-        .toUpperCase()
-        .trim();
-    }
-
-    function formatarDataAtualizacao(updatedAt) {
-      if (!updatedAt) return '';
+    async function include(path, targetId) {
+      const el = document.getElementById(targetId);
+      if (!el) return;
 
       try {
-        let date = null;
+        const res = await fetch(path, { cache: 'no-store' });
 
-        if (typeof updatedAt.toDate === 'function') {
-          date = updatedAt.toDate();
-        } else if (updatedAt.seconds) {
-          date = new Date(updatedAt.seconds * 1000);
-        } else {
-          date = new Date(updatedAt);
+        if (!res.ok) {
+          throw new Error(`Erro HTTP ${res.status}`);
         }
 
-        if (!date || Number.isNaN(date.getTime())) return '';
-
-        return date.toLocaleString('pt-BR');
-      } catch (_) {
-        return '';
+        el.innerHTML = await res.text();
+      } catch (e) {
+        console.error(`Falha ao carregar ${path}`, e);
+        el.innerHTML = `<!-- falha ao carregar ${path} -->`;
       }
     }
 
-    function itemStatus(rotulo, conteudo) {
-      if (!conteudo || !String(conteudo).trim()) return '';
-
-      return `
-        <div class="status-item">
-          <span>${escapeHtml(rotulo)}</span>
-          <strong>${escapeHtml(conteudo)}</strong>
-        </div>
-      `;
+    function toggleMenu() {
+      const menu = document.getElementById('menu');
+      if (menu) menu.classList.toggle('active');
     }
 
-    function montarListaPendencias(faltando, usarLinksDocumentos = false) {
-      if (!faltando || !String(faltando).trim()) return '';
+    function criarCardConsulta(item) {
+      const a = document.createElement('a');
+      a.className = `consulta-link${item.primary ? ' primary' : ''}`;
+      a.href = item.href;
+      a.setAttribute('data-feature', item.chave);
+      a.setAttribute('aria-label', item.titulo);
 
-      const linksDocumentosPendentes = {
-        'DECLARACAO DE INEXISTENCIA DE ACAO VPE': 'https://drive.google.com/file/d/1g4UGhUVHKmJIxomjgrouPpTw-IOniEYx/view?usp=drive_link',
-        'CONTRATO VPE': 'https://drive.google.com/file/d/1XSM8aUBeg8icX-8WkVcHNzNVTc0a7Div/view?usp=drive_link',
-        'PROCURACAO VPE': 'https://drive.google.com/file/d/1cVOQF6liNkEWvWCzfK5r4hJgyXVakKvV/view?usp=drive_link'
-      };
+      a.innerHTML = `
+        <div class="consulta-main">
+          <i class="fa-solid ${item.icone}" aria-hidden="true"></i>
 
-      const itens = String(faltando)
-        .split('|')
-        .map(p => p.trim())
-        .filter(Boolean)
-        .map(p => {
-          const textoSeguro = escapeHtml(p);
-
-          if (!usarLinksDocumentos) {
-            return `<li>${textoSeguro}</li>`;
-          }
-
-          const chave = normalizarTexto(p);
-          const link = linksDocumentosPendentes[chave];
-
-          if (!link) {
-            return `<li>${textoSeguro}</li>`;
-          }
-
-          return `
-            <li>
-              <a href="${link}" target="_blank" rel="noopener noreferrer">${textoSeguro}</a>
-            </li>
-          `;
-        })
-        .join('');
-
-      if (!itens) return '';
-
-      return `<ul class="pendencias-lista">${itens}</ul>`;
-    }
-
-    function temPendencia(faltando, pendencia) {
-      if (!faltando || !String(faltando).trim()) return false;
-
-      const alvo = normalizarTexto(pendencia);
-
-      return String(faltando)
-        .split('|')
-        .map(p => normalizarTexto(p))
-        .some(p => p.includes(alvo));
-    }
-
-    function mostrarCarregando() {
-      const container = document.getElementById('resultContainer');
-      container.innerHTML = `
-        <div class="resultado-card">
-          <div class="resultado-topo">
-            <div class="resultado-icone" style="background:#e6f0ff;color:#003366;">
-              <i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i>
-            </div>
-            <div>
-              <h3>Consultando...</h3>
-              <p>Aguarde enquanto verificamos a base da VPE.</p>
-            </div>
+          <div class="consulta-text">
+            <strong>${item.titulo}</strong>
+            <span>${item.descricao}</span>
           </div>
         </div>
+
+        <i class="fa-solid fa-arrow-right consulta-arrow" aria-hidden="true"></i>
       `;
+
+      return a;
     }
 
-    function mostrarNaoEncontrado() {
-      const container = document.getElementById('resultContainer');
-      container.innerHTML = `
-        <div class="resultado-card erro">
-          <div class="resultado-topo">
-            <div class="resultado-icone">
-              <i class="fa-solid fa-circle-xmark" aria-hidden="true"></i>
-            </div>
-            <div>
-              <h3>CPF não encontrado</h3>
-              <p>Não localizamos dados da VPE para o CPF informado nesta base.</p>
-            </div>
-          </div>
+    function renderizarConsultas() {
+      const listaDocumentacao = document.getElementById('lista-documentacao');
+      const listaListagens = document.getElementById('lista-listagens');
+      const blocoDocumentacao = document.getElementById('bloco-documentacao');
+      const blocoListagens = document.getElementById('bloco-listagens');
+      const grid = document.querySelector('.consultas-grid');
 
-          <div class="passos">
-            <div class="passo">
-              <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
-              <div>
-                Verifique se o CPF foi digitado corretamente. Caso a dúvida continue, entre em contato com a Associação para conferência cadastral.
-              </div>
-            </div>
-          </div>
-        </div>
-      `;
-    }
+      if (!listaDocumentacao || !listaListagens || !blocoDocumentacao || !blocoListagens || !grid) return;
 
-    function mostrarErroPermissao() {
-      const container = document.getElementById('resultContainer');
-      container.innerHTML = `
-        <div class="resultado-card erro">
-          <div class="resultado-topo">
-            <div class="resultado-icone">
-              <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
-            </div>
-            <div>
-              <h3>Permissão insuficiente para consultar</h3>
-              <p>As regras do Firestore não permitiram a leitura dos dados para este site.</p>
-            </div>
-          </div>
-        </div>
-      `;
-    }
+      listaDocumentacao.innerHTML = '';
+      listaListagens.innerHTML = '';
 
-    function mostrarErroConsulta(msg) {
-      const container = document.getElementById('resultContainer');
-      container.innerHTML = `
-        <div class="resultado-card erro">
-          <div class="resultado-topo">
-            <div class="resultado-icone">
-              <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
-            </div>
-            <div>
-              <h3>Erro ao consultar</h3>
-              <p>${escapeHtml(msg)}</p>
-            </div>
-          </div>
-        </div>
-      `;
-    }
+      CONSULTAS.forEach((item) => {
+        const ativo = CONFIG_CONSULTAS[item.chave] !== false;
+        if (!ativo) return;
 
-    function mostrarDados(data) {
-      const container = document.getElementById('resultContainer');
-      container.innerHTML = '';
+        const card = criarCardConsulta(item);
 
-      const existsFlag = data && (data.exists === true || data['exists'] === true);
-
-      if (!data || Object.keys(data).length === 0 || !existsFlag) {
-        mostrarNaoEncontrado();
-        return;
-      }
-
-      const nome = valor(data, 'NOME_BASE', 'nome', 'Nome', 'NOME');
-      const cpf = valor(data, 'CPF', 'cpf');
-      const siape = valor(data, 'SIAPE_INSTITUIDOR');
-      const dtInicio = valor(data, 'DT_INICIO_BENEFICIO');
-      const anoInicio = valor(data, 'ANO_INICIO_BENEFICIO');
-      const protocolado = valor(data, 'PROTOCOLADO_SC');
-      const consultaLP = valor(data, 'CONSULTA_LP');
-      const completude = valor(data, 'COMPLETUDE');
-      const faltando = valor(data, 'FALTANDO');
-      const periodoAnterior = valor(data, 'PERIODO_ANTERIOR');
-      const termoRenuncia = valor(data, 'Termo_Renuncia', 'TERMO_RENUNCIA');
-      const atualizadoEm = formatarDataAtualizacao(data.updatedAt);
-      const origem = valor(data, 'ORIGEM', 'origem', 'Origem');
-      const origemNorm = normalizarTexto(origem);
-      const isCompartilhados = origemNorm === 'COMPARTILHADOS';
-      const isNaoCompartilhados = origemNorm === 'NAO COMPARTILHADOS';
-
-      const completudeNorm = normalizarTexto(completude);
-      const classe = completudeNorm === 'INCOMPLETA' ? 'alerta' : 'sucesso';
-      const icone = completudeNorm === 'INCOMPLETA' ? 'fa-triangle-exclamation' : 'fa-circle-check';
-      const titulo = completudeNorm === 'INCOMPLETA'
-        ? 'CPF encontrado com documentação pendente'
-        : 'CPF encontrado na base da VPE';
-      const subtitulo = completudeNorm === 'INCOMPLETA'
-        ? 'Há pendências documentais indicadas abaixo.'
-        : 'Consulte abaixo as informações disponíveis para este CPF.';
-
-      const protocoloNorm = normalizarTexto(protocolado);
-      const consultaLPNorm = normalizarTexto(consultaLP);
-      const consultaLPNaoEncontrada = consultaLPNorm === 'NAO ENCONTRADO' || consultaLPNorm === 'NÃO ENCONTRADO';
-      const consultaLPNao = consultaLPNorm === 'NAO' || consultaLPNorm === 'NÃO';
-      const termoRenunciaNorm = normalizarTexto(termoRenuncia);
-      const termoRenunciaSim = termoRenunciaNorm === 'SIM';
-      const anoInicioMatch = String(anoInicio ?? '').match(/\b(19|20)\d{2}\b/);
-      const anoInicioNumero = anoInicioMatch ? Number(anoInicioMatch[0]) : NaN;
-      const deveMostrarConsultaLP = !isCompartilhados && !(isNaoCompartilhados && consultaLPNao);
-      const deveMostrarTermoRenuncia = !isCompartilhados && (isNaoCompartilhados ? anoInicioNumero > 2008 : true);
-
-      const statusItens = [
-        itemStatus('CPF', cpf),
-        !isNaoCompartilhados ? itemStatus('SIAPE do instituidor', siape) : '',
-        !isNaoCompartilhados ? itemStatus('Início do benefício', dtInicio) : '',
-        itemStatus('Ano início do benefício', anoInicio),
-        itemStatus('Documentação', completude),
-        !isNaoCompartilhados ? itemStatus(isCompartilhados ? 'Número do processo' : 'Protocolo SC', protocolado) : '',
-        deveMostrarConsultaLP ? itemStatus('Consulta LP', consultaLP) : '',
-        itemStatus('Período anterior', periodoAnterior),
-        deveMostrarTermoRenuncia ? itemStatus('Termo de renúncia', termoRenuncia) : '',
-        !isCompartilhados ? itemStatus('Última atualização', atualizadoEm) : ''
-      ].filter(Boolean).join('');
-
-      const avisoPeriodoAnteriorNaoCompartilhadosHtml = isNaoCompartilhados && anoInicioNumero > 2008 && !termoRenunciaSim
-        ? `
-          <div class="passo">
-            <i class="fa-solid fa-file-signature" aria-hidden="true"></i>
-            <div>
-              <strong>Atenção ao período anterior:</strong>
-              <p>A Associação informa que a execução da VPE abrange o período de outubro de 2008 até o efetivo recebimento da gratificação.</p>
-              <p>Conforme orientação do escritório Silveira Cruz, o recomendável é que, no processo de cobrança dos valores atrasados da VPE, seja solicitado o período integral.</p>
-              <p>Por isso, nos casos em que a pensionista atual começou a receber a pensão a partir de 2009, o ideal é que o(s) herdeiro(s) do servidor ou pensionista que recebia anteriormente também entreguem toda a documentação necessária.</p>
-              <p>Dessa forma, o escritório poderá pedir, no mesmo processo:</p>
-              <ul class="orientacao-lista">
-                <li>o período anterior, a ser dividido entre os herdeiros de quem recebia a pensão anteriormente;</li>
-                <li>o período individual da pensionista atual, que cabe apenas a ela.</li>
-              </ul>
-              <p>Assim, a entrega da documentação dos herdeiros permite que o pedido seja feito da forma mais completa possível, evitando que parte do período devido fique fora da execução.</p>
-              <p>Caso a pensionista não tenha interesse em executar o período anterior e deseje prosseguir apenas com o período que cabe individualmente a ela, sem depender da documentação dos demais herdeiros, isso também é possível.</p>
-              <p>Nesse caso, será necessário assinar o <strong>Termo de Renúncia do Período Anterior</strong>, fornecido pela Associação. <a href="https://drive.google.com/file/d/1sKFN-fDYp91b-V2Gz1vlAayDIWWL85Br/view?usp=drive_link" target="_blank" rel="noopener noreferrer">Clique aqui para baixar o termo</a>.</p>
-            </div>
-          </div>
-        `
-        : '';
-
-      const pendenciasHtml = completudeNorm === 'INCOMPLETA' && faltando
-        ? `
-          <div class="passo">
-            <i class="fa-solid fa-file-circle-exclamation" aria-hidden="true"></i>
-            <div>
-              <strong>Documentos pendentes:</strong>
-              ${montarListaPendencias(faltando, isNaoCompartilhados)}
-            </div>
-          </div>
-        `
-        : '';
-
-      const fichaFinanceiraNaoCompartilhadosHtml = isNaoCompartilhados && completudeNorm === 'INCOMPLETA' && temPendencia(faltando, 'FICHA FINANCEIRA')
-        ? `
-          <div class="passo">
-            <i class="fa-solid fa-file-invoice-dollar" aria-hidden="true"></i>
-            <div>
-              <strong>Como acessar a Ficha Financeira Anual pelo SouGov.br</strong>
-              <ol class="orientacao-lista">
-                <li>Acesse o aplicativo <strong>SouGov.br</strong> no celular ou entre pelo computador no <strong>SouGov.br Web</strong>.</li>
-                <li>Faça login com sua conta <strong>gov.br</strong>.</li>
-                <li>Antes de consultar, verifique se o vínculo está correto.</li>
-                <li>Caso tenha mais de um vínculo, clique na seta ao lado de <strong>“Órgão – Uorg – Matrícula”</strong> e selecione o vínculo desejado.</li>
-                <li>Na tela inicial, procure a opção <strong>“Autoatendimento”</strong>.</li>
-                <li>Dentro de Autoatendimento, clique em <strong>“Ficha Financeira Anual”</strong>.</li>
-                <li>Selecione o ano que deseja consultar.</li>
-                <li>Após selecionar o ano, a ficha financeira será exibida com o demonstrativo detalhado dos rendimentos e descontos lançados na folha de pagamento/contracheque.</li>
-                <li>Para salvar, enviar ou compartilhar o documento, clique nos <strong>três pontinhos</strong>.</li>
-                <li>Escolha a opção desejada, como compartilhar, baixar ou enviar para o e-mail.</li>
-                <li>Caso precise enviar para a Associação, salve ou compartilhe o arquivo em <strong>PDF</strong>.</li>
-              </ol>
-              <div class="observacao-box">
-                <strong>Observação:</strong> a consulta pode ser feita tanto pelo aplicativo SouGov.br quanto pela versão web.
-              </div>
-            </div>
-          </div>
-        `
-        : '';
-
-      const protocoloHtml = !isNaoCompartilhados && protocolado && protocoloNorm !== 'NAO' && protocoloNorm !== 'NÃO'
-        ? (isCompartilhados
-          ? `
-            <div class="passo">
-              <i class="fa-solid fa-scale-balanced" aria-hidden="true"></i>
-              <div>
-                <strong>Processo localizado:</strong>
-                consta número de processo vinculado a este CPF. Utilize o número informado acima para consultar o andamento no TRF1.
-              </div>
-            </div>
-          `
-          : `
-            <div class="passo">
-              <i class="fa-solid fa-scale-balanced" aria-hidden="true"></i>
-              <div>
-                <strong>Processo protocolado:</strong>
-                consta protocolo vinculado a este CPF. Aguarde novas movimentações e comunicados da Associação.
-              </div>
-            </div>
-          `)
-        : '';
-
-      const consultaLPHtml = !isCompartilhados && consultaLP && !consultaLPNaoEncontrada && !(isNaoCompartilhados && consultaLPNao)
-        ? `
-          <div class="passo">
-            <i class="fa-solid fa-magnifying-glass-chart" aria-hidden="true"></i>
-            <div>
-              <strong>Consulta LP:</strong>
-              há informação registrada na base interna para este CPF.
-            </div>
-          </div>
-        `
-        : '';
-
-      const orientacaoCompartilhadosHtml = `
-        <div class="passo">
-          <i class="fa-solid fa-list-check" aria-hidden="true"></i>
-          <div>
-            <strong>Orientação: como consultar o andamento do processo no TRF1</strong>
-            <ol class="orientacao-lista">
-              <li>Tenha em mãos o número completo do processo, no formato <strong>0000000-00.0000.4.01.0000</strong>.</li>
-              <li>Acesse o site oficial de Consulta Processual do TRF1: <a href="https://www.trf1.jus.br/trf1/processual/consulta-processual" target="_blank" rel="noopener noreferrer">https://www.trf1.jus.br/trf1/processual/consulta-processual</a>.</li>
-              <li>Clique em <strong>“PJe - Consulta (usuários em geral)”</strong>.</li>
-              <li>Depois clique em <strong>“1º Grau — Varas e Juizados”</strong>.</li>
-              <li>Na página que abrir, informe o número completo do processo no campo de consulta.</li>
-              <li>Clique em <strong>“Pesquisar”</strong> ou <strong>“Consultar”</strong>.</li>
-              <li>O sistema poderá mostrar informações como vara responsável, partes do processo, data de distribuição, movimentações, decisões ou documentos públicos disponíveis.</li>
-              <li>Caso o processo não apareça, tente também a consulta geral do TRF1: <a href="https://processual.trf1.jus.br/" target="_blank" rel="noopener noreferrer">https://processual.trf1.jus.br/</a>.</li>
-            </ol>
-            <div class="observacao-box">
-              <strong>Observação importante:</strong> sempre consulte pelo site oficial do TRF1. Outros sites podem aparecer no Google, mas o andamento oficial deve ser conferido diretamente no sistema do Tribunal. Se o processo não for localizado, ele pode estar em outro grau, em outro sistema ou com alguma restrição de acesso.
-            </div>
-          </div>
-        </div>
-      `;
-
-      const orientacaoHtml = isCompartilhados
-        ? orientacaoCompartilhadosHtml
-        : (completudeNorm === 'INCOMPLETA'
-          ? `
-            <div class="passo">
-              <i class="fa-solid fa-envelope-open-text" aria-hidden="true"></i>
-              <div>
-                <strong>Orientação:</strong>
-                a documentação pendente deve ser enviada em <strong>PDF legível</strong> para o e-mail
-                <a href="mailto:documentos@apipmcbdf.com.br">documentos@apipmcbdf.com.br</a>.
-                Esse e-mail é utilizado apenas para recebimento dos documentos pendentes e não é respondido.
-                Em caso de dúvidas, entre em contato pelo telefone da Associação ou pelo e-mail
-                <a href="mailto:atendimento@apipmcbdf.com.br">atendimento@apipmcbdf.com.br</a>.
-              </div>
-            </div>
-          `
-          : `
-            <div class="passo">
-              <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
-              <div>
-                <strong>Orientação:</strong>
-                acompanhe os comunicados oficiais da Associação sobre o andamento da VPE.
-              </div>
-            </div>
-          `);
-
-      const documentacaoCompletaNaoCompartilhadosHtml = isNaoCompartilhados && completudeNorm === 'COMPLETA'
-        ? `
-          <div class="passo">
-            <i class="fa-solid fa-file-circle-check" aria-hidden="true"></i>
-            <div>
-              <strong>Documentação completa:</strong>
-              sua documentação está completa e será encaminhada ao escritório Silveira Cruz para as providências cabíveis.
-            </div>
-          </div>
-        `
-        : '';
-
-      const litispendenciaNaoCompartilhadosHtml = isNaoCompartilhados && consultaLP && consultaLPNaoEncontrada
-        ? `
-          <div class="passo">
-            <i class="fa-solid fa-scale-balanced" aria-hidden="true"></i>
-            <div>
-              <strong>Pendente verificação de litispendência:</strong>
-              o setor jurídico ainda verificará se já existe processo anterior pedindo a VPE. Se houver ação anterior com o mesmo pedido, não será possível solicitar novamente o mesmo objeto. Se não houver processo anterior, o caso seguirá para o escritório Silveira Cruz após a conclusão da documentação.
-            </div>
-          </div>
-        `
-        : '';
-
-      container.innerHTML = `
-        <div class="resultado-card ${classe}">
-          <div class="resultado-topo">
-            <div class="resultado-icone">
-              <i class="fa-solid ${icone}" aria-hidden="true"></i>
-            </div>
-            <div>
-              <h3>${titulo}</h3>
-              <p>${subtitulo}</p>
-            </div>
-          </div>
-
-          <div class="nome-box">
-            <span>Nome encontrado</span>
-            <strong>${nome ? escapeHtml(nome) : 'Nome não informado'}</strong>
-          </div>
-
-          ${statusItens ? `<div class="status-grid">${statusItens}</div>` : ''}
-
-          <div class="passos">
-            ${avisoPeriodoAnteriorNaoCompartilhadosHtml}
-            ${pendenciasHtml}
-            ${fichaFinanceiraNaoCompartilhadosHtml}
-            ${protocoloHtml}
-            ${consultaLPHtml}
-            ${orientacaoHtml}
-            ${documentacaoCompletaNaoCompartilhadosHtml}
-            ${litispendenciaNaoCompartilhadosHtml}
-          </div>
-        </div>
-      `;
-    }
-
-    window.addEventListener('DOMContentLoaded', () => {
-      const botao = document.getElementById('consultBtn');
-      const input = document.getElementById('cpfInput');
-
-      if (!botao || !input) return;
-
-      botao.onclick = async () => {
-        const cpfDigitado = limparCPF(input.value);
-
-        if (!cpfDigitado || cpfDigitado.length > 11) {
-          alert('Digite um CPF válido.');
-          return;
+        if (item.categoria === 'documentacao') {
+          listaDocumentacao.appendChild(card);
         }
 
-        const cpf = formatarCPFConsulta(input.value);
-
-        if (cpf.length !== 11) {
-          alert('CPF inválido.');
-          return;
+        if (item.categoria === 'listagens') {
+          listaListagens.appendChild(card);
         }
+      });
 
-        mostrarCarregando();
+      const documentacaoVisivel = listaDocumentacao.children.length > 0;
+      const listagensVisivel = listaListagens.children.length > 0;
 
-        try {
-          const ref = doc(db, 'CONSULTARVPE', cpf);
-          const snap = await getDoc(ref);
-          mostrarDados(snap.exists() ? snap.data() : {});
-        } catch (err) {
-          console.error(err);
+      blocoDocumentacao.classList.toggle('is-hidden', !documentacaoVisivel);
+      blocoListagens.classList.toggle('is-hidden', !listagensVisivel);
 
-          const msg = (err && err.message) ? err.message : String(err);
+      const totalBlocosVisiveis = Number(documentacaoVisivel) + Number(listagensVisivel);
+      grid.classList.toggle('single-card', totalBlocosVisiveis === 1);
+    }
 
-          if (msg.toLowerCase().includes('missing or insufficient permissions')) {
-            mostrarErroPermissao();
-            return;
-          }
-
-          mostrarErroConsulta(msg);
-        }
-      };
-    });
+    include('header.html', 'header-container');
+    include('footer.html', 'footer-container');
+    renderizarConsultas();
   </script>
 
-  <noscript>
-    <iframe src="header.html" title="Cabeçalho" style="width:100%; border:0; height:160px;"></iframe>
-    <iframe src="footer.html" title="Rodapé" style="width:100%; border:0; height:320px;"></iframe>
-  </noscript>
 </body>
 </html>
