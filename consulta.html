@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Consultas — APIPMCBDF</title>
+  <title>Consultas VPE — APIPMCBDF</title>
   <meta name="robots" content="noindex, nofollow" />
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -436,10 +436,10 @@
           <span>Consultas</span>
         </div>
 
-        <h1>Selecione o tipo de consulta</h1>
+        <h1>Consultas da VPE</h1>
 
         <p>
-          Consulte a situação da VPE ou verifique se o nome consta nas listagens disponibilizadas pela APIPMCBDF.
+          Escolha a opção conforme a situação do caso: VPE já implantada, herdeiros ou listagens de implantação.
         </p>
       </div>
     </section>
@@ -454,9 +454,9 @@
             </div>
 
             <div>
-              <h2 id="titulo-documentacao">Consulta - PARA QUEM RECEBE VPE</h2>
+              <h2 id="titulo-documentacao">VPE já implantada</h2>
               <p>
-                Consulte a situação da documentação, protocolo e informações relacionadas à VPE.
+                Documentação, protocolo, processo e pendências de quem já possui VPE implantada.
               </p>
             </div>
           </div>
@@ -471,9 +471,9 @@
             </div>
 
             <div>
-              <h2 id="titulo-listagens">Consulta Nome em Listagens</h2>
+              <h2 id="titulo-listagens">Listagens de implantação</h2>
               <p>
-                Confira a presença do nome nas listagens oficiais disponibilizadas pela Associação.
+                Consulta para quem ainda aguarda a implantação da VPE.
               </p>
             </div>
           </div>
@@ -487,9 +487,9 @@
         <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
 
         <div>
-          <strong>Orientação</strong>
+          <strong>Antes de consultar</strong>
           <p>
-            Caso não encontre seu nome ou tenha dúvida sobre alguma informação, entre em contato com a Associação para conferência dos dados.
+            Na consulta de herdeiros, informe o CPF da pessoa falecida. Nas demais consultas, informe o CPF ou nome solicitado na própria página. Em caso de divergência, procure a Associação para conferência cadastral.
           </p>
         </div>
       </div>
@@ -509,6 +509,7 @@
     */
     const CONFIG_CONSULTAS = {
       situacao_documentacao_vpe: true,
+      situacao_documentacao_vpe_herdeiros: true,
       situacao_documentacao_auxilio_moradia: false,
       herdeiros_auxilio_moradia: false,
 
@@ -530,10 +531,19 @@
       {
         chave: 'situacao_documentacao_vpe',
         categoria: 'documentacao',
-        titulo: 'Consultar VPE',
-        descricao: 'Consulte a documentação, protocolo e informações relacionadas à VPE.',
+        titulo: 'Beneficiário ou pensionista',
+        descricao: 'Documentação e andamento do titular. Consulta pelo CPF próprio.',
         href: 'consulta_vpe.html',
         icone: 'fa-file-circle-check',
+        primary: false
+      },
+      {
+        chave: 'situacao_documentacao_vpe_herdeiros',
+        categoria: 'documentacao',
+        titulo: 'Herdeiros',
+        descricao: 'Valores de pessoa falecida. Consulta pelo CPF do falecido.',
+        href: 'consulta_vpe_herdeiros.html',
+        icone: 'fa-people-roof',
         primary: false
       },
       {
@@ -557,8 +567,8 @@
       {
         chave: 'primeira_lista_vpe',
         categoria: 'listagens',
-        titulo: 'Primeira Listagem de Implantação - VPE',
-        descricao: 'Consulte se o nome consta na primeira listagem de implantação da VPE.',
+        titulo: '1ª Listagem',
+        descricao: 'Verifique se o nome consta na primeira relação de implantação.',
         href: 'primeira_lista_vpe.html',
         icone: 'fa-list-ol',
         primary: true
@@ -566,8 +576,8 @@
       {
         chave: 'segunda_lista_vpe',
         categoria: 'listagens',
-        titulo: 'Segunda Listagem de Implantação - VPE',
-        descricao: 'Consulte se o nome consta na segunda listagem de implantação da VPE.',
+        titulo: '2ª Listagem',
+        descricao: 'Verifique se o nome consta na segunda relação de implantação.',
         href: 'segunda_lista_vpe.html',
         icone: 'fa-list-ol',
         primary: true
@@ -575,8 +585,8 @@
       {
         chave: 'terceira_lista_vpe',
         categoria: 'listagens',
-        titulo: 'Terceira Listagem de Implantação - VPE',
-        descricao: 'Consulte se o nome consta na terceira listagem de implantação da VPE.',
+        titulo: '3ª Listagem',
+        descricao: 'Verifique se o nome consta na terceira relação de implantação.',
         href: 'terceira_lista_vpe.html',
         icone: 'fa-list-ol',
         primary: true
