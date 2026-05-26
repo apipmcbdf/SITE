@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Consulta VPE - Herdeiros</title>
+  <meta name="robots" content="noindex, nofollow" />
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --azul: #003366;
+      --azul-claro: #005599;
+      --azul-suave: #e6f0ff;
+      --dourado: #f5b200;
+      --fundo: #f4f7fb;
+      --branco: #ffffff;
+      --texto: #1f2937;
+      --texto-suave: #5b6472;
+      --borda: #dbe5f2;
+      --sombra: 0 10px 28px rgba(0, 51, 102, 0.10);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--fundo);
+      color: var(--texto);
+      line-height: 1.5;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    /* Compatibilidade com o header carregado por header.html */
+    header {
+      background-color: var(--azul);
+      padding: 20px;
+      color: white;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .logo img {
+      height: 50px;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    nav ul li {
+      position: relative;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 8px 12px;
+      display: block;
+      transition: background-color 0.3s ease;
+    }
+
+    nav ul li a:hover {
+      background-color: var(--azul-claro);
+      border-radius: 4px;
+    }
+
+    nav ul li ul {
+      display: none;
+      position: absolute;
+      background-color: #004080;
+      top: 100%;
+      left: 0;
+      min-width: 220px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      z-index: 10;
+    }
+
+    nav ul li:hover ul {
+      display: block;
+      animation: fadeIn 0.25s ease-in-out;
+    }
+
+    nav ul li ul li a {
+      padding: 10px;
+      font-weight: 400;
+    }
+
+    .menu-toggle {
+      display: none;
+      cursor: pointer;
+      font-size: 24px;
+      color: white;
+      margin-bottom: 10px;
+    }
+
+    #menu {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-8px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .page-hero {
+      background:
+        linear-gradient(rgba(0, 51, 102, 0.84), rgba(0, 51, 102, 0.84)),
+        url("https://www.freetour.com/images/cities/rio-de-janeiro-brazil.jpg");
+      background-size: cover;
+      background-position: center;
+      color: var(--branco);
+      text-align: center;
+      padding: 68px 20px 72px;
+    }
+
+    .page-hero-inner {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background-color: var(--dourado);
+      color: #111;
+      font-weight: 800;
+      padding: 9px 18px;
+      border-radius: 999px;
+      margin-bottom: 22px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.22);
+    }
+
+    .page-hero h1 {
+      font-size: clamp(30px, 5vw, 44px);
+      line-height: 1.12;
+      font-weight: 800;
+      margin-bottom: 14px;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.35);
+    }
+
+    .page-hero p {
+      font-size: clamp(15px, 2.4vw, 18px);
+      max-width: 780px;
+      margin: 0 auto;
+      opacity: 0.96;
+    }
+
+    .main-content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 42px 20px 56px;
+    }
+
+    .construction-card {
+      background-color: var(--branco);
+      border: 1px solid var(--borda);
+      border-radius: 20px;
+      box-shadow: var(--sombra);
+      padding: 34px;
+      animation: fadeIn 0.55s ease-in-out;
+    }
+
+    .construction-top {
+      display: flex;
+      align-items: flex-start;
+      gap: 18px;
+      margin-bottom: 22px;
+    }
+
+    .construction-icon {
+      width: 62px;
+      height: 62px;
+      border-radius: 18px;
+      background-color: var(--azul-suave);
+      color: var(--azul);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      flex-shrink: 0;
+    }
+
+    .construction-top h2 {
+      color: var(--azul);
+      font-size: clamp(24px, 3vw, 31px);
+      line-height: 1.2;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .construction-top p {
+      color: var(--texto-suave);
+      font-size: 16px;
+    }
+
+    .info-box {
+      background-color: #f8fbff;
+      border: 1px solid var(--borda);
+      border-radius: 16px;
+      padding: 18px;
+      margin-top: 18px;
+    }
+
+    .info-box strong {
+      color: var(--azul);
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .info-box p {
+      color: var(--texto);
+      margin-bottom: 10px;
+    }
+
+    .info-box p:last-child {
+      margin-bottom: 0;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      padding: 13px 18px;
+      border-radius: 12px;
+      font-weight: 800;
+      text-decoration: none;
+      transition: transform 0.18s ease, background-color 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .btn-primary {
+      background-color: var(--azul);
+      color: var(--branco);
+    }
+
+    .btn-primary:hover,
+    .btn-primary:focus-visible {
+      background-color: var(--azul-claro);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 18px rgba(0, 51, 102, 0.14);
+      outline: none;
+    }
+
+    .btn-secondary {
+      background-color: #fff8e2;
+      color: #5f4100;
+      border: 1px solid rgba(245, 178, 0, 0.62);
+    }
+
+    .btn-secondary:hover,
+    .btn-secondary:focus-visible {
+      background-color: #fff2c2;
+      transform: translateY(-1px);
+      outline: none;
+    }
+
+    .contact-note {
+      margin-top: 20px;
+      color: var(--texto-suave);
+      font-size: 14px;
+    }
+
+    .contact-note a {
+      color: var(--azul);
+      font-weight: 800;
+      text-decoration: underline;
+      overflow-wrap: anywhere;
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        position: relative;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .logo {
+        text-align: center;
+        width: 100%;
+        margin-bottom: 10px;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+
+      #menu {
+        display: none;
+        flex-direction: column;
+        position: relative;
+        width: 100%;
+        background-color: var(--azul);
+        z-index: 1000;
+      }
+
+      #menu.active {
+        display: flex;
+      }
+
+      .page-hero {
+        padding: 50px 18px 56px;
+      }
+
+      .construction-card {
+        padding: 24px;
+      }
+
+      .construction-top {
+        flex-direction: column;
+      }
+
+      .actions {
+        flex-direction: column;
+      }
+
+      .btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Header include -->
+  <div id="header-container" aria-label="Cabeçalho do site"></div>
+
+  <main>
+    <section class="page-hero" aria-label="Consulta VPE para herdeiros">
+      <div class="page-hero-inner">
+        <div class="badge">
+          <i class="fa-solid fa-person-digging" aria-hidden="true"></i>
+          <span>Em construção</span>
+        </div>
+
+        <h1>Consulta VPE - Herdeiros</h1>
+
+        <p>
+          Esta área será destinada à consulta de informações relacionadas aos valores de VPE de beneficiários ou pensionistas falecidos.
+        </p>
+      </div>
+    </section>
+
+    <section class="main-content">
+      <div class="construction-card">
+        <div class="construction-top">
+          <div class="construction-icon" aria-hidden="true">
+            <i class="fa-solid fa-people-group"></i>
+          </div>
+
+          <div>
+            <h2>Página em construção</h2>
+            <p>
+              A consulta para herdeiros ainda está sendo preparada pela Associação.
+            </p>
+          </div>
+        </div>
+
+        <div class="info-box">
+          <strong>Como será a consulta?</strong>
+          <p>
+            Quando disponível, esta página permitirá consultar a situação da documentação e das informações relacionadas à VPE usando o <strong>CPF da pessoa falecida</strong>.
+          </p>
+          <p>
+            Essa consulta será voltada aos herdeiros de beneficiários ou pensionistas que já recebiam a VPE e que possuem valores pendentes a serem analisados.
+          </p>
+        </div>
+
+        <div class="info-box">
+          <strong>Enquanto a página não estiver disponível</strong>
+          <p>
+            Em caso de dúvida, entre em contato com a Associação para orientação sobre documentação, conferência cadastral ou acompanhamento do caso.
+          </p>
+        </div>
+
+        <div class="actions">
+          <a class="btn btn-primary" href="consulta.html">
+            <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+            Voltar para consultas
+          </a>
+
+          <a class="btn btn-secondary" href="mailto:atendimento@apipmcbdf.com.br">
+            <i class="fa-solid fa-envelope" aria-hidden="true"></i>
+            Falar com atendimento
+          </a>
+        </div>
+
+        <p class="contact-note">
+          Para dúvidas, utilize o e-mail
+          <a href="mailto:atendimento@apipmcbdf.com.br">atendimento@apipmcbdf.com.br</a>
+          ou entre em contato pelo telefone da Associação.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer include -->
+  <div id="footer-container" aria-label="Rodapé do site"></div>
+
+  <script>
+    async function include(path, targetId) {
+      const el = document.getElementById(targetId);
+      if (!el) return;
+
+      try {
+        const res = await fetch(path, { cache: 'no-store' });
+
+        if (!res.ok) {
+          throw new Error(`Erro HTTP ${res.status}`);
+        }
+
+        el.innerHTML = await res.text();
+      } catch (e) {
+        console.error(`Falha ao carregar ${path}`, e);
+        el.innerHTML = `<!-- falha ao carregar ${path} -->`;
+      }
+    }
+
+    function toggleMenu() {
+      const menu = document.getElementById('menu');
+      if (menu) menu.classList.toggle('active');
+    }
+
+    include('header.html', 'header-container');
+    include('footer.html', 'footer-container');
+  </script>
+
+</body>
+</html>
