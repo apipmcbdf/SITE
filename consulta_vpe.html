@@ -476,6 +476,73 @@
       color: var(--texto);
     }
 
+
+    .periodo-anterior-card {
+      width: 100%;
+    }
+
+    .periodo-anterior-titulo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--azul);
+      font-size: 17px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .periodo-anterior-titulo i {
+      color: var(--alerta);
+      margin-top: 0;
+    }
+
+    .periodo-anterior-secao {
+      background-color: #f8fbff;
+      border: 1px solid var(--borda);
+      border-radius: 12px;
+      padding: 14px;
+      margin-top: 12px;
+    }
+
+    .periodo-anterior-secao p {
+      margin-bottom: 10px;
+    }
+
+    .periodo-anterior-secao p:last-child {
+      margin-bottom: 0;
+    }
+
+    .periodo-anterior-subtitulo {
+      display: block;
+      color: var(--azul);
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .periodo-anterior-lista {
+      margin-top: 8px;
+      padding-left: 20px;
+      color: var(--texto);
+    }
+
+    .periodo-anterior-lista li {
+      margin-bottom: 8px;
+    }
+
+    .periodo-anterior-alerta {
+      background-color: #fff8e2;
+      border: 1px solid rgba(245, 178, 0, 0.42);
+      border-left: 5px solid var(--dourado);
+    }
+
+    .periodo-anterior-alerta a,
+    .periodo-anterior-secao a {
+      color: var(--azul);
+      font-weight: 800;
+      text-decoration: underline;
+      overflow-wrap: anywhere;
+    }
+
     @media (max-width: 900px) {
       .status-grid {
         grid-template-columns: 1fr;
@@ -965,19 +1032,35 @@
         ? `
           <div class="passo">
             <i class="fa-solid fa-file-signature" aria-hidden="true"></i>
-            <div>
-              <strong>Atenção ao período anterior:</strong>
-              <p>A Associação informa que a execução da VPE abrange o período de outubro de 2008 até o efetivo recebimento da gratificação.</p>
-              <p>Conforme orientação do escritório Silveira Cruz, o recomendável é que, no processo de cobrança dos valores atrasados da VPE, seja solicitado o período integral.</p>
-              <p>Por isso, nos casos em que a pensionista atual começou a receber a pensão a partir de 2009, o ideal é que o(s) herdeiro(s) do servidor ou pensionista que recebia anteriormente também entreguem toda a documentação necessária.</p>
-              <p>Dessa forma, o escritório poderá pedir, no mesmo processo:</p>
-              <ul class="orientacao-lista">
-                <li>o período anterior, a ser dividido entre os herdeiros de quem recebia a pensão anteriormente;</li>
-                <li>o período individual da pensionista atual, que cabe apenas a ela.</li>
-              </ul>
-              <p>Assim, a entrega da documentação dos herdeiros permite que o pedido seja feito da forma mais completa possível, evitando que parte do período devido fique fora da execução.</p>
-              <p>Caso a pensionista não tenha interesse em executar o período anterior e deseje prosseguir apenas com o período que cabe individualmente a ela, sem depender da documentação dos demais herdeiros, isso também é possível.</p>
-              <p>Nesse caso, será necessário assinar o <strong>Termo de Renúncia do Período Anterior</strong>, fornecido pela Associação. <a href="https://drive.google.com/file/d/1sKFN-fDYp91b-V2Gz1vlAayDIWWL85Br/view?usp=drive_link" target="_blank" rel="noopener noreferrer">Clique aqui para baixar o termo</a>.</p>
+            <div class="periodo-anterior-card">
+              <div class="periodo-anterior-titulo">
+                <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
+                <span>Atenção ao período anterior</span>
+              </div>
+
+              <div class="periodo-anterior-secao">
+                <span class="periodo-anterior-subtitulo">Entenda o período da VPE</span>
+                <p>A execução da VPE abrange o período de <strong>outubro de 2008</strong> até o efetivo recebimento da gratificação.</p>
+                <p>Conforme orientação do escritório <strong>Silveira Cruz</strong>, o recomendável é que, no processo de cobrança dos valores atrasados da VPE, seja solicitado o período integral.</p>
+              </div>
+
+              <div class="periodo-anterior-secao">
+                <span class="periodo-anterior-subtitulo">Quando há pensão iniciada a partir de 2009</span>
+                <p>Nos casos em que a pensionista atual começou a receber a pensão a partir de 2009, o ideal é que o(s) herdeiro(s) do servidor ou pensionista que recebia anteriormente também entreguem toda a documentação necessária.</p>
+                <p>Dessa forma, o escritório poderá pedir, no mesmo processo:</p>
+                <ul class="periodo-anterior-lista">
+                  <li>o período anterior, a ser dividido entre os herdeiros de quem recebia a pensão anteriormente;</li>
+                  <li>o período individual da pensionista atual, que cabe apenas a ela.</li>
+                </ul>
+                <p>Assim, a entrega da documentação dos herdeiros permite que o pedido seja feito da forma mais completa possível, evitando que parte do período devido fique fora da execução.</p>
+              </div>
+
+              <div class="periodo-anterior-secao periodo-anterior-alerta">
+                <span class="periodo-anterior-subtitulo">Opção pelo Termo de Renúncia</span>
+                <p>Caso a pensionista não tenha interesse em executar o período anterior e deseje prosseguir apenas com o período que cabe individualmente a ela, sem depender da documentação dos demais herdeiros, isso também é possível.</p>
+                <p>Nesse caso, será necessário assinar o <strong>Termo de Renúncia do Período Anterior</strong>, fornecido pela Associação. <a href="https://drive.google.com/file/d/1sKFN-fDYp91b-V2Gz1vlAayDIWWL85Br/view?usp=drive_link" target="_blank" rel="noopener noreferrer">Clique aqui para baixar o termo</a>.</p>
+                <p><strong>Importante:</strong> o <strong>Termo de Renúncia</strong> deve ser assinado e ter <strong>firma reconhecida por autenticidade em cartório</strong> antes do envio à Associação.</p>
+              </div>
             </div>
           </div>
         `
