@@ -439,7 +439,7 @@
         <h1>Consultas da VPE</h1>
 
         <p>
-          Escolha a opção conforme a situação do caso: VPE já implantada, herdeiros ou listagens de implantação.
+          Escolha a opção conforme a situação do caso: documentação da VPE ou consulta das listagens de implantação.
         </p>
       </div>
     </section>
@@ -454,9 +454,9 @@
             </div>
 
             <div>
-              <h2 id="titulo-documentacao">VPE já implantada</h2>
+              <h2 id="titulo-documentacao">DOCUMENTAÇÃO VPE - TODOS</h2>
               <p>
-                Documentação, protocolo, processo e pendências de quem já possui VPE implantada.
+                Documentação de quem RECEBE e NÃO RECEBE VPE, protocolo, processo e pendências.
               </p>
             </div>
           </div>
@@ -473,7 +473,7 @@
             <div>
               <h2 id="titulo-listagens">Listagens de implantação</h2>
               <p>
-                Consulta para quem ainda aguarda a implantação da VPE.
+                Consulta para quem NÃO RECEBE e ainda aguarda a implantação da VPE.
               </p>
             </div>
           </div>
@@ -489,7 +489,7 @@
         <div>
           <strong>Antes de consultar</strong>
           <p>
-            Na consulta de herdeiros, informe o CPF da pessoa falecida. Nas demais consultas, informe o CPF ou nome solicitado na própria página. Em caso de divergência, procure a Associação para conferência cadastral.
+            Na consulta de herdeiros, informe o CPF da pessoa falecida. Nas demais consultas, informe o CPF solicitado na própria página. Em caso de divergência, procure a Associação para conferência cadastral.
           </p>
         </div>
       </div>
@@ -513,9 +513,10 @@
       situacao_documentacao_auxilio_moradia: false,
       herdeiros_auxilio_moradia: false,
 
-      primeira_lista_vpe: true,
-      segunda_lista_vpe: true,
-      terceira_lista_vpe: true,
+      consulta_listas_vpe: true,
+      primeira_lista_vpe: false,
+      segunda_lista_vpe: false,
+      terceira_lista_vpe: false,
 
       listagem_auxilio_moradia_coletivo: false
     };
@@ -565,30 +566,12 @@
         primary: false
       },
       {
-        chave: 'primeira_lista_vpe',
+        chave: 'consulta_listas_vpe',
         categoria: 'listagens',
-        titulo: '1ª Listagem',
-        descricao: 'Verifique se o nome consta na primeira relação de implantação.',
-        href: 'primeira_lista_vpe.html',
-        icone: 'fa-list-ol',
-        primary: true
-      },
-      {
-        chave: 'segunda_lista_vpe',
-        categoria: 'listagens',
-        titulo: '2ª Listagem',
-        descricao: 'Verifique se o nome consta na segunda relação de implantação.',
-        href: 'segunda_lista_vpe.html',
-        icone: 'fa-list-ol',
-        primary: true
-      },
-      {
-        chave: 'terceira_lista_vpe',
-        categoria: 'listagens',
-        titulo: '3ª Listagem',
-        descricao: 'Verifique se o nome consta na terceira relação de implantação.',
-        href: 'terceira_lista_vpe.html',
-        icone: 'fa-list-ol',
+        titulo: 'Consultar listagem da VPE',
+        descricao: 'Verifique em uma única consulta se o CPF consta na 1ª, 2ª ou 3ª listagem de implantação.',
+        href: 'listas_vpe.html',
+        icone: 'fa-list-check',
         primary: true
       },
       {
