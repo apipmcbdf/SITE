@@ -740,7 +740,7 @@
       `;
     }
 
-    function montarListaPendencias(faltando, usarLinksDocumentos = false) {
+    function montarListaPendencias(faltando, usarLinksDocumentos = false, anoInicioBeneficio = null) {
       if (!faltando || !String(faltando).trim()) return '';
 
       const linksDocumentosPendentes = {
@@ -749,18 +749,33 @@
         'PROCURACAO VPE': 'https://drive.google.com/file/d/1cVOQF6liNkEWvWCzfK5r4hJgyXVakKvV/view?usp=drive_link'
       };
 
+      const anoInicialFicha = Number.isFinite(Number(anoInicioBeneficio))
+        ? (Number(anoInicioBeneficio) < 2008 ? 2008 : Number(anoInicioBeneficio))
+        : null;
+      const periodoFichaFinanceira = anoInicialFicha ? `${anoInicialFicha}-2026` : '';
+
       const itens = String(faltando)
         .split('|')
         .map(p => p.trim())
         .filter(Boolean)
         .map(p => {
-          const textoSeguro = escapeHtml(p);
+          const chave = normalizarTexto(p);
+          let textoExibicao = p;
+
+          if (chave.includes('FICHA FINANCEIRA') && periodoFichaFinanceira) {
+            textoExibicao = textoExibicao
+              .replace(/\s*\(\s*\d{4}\s*-\s*\d{4}\s*\)\s*$/g, '')
+              .trim();
+
+            textoExibicao = `${textoExibicao} (${periodoFichaFinanceira})`;
+          }
+
+          const textoSeguro = escapeHtml(textoExibicao);
 
           if (!usarLinksDocumentos) {
             return `<li>${textoSeguro}</li>`;
           }
 
-          const chave = normalizarTexto(p);
           const link = linksDocumentosPendentes[chave];
 
           if (!link) {
@@ -974,7 +989,7 @@
             <i class="fa-solid fa-file-circle-exclamation" aria-hidden="true"></i>
             <div>
               <strong>Documentos pendentes:</strong>
-              ${montarListaPendencias(faltando, isNaoCompartilhados)}
+              ${montarListaPendencias(faltando, isNaoCompartilhados, anoInicioNumero)}
             </div>
           </div>
         `
