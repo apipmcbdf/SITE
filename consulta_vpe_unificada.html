@@ -1,0 +1,2507 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Consulta Unificada de Documentação VPE</title>
+  <meta name="robots" content="noindex, nofollow" />
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+
+  <style>
+:root {
+      --azul: #003366;
+      --azul-claro: #005599;
+      --azul-suave: #e6f0ff;
+      --dourado: #f5b200;
+      --fundo: #f4f7fb;
+      --branco: #ffffff;
+      --texto: #1f2937;
+      --texto-suave: #5b6472;
+      --borda: #dbe5f2;
+      --sucesso: #166534;
+      --sucesso-bg: #ecfdf3;
+      --erro: #991b1b;
+      --erro-bg: #fff1f2;
+      --alerta: #92400e;
+      --alerta-bg: #fff8e2;
+      --info-bg: #eff6ff;
+      --sombra: 0 10px 28px rgba(0, 51, 102, 0.10);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--fundo);
+      color: var(--texto);
+      line-height: 1.5;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    /* Compatibilidade com o header carregado por header.html */
+    header {
+      background-color: var(--azul);
+      padding: 20px;
+      color: white;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .logo img {
+      height: 50px;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    nav ul li {
+      position: relative;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 8px 12px;
+      display: block;
+      transition: background-color 0.3s ease;
+    }
+
+    nav ul li a:hover {
+      background-color: var(--azul-claro);
+      border-radius: 4px;
+    }
+
+    nav ul li ul {
+      display: none;
+      position: absolute;
+      background-color: #004080;
+      top: 100%;
+      left: 0;
+      min-width: 220px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      z-index: 10;
+    }
+
+    nav ul li:hover ul {
+      display: block;
+      animation: fadeIn 0.25s ease-in-out;
+    }
+
+    nav ul li ul li a {
+      padding: 10px;
+      font-weight: 400;
+    }
+
+    .menu-toggle {
+      display: none;
+      cursor: pointer;
+      font-size: 24px;
+      color: white;
+      margin-bottom: 10px;
+    }
+
+    #menu {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .page-hero {
+      background:
+        linear-gradient(rgba(0, 51, 102, 0.84), rgba(0, 51, 102, 0.84)),
+        url("https://www.freetour.com/images/cities/rio-de-janeiro-brazil.jpg");
+      background-size: cover;
+      background-position: center;
+      color: var(--branco);
+      text-align: center;
+      padding: 64px 20px 64px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background-color: var(--dourado);
+      color: #111;
+      font-weight: 800;
+      padding: 8px 15px;
+      border-radius: 999px;
+      margin: 0 auto 18px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.22);
+      width: fit-content;
+    }
+
+    .page-hero h1 {
+      font-size: clamp(28px, 5vw, 44px);
+      line-height: 1.12;
+      font-weight: 800;
+      margin-bottom: 14px;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.35);
+    }
+
+    .page-hero p {
+      font-size: clamp(15px, 2.4vw, 18px);
+      max-width: 820px;
+      margin: 0 auto;
+      opacity: 0.96;
+    }
+
+    .main-content {
+      max-width: 1120px;
+      margin: 36px auto 0;
+      padding: 0 20px 56px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .consulta-card {
+      background-color: var(--branco);
+      border: 1px solid var(--borda);
+      border-radius: 20px;
+      box-shadow: var(--sombra);
+      padding: 32px;
+      animation: fadeIn 0.55s ease-in-out;
+    }
+
+    .consulta-header {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      text-align: center;
+      max-width: 760px;
+      margin: 0 auto 26px;
+    }
+
+    .consulta-header h2 {
+      color: var(--azul);
+      font-size: clamp(22px, 3vw, 30px);
+      line-height: 1.2;
+      font-weight: 800;
+    }
+
+    .consulta-header p {
+      color: var(--texto-suave);
+      font-size: 16px;
+    }
+
+    .form-box {
+      max-width: 680px;
+      margin: 0 auto;
+      background: #f8fbff;
+      border: 1px solid var(--borda);
+      border-radius: 18px;
+      padding: 24px;
+    }
+
+    .form-label {
+      display: block;
+      font-weight: 700;
+      color: var(--azul);
+      margin-bottom: 9px;
+    }
+
+    .input-group {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 14px 15px;
+      font-size: 17px;
+      border-radius: 12px;
+      border: 1px solid #c8d6e6;
+      background-color: var(--branco);
+      color: var(--texto);
+      outline: none;
+      transition: border-color 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .input-group input:focus {
+      border-color: var(--azul-claro);
+      box-shadow: 0 0 0 4px rgba(0, 85, 153, 0.12);
+    }
+
+    .input-group button {
+      padding: 14px 22px;
+      border: none;
+      border-radius: 12px;
+      background-color: var(--azul);
+      color: var(--branco);
+      font-size: 16px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: background-color 0.18s ease, transform 0.18s ease;
+      white-space: nowrap;
+    }
+
+    .input-group button:hover,
+    .input-group button:focus-visible {
+      background-color: var(--azul-claro);
+      transform: translateY(-1px);
+      outline: none;
+    }
+
+    .input-help {
+      margin-top: 10px;
+      color: var(--texto-suave);
+      font-size: 13px;
+      text-align: center;
+    }
+
+    .privacy-note {
+      margin: 18px auto 0;
+      max-width: 840px;
+      background: var(--info-bg);
+      border: 1px solid #bfdbfe;
+      border-radius: 16px;
+      padding: 14px 16px;
+      color: #1e3a8a;
+      font-size: 14px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .privacy-note i {
+      margin-top: 3px;
+      color: var(--azul);
+    }
+
+    #resultContainer {
+      max-width: 920px;
+      margin: 26px auto 0;
+      position: relative;
+      z-index: 1;
+      clear: both;
+    }
+
+    .resultado-card {
+      background-color: var(--branco);
+      border: 1px solid var(--borda);
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: 0 8px 22px rgba(0, 51, 102, 0.08);
+      animation: fadeIn 0.35s ease-in-out;
+      margin-bottom: 18px;
+    }
+
+    .resultado-card.sucesso {
+      border-color: rgba(22, 101, 52, 0.28);
+      background: linear-gradient(180deg, var(--sucesso-bg), #ffffff 70%);
+    }
+
+    .resultado-card.alerta {
+      border-color: rgba(245, 178, 0, 0.40);
+      background: linear-gradient(180deg, var(--alerta-bg), #ffffff 72%);
+    }
+
+    .resultado-card.erro {
+      border-color: rgba(153, 27, 27, 0.18);
+      background: linear-gradient(180deg, var(--erro-bg), #ffffff 72%);
+    }
+
+    .resultado-card.info {
+      border-color: #bfdbfe;
+      background: linear-gradient(180deg, var(--info-bg), #ffffff 72%);
+    }
+
+    .resultado-topo {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      margin-bottom: 18px;
+    }
+
+    .resultado-icone {
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 21px;
+    }
+
+    .resultado-card.sucesso .resultado-icone {
+      background-color: #dcfce7;
+      color: var(--sucesso);
+    }
+
+    .resultado-card.alerta .resultado-icone {
+      background-color: #fef3c7;
+      color: var(--alerta);
+    }
+
+    .resultado-card.erro .resultado-icone {
+      background-color: #fee2e2;
+      color: var(--erro);
+    }
+
+    .resultado-card.info .resultado-icone {
+      background-color: #dbeafe;
+      color: var(--azul);
+    }
+
+    .resultado-topo h3 {
+      color: var(--azul);
+      font-size: 21px;
+      margin-bottom: 4px;
+    }
+
+    .resultado-topo p {
+      color: var(--texto-suave);
+    }
+
+    .resumo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .resumo-item,
+    .status-item {
+      background-color: var(--branco);
+      border: 1px solid var(--borda);
+      border-radius: 14px;
+      padding: 14px;
+    }
+
+    .resumo-item span,
+    .status-item span {
+      display: block;
+      color: var(--texto-suave);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+
+    .resumo-item strong,
+    .status-item strong {
+      color: var(--texto);
+      font-size: 15px;
+      overflow-wrap: anywhere;
+    }
+
+    .status-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .resultado-subcard {
+      background-color: var(--branco);
+      border: 1px solid var(--borda);
+      border-radius: 18px;
+      padding: 20px;
+      box-shadow: 0 6px 16px rgba(0, 51, 102, 0.06);
+      margin-bottom: 16px;
+    }
+
+    .resultado-subcard:last-child {
+      margin-bottom: 0;
+    }
+
+    .subcard-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+      border-bottom: 1px solid var(--borda);
+      padding-bottom: 14px;
+    }
+
+    .subcard-header h4 {
+      color: var(--azul);
+      font-size: 18px;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+
+    .subcard-header p {
+      color: var(--texto-suave);
+      font-size: 14px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      padding: 7px 11px;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .tag.sucesso {
+      background-color: #dcfce7;
+      color: var(--sucesso);
+      border: 1px solid rgba(22, 101, 52, 0.20);
+    }
+
+    .tag.alerta {
+      background-color: #fef3c7;
+      color: var(--alerta);
+      border: 1px solid rgba(146, 64, 14, 0.20);
+    }
+
+    .tag.info {
+      background-color: #dbeafe;
+      color: var(--azul);
+      border: 1px solid #bfdbfe;
+    }
+
+    .passos {
+      display: grid;
+      gap: 12px;
+    }
+
+    .passo {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      background-color: var(--branco);
+      border: 1px solid var(--borda);
+      border-radius: 14px;
+      padding: 14px;
+    }
+
+    .passo i {
+      color: var(--azul);
+      margin-top: 2px;
+    }
+
+    .passo strong {
+      color: var(--azul);
+    }
+
+    .pendencias-lista {
+      margin-top: 8px;
+      padding-left: 18px;
+      color: var(--texto);
+    }
+
+    .pendencias-lista li {
+      margin-bottom: 5px;
+    }
+
+    .pendencias-organizadas {
+      display: grid;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .pendencia-grupo {
+      background-color: #f8fbff;
+      border: 1px solid var(--borda);
+      border-radius: 12px;
+      padding: 12px;
+    }
+
+    .pendencia-grupo h5 {
+      color: var(--azul);
+      font-size: 15px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .pendencia-grupo ul {
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    .pendencia-grupo li {
+      margin-bottom: 5px;
+    }
+
+    .pendencia-grupo.geral h5 {
+      color: var(--alerta);
+    }
+
+    .orientacao-lista {
+      margin-top: 10px;
+      padding-left: 20px;
+      color: var(--texto);
+    }
+
+    .orientacao-lista li {
+      margin-bottom: 10px;
+    }
+
+    .orientacao-lista a,
+    .pendencias-lista a,
+    .passo a {
+      color: var(--azul);
+      font-weight: 800;
+      text-decoration: underline;
+      overflow-wrap: anywhere;
+    }
+
+    .observacao-box {
+      margin-top: 12px;
+      background-color: #f8fbff;
+      border: 1px solid var(--borda);
+      border-radius: 12px;
+      padding: 12px;
+      color: var(--texto);
+    }
+
+    .empty-result {
+      color: var(--texto-suave);
+      font-size: 14px;
+    }
+
+    @media (max-width: 900px) {
+      .status-grid,
+      .resumo-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .subcard-header {
+        flex-direction: column;
+      }
+
+      .tag {
+        width: fit-content;
+      }
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        position: relative;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .logo {
+        text-align: center;
+        width: 100%;
+        margin-bottom: 10px;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+
+      #menu {
+        display: none;
+        flex-direction: column;
+        position: relative;
+        width: 100%;
+        background-color: var(--azul);
+        z-index: 1000;
+      }
+
+      #menu.active {
+        display: flex;
+      }
+
+      .page-hero {
+        padding: 44px 18px 50px;
+      }
+
+      .main-content {
+        margin-top: 24px;
+        padding-left: 14px;
+        padding-right: 14px;
+      }
+
+      .consulta-card {
+        padding: 22px;
+      }
+
+      .form-box {
+        padding: 18px;
+      }
+
+      .input-group {
+        grid-template-columns: 1fr;
+      }
+
+      .input-group button {
+        width: 100%;
+      }
+
+      .resultado-topo {
+        flex-direction: column;
+      }
+    }
+
+
+    .nome-box {
+      background-color: #f8fbff;
+      border: 1px solid var(--borda);
+      border-radius: 14px;
+      padding: 14px 16px;
+      margin-bottom: 18px;
+    }
+
+    .nome-box span {
+      display: block;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--texto-suave);
+      margin-bottom: 4px;
+      font-weight: 800;
+    }
+
+    .nome-box strong {
+      color: var(--azul);
+      font-size: 18px;
+    }
+
+    .periodo-anterior-card {
+      width: 100%;
+    }
+
+    .periodo-anterior-titulo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--azul);
+      font-size: 17px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .periodo-anterior-titulo i {
+      color: var(--alerta);
+      margin-top: 0;
+    }
+
+    .periodo-anterior-secao {
+      background-color: #f8fbff;
+      border: 1px solid var(--borda);
+      border-radius: 12px;
+      padding: 14px;
+      margin-top: 12px;
+    }
+
+    .periodo-anterior-secao p {
+      margin-bottom: 10px;
+    }
+
+    .periodo-anterior-secao p:last-child {
+      margin-bottom: 0;
+    }
+
+    .periodo-anterior-subtitulo {
+      display: block;
+      color: var(--azul);
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .periodo-anterior-lista {
+      margin-top: 8px;
+      padding-left: 20px;
+      color: var(--texto);
+    }
+
+    .periodo-anterior-lista li {
+      margin-bottom: 8px;
+    }
+
+    .periodo-anterior-alerta {
+      background-color: #fff8e2;
+      border: 1px solid rgba(245, 178, 0, 0.42);
+      border-left: 5px solid var(--dourado);
+    }
+
+    .periodo-anterior-alerta a,
+    .periodo-anterior-secao a {
+      color: var(--azul);
+      font-weight: 800;
+      text-decoration: underline;
+      overflow-wrap: anywhere;
+    }
+
+
+
+    .consulta-geral-card {
+      background-color: var(--branco);
+      border: 1px solid var(--borda);
+      border-radius: 18px;
+      padding: 22px;
+      box-shadow: 0 8px 22px rgba(0, 51, 102, 0.08);
+      margin-bottom: 18px;
+    }
+
+    .consulta-geral-topo {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+
+    .consulta-geral-icone {
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 21px;
+      background-color: #dbeafe;
+      color: var(--azul);
+    }
+
+    .consulta-geral-topo h3 {
+      color: var(--azul);
+      font-size: 21px;
+      margin-bottom: 4px;
+    }
+
+    .consulta-geral-topo p {
+      color: var(--texto-suave);
+    }
+
+    .vinculos-encontrados {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .vinculo-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      border-radius: 999px;
+      padding: 8px 12px;
+      background-color: var(--azul-suave);
+      border: 1px solid #bfdbfe;
+      color: var(--azul);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .vinculo-section {
+      margin-top: 24px;
+      padding-top: 24px;
+      border-top: 2px solid var(--borda);
+    }
+
+    .vinculo-section:first-of-type {
+      margin-top: 0;
+    }
+
+    .vinculo-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 13px;
+      margin-bottom: 14px;
+      padding: 0 2px;
+    }
+
+    .vinculo-header-icone {
+      width: 42px;
+      height: 42px;
+      border-radius: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      background-color: var(--azul);
+      color: var(--branco);
+      font-size: 18px;
+    }
+
+    .vinculo-header h3 {
+      color: var(--azul);
+      font-size: 21px;
+      margin-bottom: 3px;
+    }
+
+    .vinculo-header p {
+      color: var(--texto-suave);
+      font-size: 14px;
+    }
+
+    .vinculo-result-container .resultado-card {
+      margin-bottom: 0;
+    }
+
+    .consulta-parcial-erro {
+      margin-top: 14px;
+      background-color: var(--erro-bg);
+      border: 1px solid rgba(153, 27, 27, 0.18);
+      border-radius: 14px;
+      padding: 14px;
+      color: var(--erro);
+    }
+
+    .consulta-parcial-erro strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    @media (max-width: 768px) {
+      .consulta-geral-topo,
+      .vinculo-header {
+        flex-direction: column;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+  <!-- Header include -->
+  <div id="header-container"></div>
+
+  <main>
+    <section class="page-hero" aria-label="Consulta unificada de documentação da VPE">
+      <div class="badge">
+        <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+        <span>CONSULTA VPE</span>
+      </div>
+
+      <h1>Consulta de Documentação da VPE</h1>
+      <p>
+        Consulte, em uma única pesquisa, a situação da VPE como pensionista e como herdeiro. Os vínculos e as pendências permanecem apresentados separadamente.
+      </p>
+    </section>
+
+    <section class="main-content">
+      <div class="consulta-card">
+        <div class="consulta-header">
+          <h2>Informe o CPF para consultar</h2>
+          <p>
+            A pesquisa verifica a base de pensionistas e a base de herdeiros. Também é possível consultar casos de herdeiros pelo CPF do falecido cadastrado.
+          </p>
+        </div>
+
+        <div class="form-box">
+          <label class="form-label" for="cpfInput">Digite o CPF:</label>
+
+          <div class="input-group">
+            <input
+              id="cpfInput"
+              placeholder="000.000.000-00"
+              type="text"
+              inputmode="numeric"
+              autocomplete="off"
+              maxlength="14"
+            />
+            <button id="consultBtn" type="button">
+              <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+              Consultar
+            </button>
+          </div>
+
+          <div class="input-help">
+            Digite somente um CPF por vez, com ou sem pontos e traço.
+          </div>
+        </div>
+
+        <div class="privacy-note">
+          <i class="fa-solid fa-shield-halved" aria-hidden="true"></i>
+          <div>
+            A consulta apresenta apenas a situação registrada nas bases da Associação. Quando o CPF possuir mais de um vínculo, cada caso será mostrado separadamente.
+          </div>
+        </div>
+
+        <div id="resultContainer" aria-live="polite"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer include -->
+  <div id="footer-container"></div>
+
+  <script>
+    (function loadHeader(){
+      const el = document.getElementById('header-container');
+      if (!el) return;
+      fetch('header.html', { cache: 'no-store' })
+        .then(r => r.text())
+        .then(html => { el.innerHTML = html; })
+        .catch(() => { el.innerHTML = '<!-- falha ao carregar header -->'; });
+    })();
+
+    (function loadFooter(){
+      const el = document.getElementById('footer-container');
+      if (!el) return;
+      fetch('footer.html', { cache: 'no-store' })
+        .then(r => r.text())
+        .then(html => { el.innerHTML = html; })
+        .catch(() => { el.innerHTML = '<!-- falha ao carregar footer -->'; });
+    })();
+
+    function toggleMenu() {
+      var menu = document.getElementById('menu');
+      if (menu) menu.classList.toggle('active');
+    }
+
+    function mascaraCPF(valor) {
+      const numeros = valor.replace(/\D/g, '').slice(0, 11);
+
+      return numeros
+        .replace(/(\d{3})(\d)/, '$1.$2')
+        .replace(/(\d{3})(\d)/, '$1.$2')
+        .replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const cpfInput = document.getElementById('cpfInput');
+      if (cpfInput) {
+        cpfInput.addEventListener('input', () => {
+          cpfInput.value = mascaraCPF(cpfInput.value);
+        });
+
+        cpfInput.addEventListener('keydown', (event) => {
+          if (event.key === 'Enter') {
+            event.preventDefault();
+            document.getElementById('consultBtn').click();
+          }
+        });
+      }
+    });
+  </script>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDoXdgj_fRuYTluJby6QOIiEYBu268lZmQ",
+      authDomain: "documentos-apipmcbdf.firebaseapp.com",
+      projectId: "documentos-apipmcbdf",
+      storageBucket: "documentos-apipmcbdf.appspot.com",
+      messagingSenderId: "422508459389",
+      appId: "1:422508459389:web:bebd6b53839f77a3cd4814"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const COLLECTION_PENSIONISTAS = 'CONSULTARVPE';
+    const COLLECTION_HERDEIROS_UNIFICADA = 'CONSULTAR_HERDEIROS_VPE';
+
+    let renderizarPensionista = null;
+    let renderizarHerdeiros = null;
+
+  {
+    function limparCPF(cpf) {
+      return cpf.replace(/\D/g, '');
+    }
+
+    function formatarCPFConsulta(cpf) {
+      const numeros = limparCPF(cpf);
+
+      if (numeros.length === 0) return '';
+      if (numeros.length < 11) return numeros.padStart(11, '0');
+
+      return numeros;
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    function valor(data, ...campos) {
+      for (const campo of campos) {
+        if (data && data[campo] !== undefined && data[campo] !== null && String(data[campo]).trim() !== '') {
+          return String(data[campo]).trim();
+        }
+      }
+      return '';
+    }
+
+    function normalizarTexto(texto) {
+      return String(texto ?? '')
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toUpperCase()
+        .trim();
+    }
+
+    function formatarDataAtualizacao(updatedAt) {
+      if (!updatedAt) return '';
+
+      try {
+        let date = null;
+
+        if (typeof updatedAt.toDate === 'function') {
+          date = updatedAt.toDate();
+        } else if (updatedAt.seconds) {
+          date = new Date(updatedAt.seconds * 1000);
+        } else {
+          date = new Date(updatedAt);
+        }
+
+        if (!date || Number.isNaN(date.getTime())) return '';
+
+        return date.toLocaleString('pt-BR');
+      } catch (_) {
+        return '';
+      }
+    }
+
+    function itemStatus(rotulo, conteudo) {
+      if (!conteudo || !String(conteudo).trim()) return '';
+
+      return `
+        <div class="status-item">
+          <span>${escapeHtml(rotulo)}</span>
+          <strong>${escapeHtml(conteudo)}</strong>
+        </div>
+      `;
+    }
+
+    function montarListaPendencias(faltando, usarLinksDocumentos = false, anoInicioBeneficio = null) {
+      if (!faltando || !String(faltando).trim()) return '';
+
+      const linksDocumentosPendentes = {
+        'DECLARACAO DE INEXISTENCIA DE ACAO VPE': 'https://drive.google.com/file/d/1g4UGhUVHKmJIxomjgrouPpTw-IOniEYx/view?usp=drive_link',
+        'CONTRATO VPE': 'https://drive.google.com/file/d/1XSM8aUBeg8icX-8WkVcHNzNVTc0a7Div/view?usp=drive_link',
+        'PROCURACAO VPE': 'https://drive.google.com/file/d/1cVOQF6liNkEWvWCzfK5r4hJgyXVakKvV/view?usp=drive_link'
+      };
+
+      const anoInicialFicha = Number.isFinite(Number(anoInicioBeneficio))
+        ? (Number(anoInicioBeneficio) < 2008 ? 2008 : Number(anoInicioBeneficio))
+        : null;
+      const periodoFichaFinanceira = anoInicialFicha ? `${anoInicialFicha}-2026` : '';
+
+      const itens = String(faltando)
+        .split('|')
+        .map(p => p.trim())
+        .filter(Boolean)
+        .map(p => {
+          const chave = normalizarTexto(p);
+          let textoExibicao = p;
+
+          if (chave.includes('FICHA FINANCEIRA') && periodoFichaFinanceira) {
+            textoExibicao = textoExibicao
+              .replace(/\s*\(\s*\d{4}\s*-\s*\d{4}\s*\)\s*$/g, '')
+              .trim();
+
+            textoExibicao = `${textoExibicao} (${periodoFichaFinanceira})`;
+          }
+
+          const textoSeguro = escapeHtml(textoExibicao);
+
+          if (!usarLinksDocumentos) {
+            return `<li>${textoSeguro}</li>`;
+          }
+
+          const link = linksDocumentosPendentes[chave];
+
+          if (!link) {
+            return `<li>${textoSeguro}</li>`;
+          }
+
+          return `
+            <li>
+              <a href="${link}" target="_blank" rel="noopener noreferrer">${textoSeguro}</a>
+            </li>
+          `;
+        })
+        .join('');
+
+      if (!itens) return '';
+
+      return `<ul class="pendencias-lista">${itens}</ul>`;
+    }
+
+    function temPendencia(faltando, pendencia) {
+      if (!faltando || !String(faltando).trim()) return false;
+
+      const alvo = normalizarTexto(pendencia);
+
+      return String(faltando)
+        .split('|')
+        .map(p => normalizarTexto(p))
+        .some(p => p.includes(alvo));
+    }
+
+    function mostrarCarregando() {
+      const container = document.getElementById('pensionistaResultContainer');
+      container.innerHTML = `
+        <div class="resultado-card">
+          <div class="resultado-topo">
+            <div class="resultado-icone" style="background:#e6f0ff;color:#003366;">
+              <i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i>
+            </div>
+            <div>
+              <h3>Consultando...</h3>
+              <p>Aguarde enquanto verificamos a base da VPE.</p>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function mostrarNaoEncontrado() {
+      const container = document.getElementById('pensionistaResultContainer');
+      container.innerHTML = `
+        <div class="resultado-card erro">
+          <div class="resultado-topo">
+            <div class="resultado-icone">
+              <i class="fa-solid fa-circle-xmark" aria-hidden="true"></i>
+            </div>
+            <div>
+              <h3>CPF não encontrado</h3>
+              <p>Não localizamos dados da VPE para o CPF informado nesta base.</p>
+            </div>
+          </div>
+
+          <div class="passos">
+            <div class="passo">
+              <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+              <div>
+                Verifique se o CPF foi digitado corretamente. Caso a dúvida continue, entre em contato com a Associação para conferência cadastral.
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function mostrarErroPermissao() {
+      const container = document.getElementById('pensionistaResultContainer');
+      container.innerHTML = `
+        <div class="resultado-card erro">
+          <div class="resultado-topo">
+            <div class="resultado-icone">
+              <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
+            </div>
+            <div>
+              <h3>Permissão insuficiente para consultar</h3>
+              <p>As regras do Firestore não permitiram a leitura dos dados para este site.</p>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function mostrarErroConsulta(msg) {
+      const container = document.getElementById('pensionistaResultContainer');
+      container.innerHTML = `
+        <div class="resultado-card erro">
+          <div class="resultado-topo">
+            <div class="resultado-icone">
+              <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
+            </div>
+            <div>
+              <h3>Erro ao consultar</h3>
+              <p>${escapeHtml(msg)}</p>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function mostrarDados(data) {
+      const container = document.getElementById('pensionistaResultContainer');
+      container.innerHTML = '';
+
+      const existsFlag = data && (data.exists === true || data['exists'] === true);
+
+      if (!data || Object.keys(data).length === 0 || !existsFlag) {
+        mostrarNaoEncontrado();
+        return;
+      }
+
+      const nome = valor(data, 'NOME_BASE', 'nome', 'Nome', 'NOME');
+      const cpf = valor(data, 'CPF', 'cpf');
+      const siape = valor(data, 'SIAPE_INSTITUIDOR');
+      const dtInicio = valor(data, 'DT_INICIO_BENEFICIO');
+      const anoInicio = valor(data, 'ANO_INICIO_BENEFICIO');
+      const protocolado = valor(data, 'PROTOCOLADO_SC');
+      const consultaLP = valor(data, 'CONSULTA_LP');
+      const completude = valor(data, 'COMPLETUDE');
+      const faltando = valor(data, 'FALTANDO');
+      const periodoAnterior = valor(data, 'PERIODO_ANTERIOR');
+      const termoRenuncia = valor(data, 'Termo_Renuncia', 'TERMO_RENUNCIA');
+      const atualizadoEm = formatarDataAtualizacao(data.updatedAt);
+      const origem = valor(data, 'ORIGEM', 'origem', 'Origem');
+      const origemNorm = normalizarTexto(origem);
+      const isCompartilhados = origemNorm === 'COMPARTILHADOS';
+      const isNaoCompartilhados = origemNorm === 'NAO COMPARTILHADOS';
+
+      const completudeNorm = normalizarTexto(completude);
+      const classe = completudeNorm === 'INCOMPLETA' ? 'alerta' : 'sucesso';
+      const icone = completudeNorm === 'INCOMPLETA' ? 'fa-triangle-exclamation' : 'fa-circle-check';
+      const titulo = completudeNorm === 'INCOMPLETA'
+        ? 'CPF encontrado com documentação pendente'
+        : 'CPF encontrado na base da VPE';
+      const subtitulo = completudeNorm === 'INCOMPLETA'
+        ? 'Há pendências documentais indicadas abaixo.'
+        : 'Consulte abaixo as informações disponíveis para este CPF.';
+
+      const protocoloNorm = normalizarTexto(protocolado);
+      const consultaLPNorm = normalizarTexto(consultaLP);
+      const consultaLPNaoEncontrada = consultaLPNorm === 'NAO ENCONTRADO' || consultaLPNorm === 'NÃO ENCONTRADO';
+      const consultaLPNao = consultaLPNorm === 'NAO' || consultaLPNorm === 'NÃO';
+      const termoRenunciaNorm = normalizarTexto(termoRenuncia);
+      const termoRenunciaSim = termoRenunciaNorm === 'SIM';
+      const anoInicioMatch = String(anoInicio ?? '').match(/\b(19|20)\d{2}\b/);
+      const anoInicioNumero = anoInicioMatch ? Number(anoInicioMatch[0]) : NaN;
+      const deveMostrarConsultaLP = !isCompartilhados && !(isNaoCompartilhados && consultaLPNao);
+      const deveMostrarTermoRenuncia = !isCompartilhados && (isNaoCompartilhados ? anoInicioNumero > 2008 : true);
+      const numeroProcessoTexto = String(protocolado ?? '').trim();
+      const numeroProcessoDigitos = numeroProcessoTexto.replace(/\D/g, '');
+      const temNumeroProcessoValidoCompartilhados = isCompartilhados && (
+        /^\d{7}-\d{2}\.\d{4}\.\d\.\d{2}\.\d{4}$/.test(numeroProcessoTexto) ||
+        /^\d{20}$/.test(numeroProcessoDigitos)
+      );
+      const compartilhadosAguardandoAnalise = isCompartilhados && !temNumeroProcessoValidoCompartilhados && (
+        protocoloNorm === 'NAO' ||
+        protocoloNorm === 'NÃO' ||
+        protocoloNorm === 'AGUARDANDO CALCULO'
+      );
+      const compartilhadosComPendenciaSilveira = isCompartilhados &&
+        !temNumeroProcessoValidoCompartilhados &&
+        !compartilhadosAguardandoAnalise &&
+        Boolean(numeroProcessoTexto);
+      const deveMostrarNumeroProcesso = !isNaoCompartilhados && (!isCompartilhados || temNumeroProcessoValidoCompartilhados);
+
+      const statusItens = [
+        itemStatus('CPF', cpf),
+        !isNaoCompartilhados ? itemStatus('SIAPE do instituidor', siape) : '',
+        !isNaoCompartilhados ? itemStatus('Início do benefício', dtInicio) : '',
+        itemStatus('Ano início do benefício', anoInicio),
+        itemStatus('Documentação', completude),
+        deveMostrarNumeroProcesso ? itemStatus(isCompartilhados ? 'Número do processo' : 'Protocolo SC', protocolado) : '',
+        deveMostrarConsultaLP ? itemStatus('Consulta LP', consultaLP) : '',
+        itemStatus('Período anterior', periodoAnterior),
+        deveMostrarTermoRenuncia ? itemStatus('Termo de renúncia', termoRenuncia) : '',
+        !isCompartilhados ? itemStatus('Última atualização', atualizadoEm) : ''
+      ].filter(Boolean).join('');
+
+      const avisoPeriodoAnteriorNaoCompartilhadosHtml = isNaoCompartilhados && anoInicioNumero > 2008 && !termoRenunciaSim
+        ? `
+          <div class="passo">
+            <i class="fa-solid fa-file-signature" aria-hidden="true"></i>
+            <div class="periodo-anterior-card">
+              <div class="periodo-anterior-titulo">
+                <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
+                <span>Atenção ao período anterior</span>
+              </div>
+
+              <div class="periodo-anterior-secao">
+                <span class="periodo-anterior-subtitulo">Entenda o período da VPE</span>
+                <p>A execução da VPE abrange o período de <strong>outubro de 2008</strong> até o efetivo recebimento da gratificação.</p>
+                <p>Conforme orientação do escritório <strong>Silveira Cruz</strong>, o recomendável é que, no processo de cobrança dos valores atrasados da VPE, seja solicitado o período integral.</p>
+              </div>
+
+              <div class="periodo-anterior-secao">
+                <span class="periodo-anterior-subtitulo">Quando há pensão iniciada a partir de 2009</span>
+                <p>Nos casos em que a pensionista atual começou a receber a pensão a partir de 2009, o ideal é que o(s) herdeiro(s) do servidor ou pensionista que recebia anteriormente também entreguem toda a documentação necessária.</p>
+                <p>Dessa forma, o escritório poderá pedir, no mesmo processo:</p>
+                <ul class="periodo-anterior-lista">
+                  <li>o período anterior, a ser dividido entre os herdeiros de quem recebia a pensão anteriormente;</li>
+                  <li>o período individual da pensionista atual, que cabe apenas a ela.</li>
+                </ul>
+                <p>Assim, a entrega da documentação dos herdeiros permite que o pedido seja feito da forma mais completa possível, evitando que parte do período devido fique fora da execução.</p>
+              </div>
+
+              <div class="periodo-anterior-secao periodo-anterior-alerta">
+                <span class="periodo-anterior-subtitulo">Opção pelo Termo de Renúncia</span>
+                <p>Caso a pensionista não tenha interesse em executar o período anterior e deseje prosseguir apenas com o período que cabe individualmente a ela, sem depender da documentação dos demais herdeiros, isso também é possível.</p>
+                <p>Nesse caso, será necessário assinar o <strong>Termo de Renúncia do Período Anterior</strong>, fornecido pela Associação. <a href="https://drive.google.com/file/d/1sKFN-fDYp91b-V2Gz1vlAayDIWWL85Br/view?usp=drive_link" target="_blank" rel="noopener noreferrer">Clique aqui para baixar o termo</a>.</p>
+                <p><strong>Importante:</strong> o <strong>Termo de Renúncia</strong> deve ser assinado e ter <strong>firma reconhecida por autenticidade em cartório</strong> antes do envio à Associação.</p>
+              </div>
+            </div>
+          </div>
+        `
+        : '';
+
+      const pendenciasHtml = completudeNorm === 'INCOMPLETA' && faltando
+        ? `
+          <div class="passo">
+            <i class="fa-solid fa-file-circle-exclamation" aria-hidden="true"></i>
+            <div>
+              <strong>Documentos pendentes:</strong>
+              ${montarListaPendencias(faltando, isNaoCompartilhados, anoInicioNumero)}
+            </div>
+          </div>
+        `
+        : '';
+
+      const fichaFinanceiraNaoCompartilhadosHtml = isNaoCompartilhados && completudeNorm === 'INCOMPLETA' && temPendencia(faltando, 'FICHA FINANCEIRA')
+        ? `
+          <div class="passo">
+            <i class="fa-solid fa-file-invoice-dollar" aria-hidden="true"></i>
+            <div>
+              <strong>Como acessar a Ficha Financeira Anual pelo SouGov.br</strong>
+              <ol class="orientacao-lista">
+                <li>Acesse o aplicativo <strong>SouGov.br</strong> no celular ou entre pelo computador no <strong>SouGov.br Web</strong>.</li>
+                <li>Faça login com sua conta <strong>gov.br</strong>.</li>
+                <li>Antes de consultar, verifique se o vínculo está correto.</li>
+                <li>Caso tenha mais de um vínculo, clique na seta ao lado de <strong>“Órgão – Uorg – Matrícula”</strong> e selecione o vínculo desejado.</li>
+                <li>Na tela inicial, procure a opção <strong>“Autoatendimento”</strong>.</li>
+                <li>Dentro de Autoatendimento, clique em <strong>“Ficha Financeira Anual”</strong>.</li>
+                <li>Selecione o ano que deseja consultar.</li>
+                <li>Após selecionar o ano, a ficha financeira será exibida com o demonstrativo detalhado dos rendimentos e descontos lançados na folha de pagamento/contracheque.</li>
+                <li>Para salvar, enviar ou compartilhar o documento, clique nos <strong>três pontinhos</strong>.</li>
+                <li>Escolha a opção desejada, como compartilhar, baixar ou enviar para o e-mail.</li>
+                <li>Caso precise enviar para a Associação, salve ou compartilhe o arquivo em <strong>PDF</strong>.</li>
+              </ol>
+              <div class="observacao-box">
+                <strong>Observação:</strong> a consulta pode ser feita tanto pelo aplicativo SouGov.br quanto pela versão web.
+              </div>
+            </div>
+          </div>
+        `
+        : '';
+
+      const protocoloHtml = !isNaoCompartilhados && protocolado && (!isCompartilhados || temNumeroProcessoValidoCompartilhados) && protocoloNorm !== 'NAO' && protocoloNorm !== 'NÃO'
+        ? (isCompartilhados
+          ? `
+            <div class="passo">
+              <i class="fa-solid fa-scale-balanced" aria-hidden="true"></i>
+              <div>
+                <strong>Processo localizado:</strong>
+                consta número de processo vinculado a este CPF. Utilize o número informado acima para consultar o andamento no TRF1.
+              </div>
+            </div>
+          `
+          : `
+            <div class="passo">
+              <i class="fa-solid fa-scale-balanced" aria-hidden="true"></i>
+              <div>
+                <strong>Processo protocolado:</strong>
+                consta protocolo vinculado a este CPF. Aguarde novas movimentações e comunicados da Associação.
+              </div>
+            </div>
+          `)
+        : '';
+
+      const consultaLPHtml = !isCompartilhados && consultaLP && !consultaLPNaoEncontrada && !(isNaoCompartilhados && consultaLPNao)
+        ? `
+          <div class="passo">
+            <i class="fa-solid fa-magnifying-glass-chart" aria-hidden="true"></i>
+            <div>
+              <strong>Consulta LP:</strong>
+              há informação registrada na base interna para este CPF.
+            </div>
+          </div>
+        `
+        : '';
+
+      const orientacaoCompartilhadosHtml = `
+        <div class="passo">
+          <i class="fa-solid fa-list-check" aria-hidden="true"></i>
+          <div>
+            <strong>Orientação: como consultar o andamento do processo no TRF1</strong>
+            <ol class="orientacao-lista">
+              <li>Tenha em mãos o número completo do processo, no formato <strong>0000000-00.0000.4.01.0000</strong>.</li>
+              <li>Acesse o site oficial de Consulta Processual do TRF1: <a href="https://www.trf1.jus.br/trf1/processual/consulta-processual" target="_blank" rel="noopener noreferrer">https://www.trf1.jus.br/trf1/processual/consulta-processual</a>.</li>
+              <li>Clique em <strong>“PJe - Consulta (usuários em geral)”</strong>.</li>
+              <li>Depois clique em <strong>“1º Grau — Varas e Juizados”</strong>.</li>
+              <li>Na página que abrir, informe o número completo do processo no campo de consulta.</li>
+              <li>Clique em <strong>“Pesquisar”</strong> ou <strong>“Consultar”</strong>.</li>
+              <li>O sistema poderá mostrar informações como vara responsável, partes do processo, data de distribuição, movimentações, decisões ou documentos públicos disponíveis.</li>
+              <li>Caso o processo não apareça, tente também a consulta geral do TRF1: <a href="https://processual.trf1.jus.br/" target="_blank" rel="noopener noreferrer">https://processual.trf1.jus.br/</a>.</li>
+            </ol>
+            <div class="observacao-box">
+              <strong>Observação importante:</strong> sempre consulte pelo site oficial do TRF1. Outros sites podem aparecer no Google, mas o andamento oficial deve ser conferido diretamente no sistema do Tribunal. Se o processo não for localizado, ele pode estar em outro grau, em outro sistema, com alguma restrição de acesso ou em segredo de justiça.
+            </div>
+          </div>
+        </div>
+      `;
+
+      const orientacaoCompartilhadosAnaliseHtml = `
+        <div class="passo">
+          <i class="fa-solid fa-hourglass-half" aria-hidden="true"></i>
+          <div>
+            <strong>Orientação:</strong>
+            a documentação foi enviada ao escritório <strong>Silveira Cruz</strong> e está em análise.
+            No momento, ainda não há número de processo disponível para consulta no TRF1.
+            Acompanhe os comunicados oficiais da Associação sobre as próximas atualizações.
+          </div>
+        </div>
+      `;
+
+      const orientacaoCompartilhadosPendenciaHtml = `
+        <div class="passo">
+          <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
+          <div>
+            <strong>Pendência identificada pelo escritório Silveira Cruz:</strong>
+            há uma pendência ou observação registrada para este CPF.
+            Entre em contato com a Associação o mais breve possível para verificar a situação e receber a orientação adequada.
+          </div>
+        </div>
+      `;
+
+      const orientacaoCompartilhadosIndefinidaHtml = `
+        <div class="passo">
+          <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+          <div>
+            <strong>Orientação:</strong>
+            ainda não há número de processo disponível para consulta.
+            Acompanhe os comunicados oficiais da Associação ou entre em contato para confirmar a situação atual.
+          </div>
+        </div>
+      `;
+
+      const orientacaoHtml = isCompartilhados
+        ? (temNumeroProcessoValidoCompartilhados
+          ? orientacaoCompartilhadosHtml
+          : (compartilhadosAguardandoAnalise
+            ? orientacaoCompartilhadosAnaliseHtml
+            : (compartilhadosComPendenciaSilveira
+              ? orientacaoCompartilhadosPendenciaHtml
+              : orientacaoCompartilhadosIndefinidaHtml)))
+        : (completudeNorm === 'INCOMPLETA'
+          ? `
+            <div class="passo">
+              <i class="fa-solid fa-envelope-open-text" aria-hidden="true"></i>
+              <div>
+                <strong>Orientação:</strong>
+                a documentação pendente deve ser enviada em <strong>PDF legível</strong> para o e-mail
+                <a href="mailto:documentos@apipmcbdf.com.br">documentos@apipmcbdf.com.br</a>.
+                Esse e-mail é utilizado apenas para recebimento dos documentos pendentes e não é respondido.
+                Em caso de dúvidas, entre em contato pelo telefone da Associação ou pelo e-mail
+                <a href="mailto:atendimento@apipmcbdf.com.br">atendimento@apipmcbdf.com.br</a>.
+              </div>
+            </div>
+          `
+          : `
+            <div class="passo">
+              <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+              <div>
+                <strong>Orientação:</strong>
+                acompanhe os comunicados oficiais da Associação sobre o andamento da VPE.
+              </div>
+            </div>
+          `);
+
+      const documentacaoCompletaNaoCompartilhadosHtml = isNaoCompartilhados && completudeNorm === 'COMPLETA'
+        ? `
+          <div class="passo">
+            <i class="fa-solid fa-file-circle-check" aria-hidden="true"></i>
+            <div>
+              <strong>Documentação completa:</strong>
+              sua documentação está completa e será encaminhada ao escritório Silveira Cruz para as providências cabíveis.
+            </div>
+          </div>
+        `
+        : '';
+
+      const litispendenciaNaoCompartilhadosHtml = isNaoCompartilhados && consultaLP && consultaLPNaoEncontrada
+        ? `
+          <div class="passo">
+            <i class="fa-solid fa-scale-balanced" aria-hidden="true"></i>
+            <div>
+              <strong>Pendente verificação de litispendência:</strong>
+              o setor jurídico ainda verificará se já existe processo anterior pedindo a VPE. Se houver ação anterior com o mesmo pedido, não será possível solicitar novamente o mesmo objeto. Se não houver processo anterior, o caso seguirá para o escritório Silveira Cruz após a conclusão da documentação.
+            </div>
+          </div>
+        `
+        : '';
+
+      container.innerHTML = `
+        <div class="resultado-card ${classe}">
+          <div class="resultado-topo">
+            <div class="resultado-icone">
+              <i class="fa-solid ${icone}" aria-hidden="true"></i>
+            </div>
+            <div>
+              <h3>${titulo}</h3>
+              <p>${subtitulo}</p>
+            </div>
+          </div>
+
+          <div class="nome-box">
+            <span>Nome encontrado</span>
+            <strong>${nome ? escapeHtml(nome) : 'Nome não informado'}</strong>
+          </div>
+
+          ${statusItens ? `<div class="status-grid">${statusItens}</div>` : ''}
+
+          <div class="passos">
+            ${avisoPeriodoAnteriorNaoCompartilhadosHtml}
+            ${pendenciasHtml}
+            ${fichaFinanceiraNaoCompartilhadosHtml}
+            ${protocoloHtml}
+            ${consultaLPHtml}
+            ${orientacaoHtml}
+            ${documentacaoCompletaNaoCompartilhadosHtml}
+            ${litispendenciaNaoCompartilhadosHtml}
+          </div>
+        </div>
+      `;
+    }
+
+    renderizarPensionista = mostrarDados;
+  }
+
+  {
+    const COLLECTION_HERDEIROS = 'CONSULTAR_HERDEIROS_VPE';
+
+    function limparCPF(cpf) {
+      return String(cpf ?? '').replace(/\D/g, '');
+    }
+
+    function formatarCPFConsulta(cpf) {
+      const numeros = limparCPF(cpf);
+
+      if (numeros.length === 0) return '';
+      if (numeros.length < 11) return numeros.padStart(11, '0');
+
+      return numeros;
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    function valor(data, ...campos) {
+      for (const campo of campos) {
+        if (data && data[campo] !== undefined && data[campo] !== null && String(data[campo]).trim() !== '') {
+          return String(data[campo]).trim();
+        }
+      }
+      return '';
+    }
+
+    function normalizarTexto(texto) {
+      return String(texto ?? '')
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toUpperCase()
+        .trim();
+    }
+
+    function formatarDataAtualizacao(updatedAt) {
+      if (!updatedAt) return '';
+
+      try {
+        let date = null;
+
+        if (typeof updatedAt.toDate === 'function') {
+          date = updatedAt.toDate();
+        } else if (updatedAt.seconds) {
+          date = new Date(updatedAt.seconds * 1000);
+        } else {
+          date = new Date(updatedAt);
+        }
+
+        if (!date || Number.isNaN(date.getTime())) return '';
+
+        return date.toLocaleString('pt-BR');
+      } catch (_) {
+        return '';
+      }
+    }
+
+    function itemStatus(rotulo, conteudo) {
+      if (!conteudo || !String(conteudo).trim()) return '';
+
+      return `
+        <div class="status-item">
+          <span>${escapeHtml(rotulo)}</span>
+          <strong>${escapeHtml(conteudo)}</strong>
+        </div>
+      `;
+    }
+
+    function resumoItem(rotulo, conteudo) {
+      if (!conteudo || !String(conteudo).trim()) return '';
+
+      return `
+        <div class="resumo-item">
+          <span>${escapeHtml(rotulo)}</span>
+          <strong>${escapeHtml(conteudo)}</strong>
+        </div>
+      `;
+    }
+
+    function normalizarArray(valorCampo) {
+      if (Array.isArray(valorCampo)) {
+        return valorCampo.map(v => String(v ?? '').trim()).filter(Boolean);
+      }
+
+      if (!valorCampo || !String(valorCampo).trim()) {
+        return [];
+      }
+
+      return String(valorCampo)
+        .split(/[;|\n]+/)
+        .map(v => v.trim())
+        .filter(Boolean);
+    }
+
+    function listaUnica(itens) {
+      const vistos = new Set();
+      const saida = [];
+
+      for (const item of itens) {
+        const texto = String(item ?? '').trim();
+        if (!texto) continue;
+
+        const key = normalizarTexto(texto);
+        if (vistos.has(key)) continue;
+
+        vistos.add(key);
+        saida.push(texto);
+      }
+
+      return saida;
+    }
+
+    function limparPendenciaVisivel(item) {
+      return String(item ?? '')
+        .replace(/\s*\(POSSUI\s+LP\s*=\s*N[ÃA]O\s+ENCONTRADO\)\s*\.?/gi, '')
+        .replace(/Consulta de litispend[êe]ncia da pensionista pendente\.?/gi, 'Pendente consulta de litispendência da pensionista.')
+        .replace(/\s{2,}/g, ' ')
+        .replace(/\.\./g, '.')
+        .trim();
+    }
+
+    function normalizarListaPendenciasVisiveis(itens) {
+      return listaUnica(
+        normalizarArray(itens)
+          .map(limparPendenciaVisivel)
+          .filter(Boolean)
+      );
+    }
+
+    function deveOcultarPendenciaFalecido(item) {
+      const texto = normalizarTexto(limparPendenciaVisivel(item))
+        .replace(/[.]+$/g, '')
+        .trim();
+
+      return texto === 'INFORME A QUANTIDADE DE HERDEIROS' || texto === 'INFORME SE TEM BENS';
+    }
+
+    function montarListaPendencias(itens) {
+      const lista = normalizarListaPendenciasVisiveis(itens);
+
+      if (!lista.length) return '';
+
+      return `
+        <ul class="pendencias-lista">
+          ${lista.map(item => `<li>${escapeHtml(item)}</li>`).join('')}
+        </ul>
+      `;
+    }
+
+    function separarPessoaPendencia(item) {
+      const match = String(item ?? '').match(/^([^:]{3,120}):\s*(.+)$/);
+      if (!match) return null;
+
+      const pessoa = match[1].trim();
+      const pendencia = match[2].trim();
+      const pessoaNorm = normalizarTexto(pessoa);
+      const palavras = pessoaNorm.split(/\s+/).filter(Boolean);
+
+      const termosQueNaoSaoNome = [
+        'CPF',
+        'DOCUMENTACAO',
+        'DOCUMENTAÇÃO',
+        'SITUACAO',
+        'SITUAÇÃO',
+        'STATUS',
+        'FALTA',
+        'INFORME',
+        'FORAM',
+        'SAO',
+        'SÃO',
+        'PENDENCIA',
+        'PENDÊNCIA'
+      ];
+
+      if (!pendencia || palavras.length < 2) return null;
+      if (termosQueNaoSaoNome.some(termo => pessoaNorm.startsWith(termo))) return null;
+
+      return { pessoa, pendencia };
+    }
+
+    function extrairPessoaReferente(item) {
+      const match = String(item ?? '').match(/referente\(s\)\s*a:\s*(.+?)\.?$/i);
+      if (!match) return '';
+      return match[1].trim();
+    }
+
+    function ehDetalheDeclaracaoBens(item) {
+      const texto = normalizarTexto(item);
+
+      return texto.startsWith('FORAM ENCONTRADAS')
+        && texto.includes('DECLARACAO');
+    }
+
+    function formatarPendenciaDeclaracaoBens(pendenciaBase, detalhe) {
+      const qtdNecessariaMatch = String(pendenciaBase ?? '').match(/S[ãa]o necess[áa]rias?\s+(\d+)/i);
+      const qtdEncontradaMatch = String(detalhe ?? '').match(/foram encontradas\s+(\d+)/i);
+      const referente = extrairPessoaReferente(detalhe).replace(/[.]+$/g, '').trim();
+      const qtdNecessaria = qtdNecessariaMatch ? qtdNecessariaMatch[1] : '';
+      const qtdEncontrada = qtdEncontradaMatch ? qtdEncontradaMatch[1] : '';
+
+      const inicio = qtdNecessaria
+        ? `Falta Declaração de inexistência de bens: são necessárias ${qtdNecessaria} declarações distintas`
+        : 'Falta Declaração de inexistência de bens: há declaração adicional pendente';
+
+      const encontrada = qtdEncontrada
+        ? (qtdEncontrada === '1' ? 'foi encontrada 1' : `foram encontradas ${qtdEncontrada}`)
+        : 'foi encontrada quantidade inferior à necessária';
+
+      const complemento = referente
+        ? ` Falta a declaração adicional referente a ${referente}.`
+        : '';
+
+      return `${inicio}; ${encontrada}.${complemento}`;
+    }
+
+    function anexarDetalheDeclaracaoBens(pendencias, detalhe) {
+      for (let i = pendencias.length - 1; i >= 0; i--) {
+        const texto = normalizarTexto(pendencias[i]);
+
+        if (texto.includes('DECLARACOES DISTINTAS DE INEXISTENCIA DE BENS')) {
+          pendencias[i] = formatarPendenciaDeclaracaoBens(pendencias[i], detalhe);
+          return true;
+        }
+      }
+
+      return false;
+    }
+
+    function itemDeveFicarComGrupoAtual(item) {
+      const texto = normalizarTexto(item);
+
+      return texto.startsWith('FALTA ')
+        || texto.startsWith('CPF ')
+        || texto.startsWith('GRAU ')
+        || texto.startsWith('PARENTESCO ')
+        || texto.startsWith('CERTIDAO ')
+        || texto.startsWith('CERTIDÃO ')
+        || texto.startsWith('NENHUM PDF')
+        || texto.startsWith('SAO NECESSARIAS')
+        || texto.startsWith('SÃO NECESSÁRIAS')
+        || texto.includes('CONSULTA DE LITISPENDENCIA')
+        || texto.includes('CONSULTA DE LITISPENDÊNCIA');
+    }
+
+    function obterGrupoPendencia(grupos, pessoa) {
+      const chave = normalizarTexto(pessoa);
+      let grupo = grupos.find(item => item.chave === chave);
+
+      if (!grupo) {
+        grupo = { chave, pessoa, pendencias: [] };
+        grupos.push(grupo);
+      }
+
+      return grupo;
+    }
+
+    function montarListaPendenciasPorHerdeiro(itens) {
+      const lista = normalizarListaPendenciasVisiveis(itens);
+
+      if (!lista.length) return '';
+
+      const grupos = [];
+      const gerais = [];
+      let grupoAtual = null;
+
+      for (const item of lista) {
+        if (ehDetalheDeclaracaoBens(item)) {
+          if (grupoAtual && anexarDetalheDeclaracaoBens(grupoAtual.pendencias, item)) {
+            continue;
+          }
+
+          gerais.push(item);
+          continue;
+        }
+
+        const separado = separarPessoaPendencia(item);
+
+        if (separado) {
+          grupoAtual = obterGrupoPendencia(grupos, separado.pessoa);
+          grupoAtual.pendencias.push(separado.pendencia);
+          continue;
+        }
+
+        const pessoaReferente = extrairPessoaReferente(item);
+
+        if (pessoaReferente) {
+          grupoAtual = obterGrupoPendencia(grupos, pessoaReferente);
+          grupoAtual.pendencias.push(item);
+          continue;
+        }
+
+        if (grupoAtual && itemDeveFicarComGrupoAtual(item)) {
+          grupoAtual.pendencias.push(item);
+          continue;
+        }
+
+        gerais.push(item);
+      }
+
+      const renderizarItens = (pendencias) => `
+        <ul>
+          ${listaUnica(pendencias).map(item => `<li>${escapeHtml(item)}</li>`).join('')}
+        </ul>
+      `;
+
+      const blocosGerais = gerais.length
+        ? `
+          <div class="pendencia-grupo geral">
+            <h5>Pendências gerais dos herdeiros</h5>
+            ${renderizarItens(gerais)}
+          </div>
+        `
+        : '';
+
+      const blocosPessoas = grupos
+        .filter(grupo => grupo.pessoa && grupo.pendencias.length)
+        .map(grupo => `
+          <div class="pendencia-grupo">
+            <h5>${escapeHtml(grupo.pessoa)}</h5>
+            ${renderizarItens(grupo.pendencias)}
+          </div>
+        `)
+        .join('');
+
+      return `
+        <div class="pendencias-organizadas">
+          ${blocosGerais}
+          ${blocosPessoas}
+        </div>
+      `;
+    }
+
+    function temPendenciaNoResultado(resultado) {
+      if (resultado && resultado.tem_pendente === true) return true;
+
+      const camposStatus = [
+        valor(resultado, 'situacao_geral'),
+        valor(resultado, 'documentacao_falecido'),
+        valor(resultado, 'documentacao_herdeiros'),
+        valor(resultado, 'documentacao_herdeiro')
+      ].map(normalizarTexto);
+
+      if (camposStatus.some(v => v.includes('PENDENTE') || v.includes('INCOMPLETA') || v.includes('NAO VERIFICADA'))) {
+        return true;
+      }
+
+      const pendencias = [
+        ...normalizarArray(resultado?.pendencias_falecido_lista || resultado?.pendencias_falecido),
+        ...normalizarArray(resultado?.pendencias_herdeiros_lista || resultado?.pendencias_herdeiros),
+        ...normalizarArray(resultado?.pendencias_herdeiro_lista || resultado?.pendencias_herdeiro)
+      ];
+
+      return pendencias.length > 0;
+    }
+
+    function tituloTipoConsulta(tipo) {
+      const tipoNorm = normalizarTexto(tipo);
+
+      if (tipoNorm === 'FALECIDO') {
+        return 'Consulta pelo CPF do falecido';
+      }
+
+      if (tipoNorm === 'HERDEIRO') {
+        return 'Consulta pelo CPF do herdeiro';
+      }
+
+      return 'Resultado da consulta';
+    }
+
+    function subtituloTipoConsulta(tipo) {
+      const tipoNorm = normalizarTexto(tipo);
+
+      if (tipoNorm === 'FALECIDO') {
+        return 'Dados encontrados pelo CPF do falecido';
+      }
+
+      if (tipoNorm === 'HERDEIRO') {
+        return 'Dados encontrados pelo CPF do herdeiro';
+      }
+
+      return 'Dados encontrados na consulta';
+    }
+
+    function mostrarCarregando() {
+      const container = document.getElementById('herdeiroResultContainer');
+      container.innerHTML = `
+        <div class="resultado-card info">
+          <div class="resultado-topo">
+            <div class="resultado-icone">
+              <i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i>
+            </div>
+            <div>
+              <h3>Consultando...</h3>
+              <p>Aguarde enquanto verificamos a base de herdeiros da VPE.</p>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function mostrarNaoEncontrado() {
+      const container = document.getElementById('herdeiroResultContainer');
+      container.innerHTML = `
+        <div class="resultado-card erro">
+          <div class="resultado-topo">
+            <div class="resultado-icone">
+              <i class="fa-solid fa-circle-xmark" aria-hidden="true"></i>
+            </div>
+            <div>
+              <h3>CPF não encontrado</h3>
+              <p>Não localizamos dados de herdeiros da VPE para o CPF informado nesta base.</p>
+            </div>
+          </div>
+
+          <div class="passos">
+            <div class="passo">
+              <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+              <div>
+                Verifique se o CPF foi digitado corretamente. A consulta pode ser feita pelo CPF do falecido ou pelo CPF do herdeiro cadastrado. Caso a dúvida continue, entre em contato com a Associação para conferência cadastral.
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function mostrarErroPermissao() {
+      const container = document.getElementById('herdeiroResultContainer');
+      container.innerHTML = `
+        <div class="resultado-card erro">
+          <div class="resultado-topo">
+            <div class="resultado-icone">
+              <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
+            </div>
+            <div>
+              <h3>Permissão insuficiente para consultar</h3>
+              <p>As regras do Firestore não permitiram a leitura dos dados para este site.</p>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function mostrarErroConsulta(msg) {
+      const container = document.getElementById('herdeiroResultContainer');
+      container.innerHTML = `
+        <div class="resultado-card erro">
+          <div class="resultado-topo">
+            <div class="resultado-icone">
+              <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
+            </div>
+            <div>
+              <h3>Erro ao consultar</h3>
+              <p>${escapeHtml(msg)}</p>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function montarPendenciasResultado(resultado) {
+      const blocos = [];
+
+      const pendenciasFalecido = normalizarArray(resultado.pendencias_falecido_lista || resultado.pendencias_falecido)
+        .filter(item => !deveOcultarPendenciaFalecido(item));
+      const pendenciasHerdeiros = normalizarArray(resultado.pendencias_herdeiros_lista || resultado.pendencias_herdeiros);
+      const pendenciasHerdeiro = normalizarArray(resultado.pendencias_herdeiro_lista || resultado.pendencias_herdeiro);
+
+      if (pendenciasFalecido.length) {
+        blocos.push(`
+          <div class="passo">
+            <i class="fa-solid fa-file-circle-exclamation" aria-hidden="true"></i>
+            <div>
+              <strong>Pendências do falecido:</strong>
+              ${montarListaPendencias(pendenciasFalecido)}
+            </div>
+          </div>
+        `);
+      }
+
+      if (pendenciasHerdeiros.length) {
+        blocos.push(`
+          <div class="passo">
+            <i class="fa-solid fa-users" aria-hidden="true"></i>
+            <div>
+              <strong>Pendências dos herdeiros:</strong>
+              ${montarListaPendenciasPorHerdeiro(pendenciasHerdeiros)}
+            </div>
+          </div>
+        `);
+      }
+
+      if (pendenciasHerdeiro.length) {
+        blocos.push(`
+          <div class="passo">
+            <i class="fa-solid fa-user-check" aria-hidden="true"></i>
+            <div>
+              <strong>Pendências deste herdeiro:</strong>
+              ${montarListaPendencias(pendenciasHerdeiro)}
+            </div>
+          </div>
+        `);
+      }
+
+      return blocos.join('');
+    }
+
+    function montarOrientacaoResultado(resultado) {
+      const pendente = temPendenciaNoResultado(resultado);
+
+      if (pendente) {
+        return `
+          <div class="passo">
+            <i class="fa-solid fa-envelope-open-text" aria-hidden="true"></i>
+            <div>
+              <strong>Orientação:</strong>
+              a documentação pendente deve ser enviada em <strong>PDF legível</strong> para o e-mail
+              <a href="mailto:documentos@apipmcbdf.com.br">documentos@apipmcbdf.com.br</a>.
+              Esse e-mail é utilizado apenas para recebimento dos documentos pendentes e não é respondido.
+              Em caso de dúvidas, entre em contato pelo telefone da Associação ou pelo e-mail
+              <a href="mailto:atendimento@apipmcbdf.com.br">atendimento@apipmcbdf.com.br</a>.
+            </div>
+          </div>
+        `;
+      }
+
+      return `
+        <div class="passo">
+          <i class="fa-solid fa-circle-check" aria-hidden="true"></i>
+          <div>
+            <strong>Documentação completa:</strong>
+            a documentação consta como completa no controle interno da Associação. Acompanhe os comunicados oficiais sobre o andamento da VPE.
+          </div>
+        </div>
+      `;
+    }
+
+    function montarCardResultado(resultado, index) {
+      const tipo = valor(resultado, 'tipo_consulta');
+      const nomeFalecido = valor(resultado, 'nome_falecido');
+      const cpfFalecido = valor(resultado, 'cpf_falecido');
+      const nomeHerdeiro = valor(resultado, 'nome_herdeiro');
+      const cpfHerdeiro = valor(resultado, 'cpf_herdeiro');
+      const situacaoGeral = valor(resultado, 'situacao_geral');
+      const statusPasta = valor(resultado, 'status_pasta');
+      const documentacaoFalecido = valor(resultado, 'documentacao_falecido');
+      const documentacaoHerdeiros = valor(resultado, 'documentacao_herdeiros');
+      const documentacaoHerdeiro = valor(resultado, 'documentacao_herdeiro');
+      const parentesco = valor(resultado, 'parentesco');
+      const grauParentesco = valor(resultado, 'grau_parentesco');
+      const herdeiroDe = valor(resultado, 'herdeiro_de');
+      const inventariante = valor(resultado, 'e_inventariante');
+      const pensionista = valor(resultado, 'e_pensionista');
+      const lpFalecido = valor(resultado, 'possui_lp_falecido');
+      const lpPensionista = valor(resultado, 'possui_lp_pensionista');
+
+      const pendente = temPendenciaNoResultado(resultado);
+      const classeTag = pendente ? 'alerta' : 'sucesso';
+      const textoTag = pendente ? 'Pendente' : 'Completa';
+
+      const statusItens = [
+        itemStatus('Falecido', nomeFalecido),
+        itemStatus('CPF do falecido', cpfFalecido),
+        itemStatus('Herdeiro', nomeHerdeiro),
+        itemStatus('CPF do herdeiro', cpfHerdeiro),
+        itemStatus('Grau de parentesco', grauParentesco),
+        itemStatus('Parentesco', parentesco),
+        itemStatus('Herdeiro de', herdeiroDe),
+        itemStatus('É inventariante?', inventariante),
+        itemStatus('É pensionista?', pensionista),
+        itemStatus('Situação geral', situacaoGeral),
+        itemStatus('Documentação do falecido', documentacaoFalecido),
+        itemStatus('Documentação dos herdeiros', documentacaoHerdeiros),
+        itemStatus('Documentação deste herdeiro', documentacaoHerdeiro),
+        itemStatus('Litispendência do falecido', lpFalecido),
+        itemStatus('Litispendência da pensionista', lpPensionista)
+      ].filter(Boolean).join('');
+
+      const pendenciasHtml = montarPendenciasResultado(resultado);
+      const orientacaoHtml = montarOrientacaoResultado(resultado);
+
+      return `
+        <div class="resultado-subcard">
+          <div class="subcard-header">
+            <div>
+              <h4>${escapeHtml(tituloTipoConsulta(tipo))}</h4>
+              <p>${escapeHtml(subtituloTipoConsulta(tipo))}</p>
+            </div>
+            <span class="tag ${classeTag}">${textoTag}</span>
+          </div>
+
+          ${statusItens ? `<div class="status-grid">${statusItens}</div>` : '<p class="empty-result">Não há detalhes adicionais cadastrados para este resultado.</p>'}
+
+          <div class="passos">
+            ${pendenciasHtml}
+            ${orientacaoHtml}
+          </div>
+        </div>
+      `;
+    }
+
+    function mostrarDados(data) {
+      const container = document.getElementById('herdeiroResultContainer');
+      container.innerHTML = '';
+
+      const existsFlag = data && (data.exists === true || data['exists'] === true);
+
+      if (!data || Object.keys(data).length === 0 || !existsFlag) {
+        mostrarNaoEncontrado();
+        return;
+      }
+
+      const resultados = Array.isArray(data.resultados) ? data.resultados : [];
+      const temPendente = data.tem_pendente === true || normalizarTexto(data.situacao_resumo).includes('PENDENTE');
+      const situacaoResumo = valor(data, 'situacao_resumo') || (temPendente ? 'PENDENTE' : 'COMPLETA');
+      const totalResultados = valor(data, 'total_resultados') || String(resultados.length || 1);
+      const tiposConsulta = normalizarArray(data.tipos_consulta).join(', ');
+      const nomesFalecidos = normalizarArray(data.nomes_falecidos).join(', ');
+      const nomesHerdeiros = normalizarArray(data.nomes_herdeiros).join(', ');
+      const atualizadoEm = valor(data, 'exportedAtText') || formatarDataAtualizacao(data.updatedAt);
+
+      const classe = temPendente ? 'alerta' : 'sucesso';
+      const icone = temPendente ? 'fa-triangle-exclamation' : 'fa-circle-check';
+      const titulo = temPendente
+        ? 'CPF encontrado com documentação pendente'
+        : 'CPF encontrado com documentação completa';
+      const subtitulo = temPendente
+        ? 'Há pendências documentais indicadas abaixo.'
+        : 'Consulte abaixo as informações disponíveis para este CPF.';
+
+      const resumoItens = [
+        resumoItem('Situação', situacaoResumo),
+        resumoItem('Falecido(s)', nomesFalecidos),
+        resumoItem('Herdeiro(s)', nomesHerdeiros),
+        resumoItem('Última atualização', atualizadoEm)
+      ].filter(Boolean).join('');
+
+      const cards = resultados.length
+        ? resultados.map((resultado, index) => montarCardResultado(resultado, index)).join('')
+        : montarCardResultado(data, 0);
+
+      container.innerHTML = `
+        <div class="resultado-card ${classe}">
+          <div class="resultado-topo">
+            <div class="resultado-icone">
+              <i class="fa-solid ${icone}" aria-hidden="true"></i>
+            </div>
+            <div>
+              <h3>${titulo}</h3>
+              <p>${subtitulo}</p>
+            </div>
+          </div>
+
+          ${resumoItens ? `<div class="resumo-grid">${resumoItens}</div>` : ''}
+
+          ${cards}
+        </div>
+      `;
+    }
+
+    renderizarHerdeiros = mostrarDados;
+  }
+
+    function limparCPFUnificado(cpf) {
+      return String(cpf ?? '').replace(/\D/g, '');
+    }
+
+    function formatarCPFUnificado(cpf) {
+      const numeros = limparCPFUnificado(cpf);
+      if (numeros.length === 0) return '';
+      if (numeros.length < 11) return numeros.padStart(11, '0');
+      return numeros;
+    }
+
+    function escapeHtmlUnificado(value) {
+      return String(value ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    function dadosValidos(snapshot) {
+      if (!snapshot || typeof snapshot.exists !== 'function' || !snapshot.exists()) return null;
+      const data = snapshot.data();
+      const existsFlag = data && (data.exists === true || data['exists'] === true);
+      return existsFlag ? data : null;
+    }
+
+    function mensagemErroConsulta(resultado, nomeBase) {
+      if (!resultado || resultado.status !== 'rejected') return '';
+      const erro = resultado.reason;
+      const msg = erro && erro.message ? erro.message : String(erro ?? 'Erro desconhecido');
+      const permissao = msg.toLowerCase().includes('missing or insufficient permissions');
+      const detalhe = permissao
+        ? 'As regras do Firestore não permitiram a leitura desta base.'
+        : `Não foi possível consultar esta base: ${escapeHtmlUnificado(msg)}`;
+
+      return `
+        <div class="consulta-parcial-erro">
+          <strong>Falha na consulta da base de ${escapeHtmlUnificado(nomeBase)}</strong>
+          <span>${detalhe}</span>
+        </div>
+      `;
+    }
+
+    function mostrarCarregandoUnificado() {
+      const container = document.getElementById('resultContainer');
+      container.innerHTML = `
+        <div class="resultado-card info">
+          <div class="resultado-topo">
+            <div class="resultado-icone">
+              <i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i>
+            </div>
+            <div>
+              <h3>Consultando...</h3>
+              <p>Aguarde enquanto verificamos as bases de pensionistas e herdeiros da VPE.</p>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function mostrarNaoEncontradoUnificado() {
+      const container = document.getElementById('resultContainer');
+      container.innerHTML = `
+        <div class="resultado-card erro">
+          <div class="resultado-topo">
+            <div class="resultado-icone">
+              <i class="fa-solid fa-circle-xmark" aria-hidden="true"></i>
+            </div>
+            <div>
+              <h3>CPF não encontrado</h3>
+              <p>Não localizamos dados da VPE para o CPF informado nas bases de pensionistas ou herdeiros.</p>
+            </div>
+          </div>
+
+          <div class="passos">
+            <div class="passo">
+              <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+              <div>
+                Verifique se o CPF foi digitado corretamente. Nos casos de herdeiros, a consulta também pode ser feita pelo CPF do falecido ou pelo CPF do herdeiro cadastrado. Caso a dúvida continue, entre em contato com a Associação para conferência cadastral.
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function mostrarFalhaTotal(resultadoPensionistas, resultadoHerdeiros) {
+      const container = document.getElementById('resultContainer');
+      container.innerHTML = `
+        <div class="resultado-card erro">
+          <div class="resultado-topo">
+            <div class="resultado-icone">
+              <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
+            </div>
+            <div>
+              <h3>Não foi possível concluir a consulta</h3>
+              <p>Uma ou mais bases não puderam ser verificadas. Tente novamente ou entre em contato com a Associação.</p>
+            </div>
+          </div>
+          ${mensagemErroConsulta(resultadoPensionistas, 'pensionistas')}
+          ${mensagemErroConsulta(resultadoHerdeiros, 'herdeiros')}
+        </div>
+      `;
+    }
+
+    function renderizarConsultaUnificada(dadosPensionista, dadosHerdeiros, resultadoPensionistas, resultadoHerdeiros) {
+      const container = document.getElementById('resultContainer');
+      const temPensionista = Boolean(dadosPensionista);
+      const temHerdeiros = Boolean(dadosHerdeiros);
+      const quantidade = Number(temPensionista) + Number(temHerdeiros);
+
+      const chips = [
+        temPensionista
+          ? '<span class="vinculo-chip"><i class="fa-solid fa-user" aria-hidden="true"></i> Registro como pensionista</span>'
+          : '',
+        temHerdeiros
+          ? '<span class="vinculo-chip"><i class="fa-solid fa-users" aria-hidden="true"></i> Registro como herdeiro(a)</span>'
+          : ''
+      ].filter(Boolean).join('');
+
+      const textoVinculos = quantidade > 1
+        ? 'Encontramos dois tipos de vínculo para este CPF. Cada situação está apresentada separadamente abaixo.'
+        : 'Encontramos um vínculo para este CPF. Consulte abaixo as informações disponíveis.';
+
+      const secaoPensionista = temPensionista
+        ? `
+          <section class="vinculo-section" aria-label="Resultado como pensionista">
+            <div class="vinculo-header">
+              <div class="vinculo-header-icone">
+                <i class="fa-solid fa-user" aria-hidden="true"></i>
+              </div>
+              <div>
+                <h3>VPE — Resultado como pensionista</h3>
+                <p>Este bloco apresenta exclusivamente a situação individual registrada na base de pensionistas.</p>
+              </div>
+            </div>
+            <div id="pensionistaResultContainer" class="vinculo-result-container"></div>
+          </section>
+        `
+        : '';
+
+      const secaoHerdeiros = temHerdeiros
+        ? `
+          <section class="vinculo-section" aria-label="Resultado como herdeiro">
+            <div class="vinculo-header">
+              <div class="vinculo-header-icone">
+                <i class="fa-solid fa-users" aria-hidden="true"></i>
+              </div>
+              <div>
+                <h3>VPE — Resultado como herdeiro(a)</h3>
+                <p>Este bloco apresenta exclusivamente os casos e vínculos registrados na base de herdeiros.</p>
+              </div>
+            </div>
+            <div id="herdeiroResultContainer" class="vinculo-result-container"></div>
+          </section>
+        `
+        : '';
+
+      container.innerHTML = `
+        <div class="consulta-geral-card">
+          <div class="consulta-geral-topo">
+            <div class="consulta-geral-icone">
+              <i class="fa-solid fa-circle-check" aria-hidden="true"></i>
+            </div>
+            <div>
+              <h3>CPF localizado na base da VPE</h3>
+              <p>${textoVinculos}</p>
+              <div class="vinculos-encontrados">${chips}</div>
+            </div>
+          </div>
+          ${mensagemErroConsulta(resultadoPensionistas, 'pensionistas')}
+          ${mensagemErroConsulta(resultadoHerdeiros, 'herdeiros')}
+        </div>
+
+        ${secaoPensionista}
+        ${secaoHerdeiros}
+      `;
+
+      if (temPensionista && typeof renderizarPensionista === 'function') {
+        renderizarPensionista(dadosPensionista);
+      }
+
+      if (temHerdeiros && typeof renderizarHerdeiros === 'function') {
+        renderizarHerdeiros(dadosHerdeiros);
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const botao = document.getElementById('consultBtn');
+      const input = document.getElementById('cpfInput');
+
+      if (!botao || !input) return;
+
+      botao.onclick = async () => {
+        const cpfDigitado = limparCPFUnificado(input.value);
+
+        if (!cpfDigitado || cpfDigitado.length > 11) {
+          alert('Digite um CPF válido.');
+          return;
+        }
+
+        const cpf = formatarCPFUnificado(input.value);
+
+        if (cpf.length !== 11) {
+          alert('CPF inválido.');
+          return;
+        }
+
+        mostrarCarregandoUnificado();
+
+        const [resultadoPensionistas, resultadoHerdeiros] = await Promise.allSettled([
+          getDoc(doc(db, COLLECTION_PENSIONISTAS, cpf)),
+          getDoc(doc(db, COLLECTION_HERDEIROS_UNIFICADA, cpf))
+        ]);
+
+        const dadosPensionista = resultadoPensionistas.status === 'fulfilled'
+          ? dadosValidos(resultadoPensionistas.value)
+          : null;
+
+        const dadosHerdeiros = resultadoHerdeiros.status === 'fulfilled'
+          ? dadosValidos(resultadoHerdeiros.value)
+          : null;
+
+        if (dadosPensionista || dadosHerdeiros) {
+          renderizarConsultaUnificada(
+            dadosPensionista,
+            dadosHerdeiros,
+            resultadoPensionistas,
+            resultadoHerdeiros
+          );
+          return;
+        }
+
+        const houveErro = resultadoPensionistas.status === 'rejected' || resultadoHerdeiros.status === 'rejected';
+
+        if (houveErro) {
+          mostrarFalhaTotal(resultadoPensionistas, resultadoHerdeiros);
+          return;
+        }
+
+        mostrarNaoEncontradoUnificado();
+      };
+    });
+  </script>
+
+  <noscript>
+    <iframe src="header.html" title="Cabeçalho" style="width:100%; border:0; height:160px;"></iframe>
+    <iframe src="footer.html" title="Rodapé" style="width:100%; border:0; height:320px;"></iframe>
+  </noscript>
+</body>
+</html>
