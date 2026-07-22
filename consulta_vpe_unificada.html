@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Consulta Unificada de Documentação VPE</title>
+  <title>Consulta Geral da VPE</title>
   <meta name="robots" content="noindex, nofollow" />
 
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
@@ -884,10 +884,174 @@
       margin-bottom: 4px;
     }
 
+    .vinculo-chip.lp {
+      background-color: #fff7ed;
+      border-color: #fdba74;
+      color: #9a3412;
+    }
+
+    .vinculo-section.lp-section {
+      border-top-color: #fed7aa;
+    }
+
+    .vinculo-section.lp-section .vinculo-header-icone {
+      background-color: #9a3412;
+    }
+
+    .lp-alert-card {
+      border-color: rgba(154, 52, 18, 0.30);
+      background: linear-gradient(180deg, #fff7ed, #ffffff 74%);
+    }
+
+    .lp-alert-card .resultado-icone {
+      background-color: #ffedd5;
+      color: #9a3412;
+    }
+
+    .lp-alert-card .passo {
+      border-color: #fed7aa;
+    }
+
+    .lp-alert-card .passo > i {
+      color: #9a3412;
+    }
+
+    .entenda-listagens {
+      max-width: 860px;
+      margin: 18px auto 0;
+      border: 1px solid var(--borda);
+      border-radius: 16px;
+      background-color: #f8fbff;
+      overflow: hidden;
+    }
+
+    .entenda-listagens summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 15px 17px;
+      color: var(--azul);
+      font-weight: 800;
+      cursor: pointer;
+      list-style: none;
+    }
+
+    .entenda-listagens summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .entenda-listagens summary span {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+    }
+
+    .detalhe-seta {
+      transition: transform 0.2s ease;
+    }
+
+    .entenda-listagens[open] .detalhe-seta {
+      transform: rotate(180deg);
+    }
+
+    .entenda-listagens-conteudo {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      padding: 0 17px 17px;
+    }
+
+    .entenda-item {
+      background-color: var(--branco);
+      border: 1px solid var(--borda);
+      border-radius: 13px;
+      padding: 14px;
+    }
+
+    .entenda-item strong {
+      display: block;
+      color: var(--azul);
+      margin-bottom: 5px;
+    }
+
+    .entenda-item p {
+      color: var(--texto-suave);
+      font-size: 14px;
+    }
+
+    .lista-resultados {
+      display: grid;
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .listagem-item {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 12px;
+      align-items: flex-start;
+      background-color: var(--branco);
+      border: 1px solid var(--borda);
+      border-radius: 16px;
+      padding: 16px;
+    }
+
+    .listagem-item.sucesso {
+      border-color: rgba(22, 101, 52, 0.28);
+    }
+
+    .listagem-item.alerta {
+      border-color: rgba(245, 178, 0, 0.48);
+    }
+
+    .listagem-item .item-icone {
+      width: 40px;
+      height: 40px;
+      border-radius: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--azul-suave);
+      color: var(--azul);
+      flex-shrink: 0;
+    }
+
+    .listagem-item.sucesso .item-icone {
+      background-color: #dcfce7;
+      color: var(--sucesso);
+    }
+
+    .listagem-item.alerta .item-icone {
+      background-color: #fff2c2;
+      color: var(--alerta);
+    }
+
+    .listagem-item h4 {
+      color: var(--azul);
+      font-size: 17px;
+      margin-bottom: 5px;
+    }
+
+    .listagem-item p {
+      color: var(--texto-suave);
+      font-size: 15px;
+    }
+
+    @media (max-width: 900px) {
+      .entenda-listagens-conteudo {
+        grid-template-columns: 1fr;
+      }
+    }
+
     @media (max-width: 768px) {
       .consulta-geral-topo,
       .vinculo-header {
         flex-direction: column;
+      }
+
+      .listagem-item {
+        grid-template-columns: 1fr;
       }
     }
 
@@ -899,15 +1063,15 @@
   <div id="header-container"></div>
 
   <main>
-    <section class="page-hero" aria-label="Consulta unificada de documentação da VPE">
+    <section class="page-hero" aria-label="Consulta geral da VPE">
       <div class="badge">
         <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
         <span>CONSULTA VPE</span>
       </div>
 
-      <h1>Consulta de Documentação da VPE</h1>
+      <h1>Consulta Geral da VPE</h1>
       <p>
-        Consulte, em uma única pesquisa, a situação da VPE como pensionista e como herdeiro. Os vínculos e as pendências permanecem apresentados separadamente.
+        Consulte, em uma única pesquisa, a situação da implantação da VPE e da documentação para execução dos valores devidos. Cada área e cada vínculo permanecem apresentados separadamente.
       </p>
     </section>
 
@@ -916,7 +1080,7 @@
         <div class="consulta-header">
           <h2>Informe o CPF para consultar</h2>
           <p>
-            A pesquisa verifica a base de pensionistas e a base de herdeiros. Também é possível consultar casos de herdeiros pelo CPF do falecido cadastrado.
+            A pesquisa verifica as listagens de implantação, a base de execução como pensionista e a base de execução como herdeiro. Nos casos de herdeiros, também é possível consultar pelo CPF do falecido cadastrado.
           </p>
         </div>
 
@@ -946,9 +1110,30 @@
         <div class="privacy-note">
           <i class="fa-solid fa-shield-halved" aria-hidden="true"></i>
           <div>
-            A consulta apresenta apenas a situação registrada nas bases da Associação. Quando o CPF possuir mais de um vínculo, cada caso será mostrado separadamente.
+            A consulta apresenta apenas a situação registrada nas bases da Associação. Implantação, execução como pensionista e execução como herdeiro serão mostradas em áreas independentes.
           </div>
         </div>
+
+        <details class="entenda-listagens">
+          <summary>
+            <span><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Entenda as listagens de implantação</span>
+            <i class="fa-solid fa-chevron-down detalhe-seta" aria-hidden="true"></i>
+          </summary>
+          <div class="entenda-listagens-conteudo">
+            <article class="entenda-item">
+              <strong>Primeira listagem</strong>
+              <p>Quando o CPF constar na primeira listagem, a consulta exibirá as orientações sobre implantação, contracheque e ficha financeira.</p>
+            </article>
+            <article class="entenda-item">
+              <strong>Segunda listagem</strong>
+              <p>Quando o CPF constar na segunda listagem, será informado que estamos aguardando a implantação e novas movimentações.</p>
+            </article>
+            <article class="entenda-item">
+              <strong>Terceira listagem</strong>
+              <p>Quando o CPF constar na terceira listagem, será informado que ela deve aguardar a implantação da segunda listagem.</p>
+            </article>
+          </div>
+        </details>
 
         <div id="resultContainer" aria-live="polite"></div>
       </div>
@@ -1026,9 +1211,86 @@
 
     const COLLECTION_PENSIONISTAS = 'CONSULTARVPE';
     const COLLECTION_HERDEIROS_UNIFICADA = 'CONSULTAR_HERDEIROS_VPE';
+    const COLLECTION_POSSUEM_LP = 'POSSUEM LP';
+
+
+    const LISTAGENS_IMPLANTACAO = [
+      {
+        ordem: 1,
+        nomeCurto: 'primeira',
+        titulo: 'Primeira Listagem',
+        colecao: 'PrimeiraNRVPE',
+        classe: 'sucesso',
+        icone: 'fa-circle-check',
+        descricao: 'O CPF consta na primeira listagem de implantação da VPE.',
+        orientacao: `
+          <div class="passos">
+            <div class="passo">
+              <i class="fa-solid fa-file-invoice" aria-hidden="true"></i>
+              <div><strong>Se a VPE ainda não foi implantada:</strong> envie o contracheque atual para a Associação.</div>
+            </div>
+            <div class="passo">
+              <i class="fa-solid fa-chart-line" aria-hidden="true"></i>
+              <div><strong>Se a VPE já foi implantada:</strong> providencie a ficha financeira referente ao seu período.</div>
+            </div>
+            <div class="passo">
+              <i class="fa-solid fa-people-group" aria-hidden="true"></i>
+              <div><strong>Em caso de pensão dividida:</strong> todos os beneficiários da mesma pensão devem encaminhar a documentação em conjunto.</div>
+            </div>
+            <div class="passo">
+              <i class="fa-solid fa-scale-balanced" aria-hidden="true"></i>
+              <div><strong>Em caso de pensionista falecido:</strong> os herdeiros também deverão ser habilitados.</div>
+            </div>
+          </div>
+        `
+      },
+      {
+        ordem: 2,
+        nomeCurto: 'segunda',
+        titulo: 'Segunda Listagem',
+        colecao: 'SegundaNRVPE',
+        classe: 'alerta',
+        icone: 'fa-clock',
+        descricao: 'O CPF consta na segunda listagem de implantação da VPE.',
+        orientacao: `
+          <div class="passos">
+            <div class="passo">
+              <i class="fa-solid fa-clock" aria-hidden="true"></i>
+              <div><strong>Estamos aguardando a implantação.</strong> Assim que o processo tiver alguma movimentação relevante, iremos informar todos os associados pelos canais oficiais da Associação.</div>
+            </div>
+            <div class="passo">
+              <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+              <div>No mais, pedimos que aguarde novas atualizações.</div>
+            </div>
+          </div>
+        `
+      },
+      {
+        ordem: 3,
+        nomeCurto: 'terceira',
+        titulo: 'Terceira Listagem',
+        colecao: 'TerceiraNRVPE',
+        classe: 'alerta',
+        icone: 'fa-hourglass-half',
+        descricao: 'O CPF consta na terceira listagem de implantação da VPE.',
+        orientacao: `
+          <div class="passos">
+            <div class="passo">
+              <i class="fa-solid fa-hourglass-half" aria-hidden="true"></i>
+              <div><strong>Estamos aguardando a implantação da segunda listagem.</strong> A terceira listagem deve aguardar a implantação da segunda listagem. Iremos informar todos os associados pelos canais oficiais da Associação.</div>
+            </div>
+            <div class="passo">
+              <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+              <div>No mais, pedimos que aguarde novas atualizações.</div>
+            </div>
+          </div>
+        `
+      }
+    ];
 
     let renderizarPensionista = null;
     let renderizarHerdeiros = null;
+    let renderizarListagens = null;
 
   {
     function limparCPF(cpf) {
@@ -2253,6 +2515,92 @@
     renderizarHerdeiros = mostrarDados;
   }
 
+  {
+    function escapeHtmlImplantacao(valor) {
+      return String(valor ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    function obterNomeImplantacao(data) {
+      return data?.nome ?? data?.NOME ?? data?.Nome ?? data?.['nome'] ?? data?.['NOME'] ?? data?.['Nome'] ?? '';
+    }
+
+    function montarItemListagem(resultado) {
+      return `
+        <div class="listagem-item ${resultado.classe}">
+          <div class="item-icone">
+            <i class="fa-solid ${resultado.icone}" aria-hidden="true"></i>
+          </div>
+          <div>
+            <h4>${resultado.titulo}</h4>
+            <p>${resultado.descricao}</p>
+          </div>
+        </div>
+      `;
+    }
+
+    function mostrarDadosListagens(resultados, opcoes = {}) {
+      const container = document.getElementById('implantacaoResultContainer');
+      if (!container) return;
+
+      const somenteStatus = opcoes.somenteStatus === true;
+      const ordenados = [...resultados].sort((a, b) => a.ordem - b.ordem);
+      const principal = ordenados[0];
+      const nome = escapeHtmlImplantacao(obterNomeImplantacao(principal.data).toString().trim() || 'Nome não informado');
+      const total = ordenados.length;
+      const titulo = total === 1
+        ? `CPF encontrado na ${principal.nomeCurto} listagem`
+        : `CPF encontrado em ${total} listagens`;
+      const textoTopo = total === 1
+        ? `O CPF informado consta na ${principal.nomeCurto} listagem de implantação da VPE.`
+        : 'O CPF informado consta em mais de uma listagem. Confira abaixo todas as ocorrências encontradas.';
+
+      container.innerHTML = `
+        <div class="resultado-card ${principal.classe}">
+          <div class="resultado-topo">
+            <div class="resultado-icone">
+              <i class="fa-solid ${principal.icone}" aria-hidden="true"></i>
+            </div>
+            <div>
+              <h3>${titulo}</h3>
+              <p>${textoTopo}</p>
+            </div>
+          </div>
+
+          <div class="nome-box">
+            <span>Nome encontrado</span>
+            <strong>${nome}</strong>
+          </div>
+
+          <div class="lista-resultados">
+            ${ordenados.map(montarItemListagem).join('')}
+          </div>
+
+          ${somenteStatus
+            ? `
+              <div class="passos">
+                <div class="passo">
+                  <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+                  <div>
+                    <strong>Informação sobre a implantação:</strong>
+                    a listagem acima permanece disponível porque trata da implantação administrativa da VPE. As orientações relacionadas a uma nova execução de valores não são exibidas neste caso.
+                  </div>
+                </div>
+              </div>
+            `
+            : ordenados.map(resultado => resultado.orientacao).join('')}
+        </div>
+      `;
+    }
+
+    renderizarListagens = mostrarDadosListagens;
+  }
+
+
     function limparCPFUnificado(cpf) {
       return String(cpf ?? '').replace(/\D/g, '');
     }
@@ -2280,6 +2628,34 @@
       return existsFlag ? data : null;
     }
 
+    function dadosListagemValidos(snapshot, listagem) {
+      if (!snapshot || typeof snapshot.exists !== 'function' || !snapshot.exists()) return null;
+      const data = snapshot.data() || {};
+      if (data.exists === false || data['exists'] === false) return null;
+      return { ...listagem, data };
+    }
+
+    function normalizarTextoUnificado(texto) {
+      return String(texto ?? '')
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toUpperCase()
+        .trim();
+    }
+
+    function dadosLPValidos(snapshot) {
+      if (!snapshot || typeof snapshot.exists !== 'function' || !snapshot.exists()) return null;
+
+      const data = snapshot.data() || {};
+      if (data.exists === false || data['exists'] === false) return null;
+
+      const status = normalizarTextoUnificado(
+        data['LITISPENDÊNCIA'] ?? data['LITISPENDENCIA'] ?? data.litispendencia
+      );
+
+      return status === 'SIM' ? data : null;
+    }
+
     function mensagemErroConsulta(resultado, nomeBase) {
       if (!resultado || resultado.status !== 'rejected') return '';
       const erro = resultado.reason;
@@ -2297,6 +2673,13 @@
       `;
     }
 
+    function nomesBasesComErro(resultadosConsultas) {
+      return resultadosConsultas
+        .filter(item => item.resultado && item.resultado.status === 'rejected')
+        .map(item => mensagemErroConsulta(item.resultado, item.nome))
+        .join('');
+    }
+
     function mostrarCarregandoUnificado() {
       const container = document.getElementById('resultContainer');
       container.innerHTML = `
@@ -2307,7 +2690,7 @@
             </div>
             <div>
               <h3>Consultando...</h3>
-              <p>Aguarde enquanto verificamos as bases de pensionistas e herdeiros da VPE.</p>
+              <p>Aguarde enquanto verificamos as listagens, a base de litispendência e as bases de execução da VPE.</p>
             </div>
           </div>
         </div>
@@ -2324,7 +2707,7 @@
             </div>
             <div>
               <h3>CPF não encontrado</h3>
-              <p>Não localizamos dados da VPE para o CPF informado nas bases de pensionistas ou herdeiros.</p>
+              <p>Não localizamos o CPF nas listagens de implantação, na base de litispendência nem nas bases de execução como pensionista ou herdeiro.</p>
             </div>
           </div>
 
@@ -2340,7 +2723,7 @@
       `;
     }
 
-    function mostrarFalhaTotal(resultadoPensionistas, resultadoHerdeiros) {
+    function mostrarFalhaTotal(resultadosConsultas) {
       const container = document.getElementById('resultContainer');
       container.innerHTML = `
         <div class="resultado-card erro">
@@ -2353,40 +2736,126 @@
               <p>Uma ou mais bases não puderam ser verificadas. Tente novamente ou entre em contato com a Associação.</p>
             </div>
           </div>
-          ${mensagemErroConsulta(resultadoPensionistas, 'pensionistas')}
-          ${mensagemErroConsulta(resultadoHerdeiros, 'herdeiros')}
+          ${nomesBasesComErro(resultadosConsultas)}
         </div>
       `;
     }
 
-    function renderizarConsultaUnificada(dadosPensionista, dadosHerdeiros, resultadoPensionistas, resultadoHerdeiros) {
+    function renderizarConsultaUnificada({
+      dadosLP,
+      dadosPensionista,
+      dadosHerdeiros,
+      resultadosListagens,
+      resultadosConsultas
+    }) {
       const container = document.getElementById('resultContainer');
-      const temPensionista = Boolean(dadosPensionista);
-      const temHerdeiros = Boolean(dadosHerdeiros);
-      const quantidade = Number(temPensionista) + Number(temHerdeiros);
+      const temLP = Boolean(dadosLP);
+      const temImplantacao = Array.isArray(resultadosListagens) && resultadosListagens.length > 0;
+
+      // Quando há LP, os dados de nova execução não podem aparecer,
+      // ainda que o CPF também exista nas coleções de pensionistas ou herdeiros.
+      const temPensionista = !temLP && Boolean(dadosPensionista);
+      const temHerdeiros = !temLP && Boolean(dadosHerdeiros);
+      const quantidade = Number(temImplantacao) + Number(temLP) + Number(temPensionista) + Number(temHerdeiros);
 
       const chips = [
+        temImplantacao
+          ? '<span class="vinculo-chip"><i class="fa-solid fa-list-check" aria-hidden="true"></i> Situação da implantação</span>'
+          : '',
+        temLP
+          ? '<span class="vinculo-chip lp"><i class="fa-solid fa-scale-balanced" aria-hidden="true"></i> Litispendência registrada</span>'
+          : '',
         temPensionista
-          ? '<span class="vinculo-chip"><i class="fa-solid fa-user" aria-hidden="true"></i> Registro como pensionista</span>'
+          ? '<span class="vinculo-chip"><i class="fa-solid fa-user" aria-hidden="true"></i> Execução como pensionista</span>'
           : '',
         temHerdeiros
-          ? '<span class="vinculo-chip"><i class="fa-solid fa-users" aria-hidden="true"></i> Registro como herdeiro(a)</span>'
+          ? '<span class="vinculo-chip"><i class="fa-solid fa-users" aria-hidden="true"></i> Execução como herdeiro(a)</span>'
           : ''
       ].filter(Boolean).join('');
 
-      const textoVinculos = quantidade > 1
-        ? 'Encontramos dois tipos de vínculo para este CPF. Cada situação está apresentada separadamente abaixo.'
-        : 'Encontramos um vínculo para este CPF. Consulte abaixo as informações disponíveis.';
+      const textoAreas = quantidade > 1
+        ? `Encontramos informações em ${quantidade} áreas da VPE. Cada situação está apresentada separadamente abaixo.`
+        : 'Encontramos informações em uma área da VPE. Consulte abaixo os dados disponíveis.';
+
+      const secaoImplantacao = temImplantacao
+        ? `
+          <section class="vinculo-section" aria-label="Situação da implantação da VPE">
+            <div class="vinculo-header">
+              <div class="vinculo-header-icone">
+                <i class="fa-solid fa-list-check" aria-hidden="true"></i>
+              </div>
+              <div>
+                <h3>Situação da implantação da VPE</h3>
+                <p>Este bloco informa exclusivamente em qual listagem de implantação o CPF foi localizado.</p>
+              </div>
+            </div>
+            <div id="implantacaoResultContainer" class="vinculo-result-container"></div>
+          </section>
+        `
+        : '';
+
+      const secaoLP = temLP
+        ? `
+          <section class="vinculo-section lp-section" aria-label="Litispendência relacionada à VPE">
+            <div class="vinculo-header">
+              <div class="vinculo-header-icone">
+                <i class="fa-solid fa-scale-balanced" aria-hidden="true"></i>
+              </div>
+              <div>
+                <h3>Litispendência relacionada à VPE</h3>
+                <p>Este bloco apresenta o impedimento registrado para uma nova execução judicial dos mesmos valores.</p>
+              </div>
+            </div>
+
+            <div class="resultado-card alerta lp-alert-card">
+              <div class="resultado-topo">
+                <div class="resultado-icone">
+                  <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
+                </div>
+                <div>
+                  <h3>Atenção — processo anterior relacionado à VPE</h3>
+                  <p>O CPF informado consta na base da Associação com litispendência registrada para a VPE.</p>
+                </div>
+              </div>
+
+              <div class="passos">
+                <div class="passo">
+                  <i class="fa-solid fa-scale-balanced" aria-hidden="true"></i>
+                  <div>
+                    <strong>Possível impedimento para nova ação:</strong>
+                    essa situação pode impedir o ajuizamento de uma nova ação para cobrança do mesmo objeto.
+                  </div>
+                </div>
+
+                <div class="passo">
+                  <i class="fa-solid fa-eye-slash" aria-hidden="true"></i>
+                  <div>
+                    <strong>Informações de execução não exibidas:</strong>
+                    por esse motivo, esta consulta não apresenta documentação, pendências, protocolos ou orientações de nova execução como pensionista ou herdeiro(a).
+                  </div>
+                </div>
+
+                <div class="passo">
+                  <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+                  <div>
+                    Para esclarecimentos sobre a situação específica, entre em contato com a Associação pelos canais oficiais.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        `
+        : '';
 
       const secaoPensionista = temPensionista
         ? `
-          <section class="vinculo-section" aria-label="Resultado como pensionista">
+          <section class="vinculo-section" aria-label="Execução dos valores devidos como pensionista">
             <div class="vinculo-header">
               <div class="vinculo-header-icone">
                 <i class="fa-solid fa-user" aria-hidden="true"></i>
               </div>
               <div>
-                <h3>VPE — Resultado como pensionista</h3>
+                <h3>Execução dos valores devidos — Direito como pensionista</h3>
                 <p>Este bloco apresenta exclusivamente a situação individual registrada na base de pensionistas.</p>
               </div>
             </div>
@@ -2397,13 +2866,13 @@
 
       const secaoHerdeiros = temHerdeiros
         ? `
-          <section class="vinculo-section" aria-label="Resultado como herdeiro">
+          <section class="vinculo-section" aria-label="Execução dos valores devidos como herdeiro">
             <div class="vinculo-header">
               <div class="vinculo-header-icone">
                 <i class="fa-solid fa-users" aria-hidden="true"></i>
               </div>
               <div>
-                <h3>VPE — Resultado como herdeiro(a)</h3>
+                <h3>Execução dos valores devidos — Direito como herdeiro(a)</h3>
                 <p>Este bloco apresenta exclusivamente os casos e vínculos registrados na base de herdeiros.</p>
               </div>
             </div>
@@ -2416,21 +2885,26 @@
         <div class="consulta-geral-card">
           <div class="consulta-geral-topo">
             <div class="consulta-geral-icone">
-              <i class="fa-solid fa-circle-check" aria-hidden="true"></i>
+              <i class="fa-solid ${temLP ? 'fa-triangle-exclamation' : 'fa-circle-check'}" aria-hidden="true"></i>
             </div>
             <div>
-              <h3>CPF localizado na base da VPE</h3>
-              <p>${textoVinculos}</p>
+              <h3>${temLP ? 'CPF localizado com litispendência registrada' : 'CPF localizado nas bases da VPE'}</h3>
+              <p>${textoAreas}</p>
               <div class="vinculos-encontrados">${chips}</div>
             </div>
           </div>
-          ${mensagemErroConsulta(resultadoPensionistas, 'pensionistas')}
-          ${mensagemErroConsulta(resultadoHerdeiros, 'herdeiros')}
+          ${nomesBasesComErro(resultadosConsultas)}
         </div>
 
+        ${secaoImplantacao}
+        ${secaoLP}
         ${secaoPensionista}
         ${secaoHerdeiros}
       `;
+
+      if (temImplantacao && typeof renderizarListagens === 'function') {
+        renderizarListagens(resultadosListagens, { somenteStatus: temLP });
+      }
 
       if (temPensionista && typeof renderizarPensionista === 'function') {
         renderizarPensionista(dadosPensionista);
@@ -2464,33 +2938,133 @@
 
         mostrarCarregandoUnificado();
 
-        const [resultadoPensionistas, resultadoHerdeiros] = await Promise.allSettled([
-          getDoc(doc(db, COLLECTION_PENSIONISTAS, cpf)),
-          getDoc(doc(db, COLLECTION_HERDEIROS_UNIFICADA, cpf))
-        ]);
+        // Primeira etapa: litispendência e implantação.
+        // A base POSSUEM LP tem prioridade sobre qualquer informação de nova execução.
+        const consultasIniciais = [
+          {
+            nome: 'litispendência',
+            tipo: 'lp',
+            promise: getDoc(doc(db, COLLECTION_POSSUEM_LP, cpf))
+          },
+          ...LISTAGENS_IMPLANTACAO.map(listagem => ({
+            nome: `${listagem.nomeCurto} listagem de implantação`,
+            tipo: 'listagem',
+            listagem,
+            promise: getDoc(doc(db, listagem.colecao, cpf))
+          }))
+        ];
 
-        const dadosPensionista = resultadoPensionistas.status === 'fulfilled'
-          ? dadosValidos(resultadoPensionistas.value)
+        const resultadosIniciais = await Promise.allSettled(
+          consultasIniciais.map(item => item.promise)
+        );
+
+        const consultasIniciaisComResultado = consultasIniciais.map((consulta, index) => ({
+          ...consulta,
+          resultado: resultadosIniciais[index]
+        }));
+
+        const resultadoLP = resultadosIniciais[0];
+        const dadosLP = resultadoLP.status === 'fulfilled'
+          ? dadosLPValidos(resultadoLP.value)
+          : null;
+
+        const resultadosListagens = LISTAGENS_IMPLANTACAO
+          .map((listagem, index) => {
+            const resultado = resultadosIniciais[index + 1];
+            return resultado.status === 'fulfilled'
+              ? dadosListagemValidos(resultado.value, listagem)
+              : null;
+          })
+          .filter(Boolean)
+          .sort((a, b) => a.ordem - b.ordem);
+
+        // Encontrou LP: mostra a implantação, quando houver, e o alerta.
+        // Não consulta nem exibe as coleções de execução.
+        if (dadosLP) {
+          renderizarConsultaUnificada({
+            dadosLP,
+            dadosPensionista: null,
+            dadosHerdeiros: null,
+            resultadosListagens,
+            resultadosConsultas: consultasIniciaisComResultado
+          });
+          return;
+        }
+
+        // Falha ao verificar a base prioritária: por segurança, não apresenta
+        // informações de execução que poderiam contrariar um processo já existente.
+        if (resultadoLP.status === 'rejected') {
+          if (resultadosListagens.length) {
+            renderizarConsultaUnificada({
+              dadosLP: null,
+              dadosPensionista: null,
+              dadosHerdeiros: null,
+              resultadosListagens,
+              resultadosConsultas: consultasIniciaisComResultado
+            });
+            return;
+          }
+
+          mostrarFalhaTotal(consultasIniciaisComResultado);
+          return;
+        }
+
+        // Segunda etapa: somente quando não há LP registrada.
+        const consultasExecucao = [
+          {
+            nome: 'execução como pensionista',
+            tipo: 'pensionista',
+            promise: getDoc(doc(db, COLLECTION_PENSIONISTAS, cpf))
+          },
+          {
+            nome: 'execução como herdeiro',
+            tipo: 'herdeiros',
+            promise: getDoc(doc(db, COLLECTION_HERDEIROS_UNIFICADA, cpf))
+          }
+        ];
+
+        const resultadosExecucao = await Promise.allSettled(
+          consultasExecucao.map(item => item.promise)
+        );
+
+        const consultasExecucaoComResultado = consultasExecucao.map((consulta, index) => ({
+          ...consulta,
+          resultado: resultadosExecucao[index]
+        }));
+
+        const resultadoPensionista = resultadosExecucao[0];
+        const resultadoHerdeiros = resultadosExecucao[1];
+
+        const dadosPensionista = resultadoPensionista.status === 'fulfilled'
+          ? dadosValidos(resultadoPensionista.value)
           : null;
 
         const dadosHerdeiros = resultadoHerdeiros.status === 'fulfilled'
           ? dadosValidos(resultadoHerdeiros.value)
           : null;
 
-        if (dadosPensionista || dadosHerdeiros) {
-          renderizarConsultaUnificada(
+        const resultadosConsultas = [
+          ...consultasIniciaisComResultado,
+          ...consultasExecucaoComResultado
+        ];
+
+        if (dadosPensionista || dadosHerdeiros || resultadosListagens.length) {
+          renderizarConsultaUnificada({
+            dadosLP: null,
             dadosPensionista,
             dadosHerdeiros,
-            resultadoPensionistas,
-            resultadoHerdeiros
-          );
+            resultadosListagens,
+            resultadosConsultas
+          });
           return;
         }
 
-        const houveErro = resultadoPensionistas.status === 'rejected' || resultadoHerdeiros.status === 'rejected';
+        const houveErro = resultadosConsultas.some(
+          item => item.resultado && item.resultado.status === 'rejected'
+        );
 
         if (houveErro) {
-          mostrarFalhaTotal(resultadoPensionistas, resultadoHerdeiros);
+          mostrarFalhaTotal(resultadosConsultas);
           return;
         }
 
