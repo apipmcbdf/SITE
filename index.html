@@ -391,6 +391,84 @@
         padding-right: 16px;
       }
     }
+
+    .comunicado {
+      width: min(720px, calc(100% - 24px));
+      max-height: 92vh;
+      max-height: 92dvh;
+      margin: auto;
+      padding: 0;
+      border: 0;
+      border-radius: var(--raio);
+      background: var(--branco);
+      color: var(--texto);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+    }
+
+    .comunicado::backdrop {
+      background: rgba(0, 20, 40, 0.78);
+    }
+
+    html:has(.comunicado[open]) {
+      overflow: hidden;
+    }
+
+    .comunicado-topo {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 14px;
+      background: var(--azul-principal);
+      color: var(--branco);
+    }
+
+    .comunicado-topo h2 {
+      margin: 0;
+      font-size: clamp(16px, 3vw, 20px);
+      line-height: 1.3;
+    }
+
+    .comunicado-fechar {
+      min-height: 44px;
+      padding: 8px 14px;
+      border: 0;
+      border-radius: 8px;
+      background: var(--branco);
+      color: var(--azul-principal);
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .comunicado-imagem {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-height: 64vh;
+      max-height: 64dvh;
+      object-fit: contain;
+      background: #0d263d;
+    }
+
+    .comunicado-texto {
+      padding: 12px 16px 18px;
+      line-height: 1.55;
+    }
+
+    .comunicado-texto summary {
+      padding: 8px 0;
+      font-weight: 700;
+      color: var(--azul-principal);
+      cursor: pointer;
+    }
+
+    .comunicado-texto details p + p {
+      margin-top: 12px;
+    }
   </style>
 </head>
 <body>
@@ -468,6 +546,30 @@
 <!-- Container para footer -->
 <div id="footer-container"></div>
 
+<dialog id="comunicado-fim-de-ano" class="comunicado" aria-labelledby="comunicado-titulo">
+  <div class="comunicado-topo">
+    <h2 id="comunicado-titulo">Comunicado de fim de ano</h2>
+    <form method="dialog">
+      <button type="submit" class="comunicado-fechar" autofocus>Fechar</button>
+    </form>
+  </div>
+  <img class="comunicado-imagem" src="imagens/comunicado-fim-de-ano-2026.jpeg" width="2048" height="2048"
+    alt="Comunicado da APIPMCBDF sobre o atendimento de fim de ano. A versão em texto está abaixo.">
+  <div class="comunicado-texto">
+    <p>Último dia de atendimento: <strong>11 de dezembro</strong>. Retorno: <strong>4 de janeiro de 2027</strong>.</p>
+    <details>
+      <summary>Ler o comunicado em texto</summary>
+      <p>Prezados associados e público em geral,</p>
+      <p>Informamos que as atividades de atendimento ao público deste ano serão encerradas no dia 11 de dezembro.</p>
+      <p>Este foi um período muito atípico, especialmente pelas datas de entrega de documentação para a VPE. Diante do intenso trabalho e dedicação de toda a equipe, optamos por essa data para que possamos organizar internamente nossos processos e, assim, atendê-los cada vez melhor.</p>
+      <p>Aproveitaremos o restante dos dias do ano para planejamento e organização interna.</p>
+      <p>Retornaremos o atendimento ao público no dia 04 de janeiro de 2027, prontos para um novo ciclo de luta e comprometimento!</p>
+      <p><strong>Neusa Teresinha Vargas Cordeiro Gomes</strong><br>Presidente</p>
+    </details>
+  </div>
+</dialog>
+
+
 <script>
   // Header
   (function loadHeader(){
@@ -507,6 +609,27 @@
     const menu = document.getElementById('menu');
     if (menu) menu.classList.toggle('active');
   }
+
+  (function abrirComunicado() {
+    const comunicado = document.getElementById('comunicado-fim-de-ano');
+    if (typeof comunicado?.showModal !== 'function') return;
+
+    const chave = 'apipmcbdf-comunicado-fim-de-ano-2026';
+    try {
+      if (sessionStorage.getItem(chave) === 'fechado') return;
+    } catch {
+      // O comunicado também funciona com o armazenamento bloqueado.
+    }
+
+    comunicado.addEventListener('close', () => {
+      try {
+        sessionStorage.setItem(chave, 'fechado');
+      } catch {
+        // Fechar o comunicado não depende do armazenamento.
+      }
+    });
+    comunicado.showModal();
+  })();
 </script>
 
 <noscript>
