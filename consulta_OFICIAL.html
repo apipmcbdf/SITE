@@ -510,15 +510,11 @@
     const CONFIG_CONSULTAS = {
       situacao_documentacao_vpe: true,
       situacao_documentacao_vpe_herdeiros: true,
-      situacao_documentacao_auxilio_moradia: false,
-      herdeiros_auxilio_moradia: false,
 
       consulta_listas_vpe: true,
       primeira_lista_vpe: false,
       segunda_lista_vpe: false,
-      terceira_lista_vpe: false,
-
-      listagem_auxilio_moradia_coletivo: false
+      terceira_lista_vpe: false
     };
 
     /*
@@ -548,24 +544,6 @@
         primary: false
       },
       {
-        chave: 'situacao_documentacao_auxilio_moradia',
-        categoria: 'documentacao',
-        titulo: 'Situação Documentação Auxílio Moradia Coletivo',
-        descricao: 'Verifique pendências e andamento da documentação do Auxílio Moradia Coletivo.',
-        href: 'consulta_doc_aux.html',
-        icone: 'fa-house-circle-check',
-        primary: false
-      },
-      {
-        chave: 'herdeiros_auxilio_moradia',
-        categoria: 'documentacao',
-        titulo: 'Herdeiros - Auxílio Moradia Coletivo',
-        descricao: 'Consulta específica para situação documental e acompanhamento de herdeiros.',
-        href: 'consulta_documentacao_herdeiros_cpf.html',
-        icone: 'fa-people-group',
-        primary: false
-      },
-      {
         chave: 'consulta_listas_vpe',
         categoria: 'listagens',
         titulo: 'Consultar listagem da VPE',
@@ -573,15 +551,6 @@
         href: 'listas_vpe.html',
         icone: 'fa-list-check',
         primary: true
-      },
-      {
-        chave: 'listagem_auxilio_moradia_coletivo',
-        categoria: 'listagens',
-        titulo: 'Listagem Auxílio Moradia Coletivo',
-        descricao: 'Consulte se o nome consta na listagem do Auxílio Moradia Coletivo.',
-        href: 'lista_aux.html',
-        icone: 'fa-list-check',
-        primary: false
       }
     ];
 
