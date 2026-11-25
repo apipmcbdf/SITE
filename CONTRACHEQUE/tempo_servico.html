@@ -213,11 +213,10 @@
           <div>
             <h1><i class="fa-solid fa-hourglass-half" aria-hidden="true"></i> Tempo de Serviço (anos)</h1>
             <p class="subtitle">
-              Preencha seu <strong>posto/graduação</strong> e o <strong>soldo do contracheque</strong>.
-              O sistema estima o tempo de serviço com base no soldo integral de 30 anos ÷ 30 (tabela de janeiro de 2026).
+              Informe o <strong>posto ou graduação</strong> e o <strong>valor da linha Soldo</strong> de um contracheque da competência de janeiro de 2026 ou posterior.
             </p>
           </div>
-          <a class="btn yellow" href="https://apipmcbdf.com.br/CONTRACHEQUE/simulador_aumento.html">
+          <a class="btn yellow" href="./simulador_aumento.html">
             <i class="fa-solid fa-calculator"></i> Voltar ao simulador
           </a>
         </div>
@@ -251,7 +250,7 @@
           <strong>Dica:</strong> depois que você descobrir o número, abra o simulador e preencha em <em>“Tempo de serviço”</em>.
         </div>
         <div class="muted">
-          Base de cálculo: soldo integral de 30 anos ÷ 30 • resultado limitado entre 1 e 40 anos.
+          Use o soldo antes da divisão da pensão, sem somar o complemento de soldo. Se houver apenas o valor da sua cota, consulte o ato de concessão ou a ficha financeira.
         </div>
       </div>
     </div>
@@ -279,6 +278,7 @@
     </a>
   </div>
 
+<script src="./contracheque-calculo-2026.js"></script>
 <script>
   // ===== Menu (compatível com header) =====
   function toggleMenu(){
@@ -322,98 +322,66 @@
     await loadFragment('#site-footer', ['../footer.html','/footer.html','/SITE/footer.html']);
   })();
 
-  // ===== Lógica do cálculo (mantida) =====
-  const SOLDOS_30 = {
-    "Coronel": 5411.57,
-    "Tenente-Coronel": 5196.52,
-    "Major": 4951.74,
-    "Capitão": 4137.53,
-    "Primeiro-Tenente": 3830.86,
-    "Segundo-Tenente": 3545.91,
-    "Aspirante a Oficial": 2456.8,
-    "Cadete (último ano)": 986.84,
-    "Cadete (demais anos)": 710.07,
-    "Subtenente": 2731.42,
-    "Primeiro-Sargento": 2382.96,
-    "Segundo-Sargento": 2044.73,
-    "Terceiro-Sargento": 1854.36,
-    "Cabo": 1653.11,
-    "Soldado - Primeira Classe": 1518.69,
-    "Soldado - Segunda Classe": 1387.08
-  };
+  const posto = document.getElementById('posto');
+  const soldoContra = document.getElementById('soldoContra');
+  const resultado = document.getElementById('boxResult');
+  const aviso = document.getElementById('warn');
 
-  function parseBRL(v){
-    if(!v) return NaN;
-    v = String(v).trim();
-    v = v.replace(/\s/g,'').replace(/^R\$\s*/,'');
-    if(v.includes(',') && v.includes('.')) v = v.replace(/\./g,'').replace(',', '.');
-    else v = v.replace(',', '.');
-    v = v.replace(/[^0-9.\-]/g,'');
-    return Number(v);
+  // Usa a mesma tabela do simulador e mantém as três opções de praças especiais.
+  const nomes = [...Contracheque.postos];
+  nomes.splice(6, 0, 'Aspirante a Oficial', 'Cadete (último ano)', 'Cadete (demais anos)');
+  for (const nome of nomes) {
+    const label = nome.replace(' - 1ª Classe', ' - Primeira Classe').replace(' - 2ª Classe', ' - Segunda Classe');
+    posto.add(new Option(label, nome));
+  }
+  posto.value = 'Soldado - 1ª Classe';
+
+  function paraCentavos(entrada) {
+    const valor = entrada.trim().replace(/^R\$\s*/, '');
+    const formatoBR = /^(?:[0-9]+|[0-9]{1,3}(?:\.[0-9]{3})+)(?:,[0-9]{1,2})?$/;
+    const decimalComPonto = /^[0-9]+\.[0-9]{1,2}$/;
+    if (formatoBR.test(valor)) return Math.round(Number(valor.replace(/\./g, '').replace(',', '.')) * 100);
+    if (decimalComPonto.test(valor)) return Math.round(Number(valor) * 100);
+    return null;
   }
 
-  function showWarn(msg){
-    const w = document.getElementById('warn');
-    w.textContent = msg;
-    w.style.display = 'block';
-  }
-  function hideWarn(){
-    const w = document.getElementById('warn');
-    w.style.display = 'none';
+  function ocultarResultado() {
+    resultado.style.display = 'none';
+    aviso.style.display = 'none';
   }
 
-  function fillPostos(){
-    const sel = document.getElementById('posto');
-    if (!sel) return;
-    sel.innerHTML = '';
-    const postos = Object.keys(SOLDOS_30);
-    postos.forEach(p=>{
-      const opt = document.createElement('option');
-      opt.value = p;
-      opt.textContent = p;
-      sel.appendChild(opt);
-    });
-    sel.value = postos.includes('Soldado - Primeira Classe') ? 'Soldado - Primeira Classe' : postos[0];
-  }
-
-  function calc(){
-    hideWarn();
-
-    const posto = document.getElementById('posto').value;
-    const soldoIntegral = SOLDOS_30?.[posto];
-    const soldoContra = parseBRL(document.getElementById('soldoContra').value);
-
-    if(!Number.isFinite(soldoIntegral) || soldoIntegral <= 0){
-      showWarn('Selecione o posto/graduação.');
+  function calcularTempo() {
+    ocultarResultado();
+    const cents = paraCentavos(soldoContra.value);
+    if (cents === null || cents <= 0) {
+      aviso.textContent = 'Digite um valor de soldo maior que zero. Exemplo: 1.322,49.';
+      aviso.style.display = 'block';
       return;
     }
-    if(!Number.isFinite(soldoContra) || soldoContra <= 0){
-      showWarn('Digite o soldo do contracheque.');
+    const anos = Contracheque.estimarTempo(posto.value, cents);
+    if (anos === null) {
+      aviso.textContent = 'Esse valor não corresponde a uma cota de soldo do posto selecionado. Confira o posto, a competência e a linha Soldo do contracheque.';
+      aviso.style.display = 'block';
       return;
     }
-
-    const base = soldoIntegral / 30;
-    const tempo = Math.ceil(soldoContra / base);
-    const tempoFinal = Math.max(1, Math.min(40, tempo));
-
-    document.getElementById('boxResult').style.display = 'block';
-    document.getElementById('tempo').textContent = String(tempoFinal);
-
-    const nota = document.getElementById('nota');
-    nota.textContent = (tempo !== tempoFinal)
-      ? `Resultado: ${tempo}. Usando ${tempoFinal} (limite 1–40).`
-      : '';
+    document.getElementById('tempo').textContent = anos === 30 ? 'Soldo integral' : String(anos);
+    document.getElementById('nota').textContent = anos === 30
+      ? 'Para a simulação, use 30. O soldo integral não revela o tempo efetivo de serviço.'
+      : 'Anos estimados a partir das cotas de soldo.';
+    resultado.style.display = 'block';
   }
 
-  document.getElementById('btnCalc').addEventListener('click', calc);
-  document.getElementById('btnLimpar').addEventListener('click', ()=>{
-    document.getElementById('soldoContra').value = '';
-    document.getElementById('boxResult').style.display = 'none';
-    hideWarn();
+  document.getElementById('btnCalc').addEventListener('click', calcularTempo);
+  document.getElementById('btnLimpar').addEventListener('click', () => {
+    soldoContra.value = '';
+    ocultarResultado();
+    soldoContra.focus();
   });
-  document.getElementById('soldoContra').addEventListener('keydown', (e)=>{ if(e.key==='Enter') calc(); });
-
-  fillPostos();
+  posto.addEventListener('change', ocultarResultado);
+  soldoContra.addEventListener('input', ocultarResultado);
+  soldoContra.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') calcularTempo();
+  });
 </script>
 </body>
 </html>
